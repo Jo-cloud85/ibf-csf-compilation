@@ -1,0 +1,34 @@
+<h1>Todo</h1>
+<form class="form-group d-flex flex-column gap-4 my-3" [formGroup]="taskForm" (ngSubmit)="addTask()">
+    <div>
+        <label class="form-label">Description</label>
+        <input class="form-control" type="text" formControlName="description">
+    </div>
+    <div>
+        <label class="form-label">Priority</label>
+        <div class="d-flex gap-5">
+            <label>
+                <input class="me-2" type="radio" formControlName="priority" value="Low">Low
+            </label>
+            <label>
+                <input class="me-2" type="radio" formControlName="priority" value="Medium">Medium
+            </label>
+            <label>
+                <input class="me-2" type="radio" formControlName="priority" value="High">High
+            </label>
+        </div>
+    </div>
+    <div>
+        <label class="form-label">Due Date</label>
+        <input class="form-control" type="date" formControlName="dueDate" (change)="checkDueDate()">
+    </div>
+    <div>
+        <button 
+            class="btn btn-warning rounded-pill px-4 py-2 mt-3"
+            type="submit" 
+            [disabled]="!taskForm.valid || dueDateInPast">Add Task
+        </button>
+    </div>
+    <p *ngIf="dueDateInPast">Error: Due date cannot be in the past</p>
+</form>
+
