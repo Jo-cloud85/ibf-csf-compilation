@@ -1,0 +1,22 @@
+<div class="container pt-5">
+	<div class="row gap-5">
+		<div class="col">
+		<h1>Please Select</h1>
+		<app-inventory 
+			*ngFor="let item of Items" 
+			[item]="item" 
+			(addToCart)="addToCart($event)"></app-inventory>
+		<!-- addToCart comes from inventory.component -->
+		<!-- removeFromCart($event) comes from app.component.ts -->
+		</div>
+		<div class="col">
+		<h1>My Cart</h1>
+		<app-shopping-cart 
+			*ngFor="let item of cartItems" 
+			[cartItem]="item" 
+			(removeFromCart)="removeFromCart($event)"></app-shopping-cart>
+		<!-- removeFromCart comes from shopping-cart.component.ts -->
+		<!-- removeFromCart($event) comes from app.component.ts -->
+		</div>
+	</div>
+</div>

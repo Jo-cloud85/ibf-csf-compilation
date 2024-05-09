@@ -1,0 +1,15 @@
+<!-- <h1>My Cart</h1> -->
+<hr>
+<div class="d-flex align-items-center justify-content-between gap-3">
+    <div class="d-flex align-items-center gap-3">
+        <!-- Using property binding -->
+        <div class="image-container">
+            <img 
+                [src]="cartItem.itemImgPath"
+                [alt]="cartItem.itemName"
+                class="img-fluid">
+        </div>
+        <h3>{{cartItem.itemName}} | quantity: {{ cartItem.itemQty }}</h3>
+    </div>
+    <button class="btn btn-dark rounded-pill px-4 py-2" (click)="removeItemFromCart(cartItem)">Remove</button>
+</div>

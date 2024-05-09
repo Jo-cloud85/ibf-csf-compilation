@@ -1,0 +1,15 @@
+/* Custom CSS */
+.btn-dark:hover {
+    background-color: white; /* Change to the desired hover color */
+    border: 0.1rem solid black;
+    color: black;
+  }
+
+.image-container {
+    max-height: 7.5rem;
+    overflow: hidden; 
+    aspect-ratio: 1;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}

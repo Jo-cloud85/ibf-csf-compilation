@@ -1,0 +1,21 @@
+<hr>
+<div class="d-flex align-items-center justify-content-between gap-3">
+    <div class="d-flex align-items-center gap-3">
+        <!-- Using property binding -->
+        <div class="image-container">
+            <img 
+                [src]="item.itemImgPath"
+                [alt]="item.itemName"
+                class="img-fluid">
+        </div>
+        <!-- Using string interpolation -->
+        <!-- <div class="image-container">
+            <img 
+                src={{item.itemImgPath}}
+                alt={{item.itemName}}
+                class="img-fluid">
+        </div> -->
+        <h3>{{item.itemName}}</h3>
+    </div>
+    <button class="btn btn-dark rounded-pill px-4 py-2" (click)="addItemToCart(item)">Add</button>
+</div>
