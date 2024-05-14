@@ -1,0 +1,36 @@
+<div class="container pt-5">
+	<div class="row gap-5">
+    <h1>Yet another shopping cart</h1>
+        <!-- Inventory section -->
+		<div class="col">
+            <h3>Inventory</h3>
+            <hr>
+            <app-inventory 
+                *ngFor="let item of Items" 
+                [item]="item" 
+                (addToCart)="addToCart($event)">
+            </app-inventory>
+            <!-- addToCart comes from inventory.component -->
+            <!-- removeFromCart($event) comes from app.component.ts -->
+		</div>
+        <!-- Cart section -->
+		<div class="col">
+            <div class="d-flex justify-content-between">
+                <h3>My Cart</h3>
+                <button 
+                    class="btn btn-danger rounded-pill py-2 px-4" 
+                    type="button"
+                    (click)="clearCart()">Clear cart
+                </button>
+            </div>
+            <hr>
+            <app-cart 
+                *ngFor="let item of cartItems" 
+                [cartItem]="item"
+                (removeFromCart)="removeFromCart(item)">
+            </app-cart>
+            <!-- removeFromCart comes from shopping-cart.component.ts -->
+            <!-- removeFromCart($event) comes from app.component.ts -->
+		</div>
+	</div>
+</div>

@@ -8,7 +8,7 @@ import { Item } from '../shared/item.model';
 })
 export class InventoryComponent {
 	// use @Input because you want to get the data, item of Items array via *ngFor, from outside/parent
-	@Input() item: Item;
+	@Input() item: Item = new Item();
 
 	// use @Output because you want the data here, which is addToCart, to be accessed by outside/parent
 	@Output() addToCart: EventEmitter<Item> = new EventEmitter<Item>();

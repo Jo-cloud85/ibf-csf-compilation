@@ -10,6 +10,7 @@
                 class="img-fluid">
         </div>
         <h3>{{cartItem.itemName}} | quantity: {{ cartItem.itemQty }}</h3>
+        <small>{{cartItem.itemOrderDate | date:'full'}}</small>
     </div>
     <button class="btn btn-dark rounded-pill px-4 py-2" (click)="removeItemFromCart(cartItem)">Remove</button>
 </div>

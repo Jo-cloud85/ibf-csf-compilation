@@ -1,3 +1,38 @@
-<div>
-  <h1>{{title}}</h1>
+<div class="container pt-5 d-flex gap-3">
+	<app-my-image></app-my-image>
+	<app-my-image 
+		imageUrl="https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?cs=srgb&dl=pexels-kellie-churchman-371878-1001682.jpg&fm=jpg"
+		caption="A wonderful scenery"
+		(onFigureClicked)="handleClicked($event)"
+	>
+	</app-my-image>
+	<app-my-image [imageUrl]="sceneryUrl" [caption]="title"></app-my-image>
+
+	<!-- Using *ngFor directive -------------------------------------->
+	<app-my-image 
+		*ngFor="let i of imgs; let idx=index"
+		[imageUrl]="i"
+		[caption]="'Image number ' + idx"
+	></app-my-image>
+
+	<!-- Using the new @for ------------------------------------------>
+	<!-- @for (i of imgs; track idx; let idx = $index) {
+		<app-my-image 
+			[imageUrl]="i" 
+			[caption]="'Image number ' + idx"
+		>({{idx}})</app-my-image>
+	} -->
+</div>
+
+<div  class="container pt-5 d-flex gap-3">
+	<!-- Using *ngFor directive -------------------------------------->
+	<!-- <h3 *ngIf="(imgs.length % 2) == 0">You have even number of pictures</h3>
+	<h3 *ngIf="(imgs.length % 2) != 0">You have odd number of pictures</h3> -->
+
+	<!-- Using the new @for ------------------------------------------>
+	@if((imgs.length % 2) == 0) {
+		<h3>You have even number of pictures</h3>
+	} @else {
+		<h3>You have odd number of pictures</h3>
+	}
 </div>

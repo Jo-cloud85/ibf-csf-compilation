@@ -1,0 +1,19 @@
+<div class="d-flex align-items-center justify-content-between pb-3">
+    <div>
+        <div class="d-flex align-items-center">
+            <!-- Using property binding -->
+            <!-- <div class="image-container">
+                <img 
+                    [src]="cartItem.itemImgPath"
+                    [alt]="cartItem.itemName"
+                    class="img-fluid">
+            </div> -->
+            <h4>{{cartItem.itemName}} | Quantity: {{cartItem.itemQty}}</h4>
+        </div>
+        <small>{{cartItem.itemOrderDate | date:'full'}}</small>
+    </div>
+    <button 
+        class="btn btn-outline-warning rounded-pill px-4 py-2" 
+        (click)="removeItemFromCart(cartItem)"
+    >Remove</button>
+</div>
