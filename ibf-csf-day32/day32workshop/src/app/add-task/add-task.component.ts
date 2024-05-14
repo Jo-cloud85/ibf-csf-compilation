@@ -9,7 +9,7 @@ import { TaskService } from '../task-list/task.service';
 })
 
 export class AddTaskComponent implements OnInit {
-	taskForm: FormGroup;
+	taskForm: FormGroup = {} as FormGroup;
 	dueDateInPast: boolean = false;
 
 	constructor(

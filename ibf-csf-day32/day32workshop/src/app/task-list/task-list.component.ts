@@ -8,7 +8,7 @@ import { TaskService } from '../task-list/task.service';
 	styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-	tasks: Task[];
+	tasks: Task[] = [];
 
 	constructor(private taskService: TaskService) { }
 

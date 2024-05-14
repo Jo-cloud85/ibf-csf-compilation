@@ -12,8 +12,7 @@
         <div class="col-8">
             <span 
                 [class.completed]="task.completed || task.editing"
-                *ngIf="!task.editing"
-                (click)="editTask(task)">{{ task.description }}
+                *ngIf="!task.editing">{{ task.description }}
             </span>
             <input 
                 class="form-control"
