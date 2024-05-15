@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Item } from './shared/item.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
 	selector: 'app-root',
@@ -21,13 +22,13 @@ export class AppComponent {
 		if (existingItem) {
 			if (existingItem.itemQty !== undefined) {
 				existingItem.itemQty++;
-				existingItem.itemOrderDate=new Date();
+				existingItem.itemOrderDate = new Date();
 			} else {
 				existingItem.itemQty=1;
 			}
-			
 		} else {
-			this.cartItems.push({ ...item, itemQty: 1 });
+			const uuid: string = uuidv4().slice(0,8);
+			this.cartItems.push({ ...item, itemId: uuid });
 		}
 	}
 

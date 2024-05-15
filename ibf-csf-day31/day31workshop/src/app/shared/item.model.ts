@@ -3,6 +3,7 @@ export class Item {
         public itemName?: string, 
         public itemImgPath?: string, 
         public itemQty?: number,
-        public itemOrderDate?: Date
+        public itemOrderDate?: Date,
+        public itemId?: string
     ) {}
 }

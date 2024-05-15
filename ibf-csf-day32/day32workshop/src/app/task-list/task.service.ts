@@ -5,9 +5,8 @@ import { Task } from '../shared/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-    private tasks: Task[] = [
-		new Task(1715258810817, "Learn Spring Boot", "Medium", new Date(), false, false)
-	];
+    // if you use interface instead of class for Task model then you don't need to initialize
+    private tasks: Task[] = []; 
 
     constructor() { }
 

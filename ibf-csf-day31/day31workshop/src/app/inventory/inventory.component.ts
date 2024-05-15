@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Item } from '../shared/item.model';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'app-inventory',
@@ -11,11 +12,12 @@ export class InventoryComponent {
 	@Input() item: Item = new Item();
 
 	// use @Output because you want the data here, which is addToCart, to be accessed by outside/parent
-	@Output() addToCart: EventEmitter<Item> = new EventEmitter<Item>();
+	// @Output() addToCart: EventEmitter<Item> = new EventEmitter<Item>();
+	@Output() addToCart = new Subject<Item>();
 
 	constructor() { }
 
 	addItemToCart(item: Item) {
-		this.addToCart.emit(item);
+		this.addToCart.next(item); // use next() instead of emit() when using new Subject
 	}
 }

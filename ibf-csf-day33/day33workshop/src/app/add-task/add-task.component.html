@@ -13,7 +13,7 @@
         >
         <small 
             class="text-danger" 
-            *ngIf="taskForm.get('description').hasError('required')"
+            *ngIf="taskForm.get('description')?.hasError('required')"
         >
             Please enter description
         </small>
