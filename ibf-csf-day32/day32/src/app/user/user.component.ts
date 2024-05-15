@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { User } from '../model/user.model';
 import { Observable } from 'rxjs';
+import { nonWhiteSpace } from '../custom-validator';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,6 @@ export class UserComponent implements OnInit {
   userForm!: FormGroup;
   foodArray!: FormArray;
   unhealthyFood = ['fried chicken', 'sweets', 'coke', 'curry', 'chocolate', 'chips']
-  forbiddenFirstnames: string[] = ['Chris', 'Anna'];
 
   user: User = new User('', '', '', []);
 
@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.foodArray = this.formBuilder.array([]);
     this.userForm = this.formBuilder.group({
-      firstName: this.formBuilder.control<string>('', [Validators.required, Validators.minLength(3)]),
+      firstName: this.formBuilder.control<string>('', [Validators.required, Validators.minLength(3), nonWhiteSpace]),
       lastName: this.formBuilder.control<string>('', [Validators.required, Validators.minLength(3)]),
       email: this.formBuilder.control<string>('', [Validators.required, Validators.email]),
       foodList: this.foodArray
@@ -53,13 +53,6 @@ export class UserComponent implements OnInit {
   // getControls() {
   //   return (<FormArray>this.userForm.get('food')).controls;
   // }
-
-  forbiddenNames(control: AbstractControl): ValidationErrors | null {
-    if (control && control.value && this.forbiddenFirstnames.includes(control.value)) {
-      return { nameIsForbidden: true };
-    }
-    return null;
-  }
 
   unhealthyFoodCheck(control: AbstractControl): Promise<ValidationErrors | null > | Observable<ValidationErrors | null> {
     const promise = new Promise<any>((resolve, reject) => {
