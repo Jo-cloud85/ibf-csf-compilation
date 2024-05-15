@@ -1,0 +1,108 @@
+<h1>User Registration</h1>
+<form 
+    class="form-group d-flex flex-column gap-4 my-3" 
+    [formGroup]="userForm" 
+    (ngSubmit)="processUserForm()"
+>
+    <!-- First name -->
+    <div>
+        <label class="form-label">First Name</label>
+        <input 
+            class="form-control" 
+            type="text" 
+            formControlName="firstName"
+        >
+        <div *ngIf="userForm.get('firstName')?.touched">
+            <small 
+                class="text-danger" 
+                *ngIf="userForm.get('firstName')?.hasError('required')"
+            >
+                Please enter your first name
+            </small>
+            <small 
+                class="text-danger" 
+                *ngIf="userForm.get('firstName')?.hasError('minlength')"
+            >
+                First name must be minimally 3 characters long
+            </small>
+        </div>
+    </div>
+    <!-- Last name -->
+    <div>
+        <label class="form-label">Last Name</label>
+        <input 
+            class="form-control" 
+            type="text" 
+            formControlName="lastName"
+        >
+        <div *ngIf="userForm.get('lastName')?.touched">
+            <small 
+                class="text-danger" 
+                *ngIf="userForm.get('lastName')?.hasError('required')"
+            >
+                Please enter your last name
+            </small>
+            <small 
+                class="text-danger" 
+                *ngIf="userForm.get('lastName')?.hasError('minlength')"
+            >
+                Last name must be minimally 3 characters long
+            </small>
+        </div>
+    </div>
+    <!-- Email -->
+    <div>
+        <label class="form-label">Email</label>
+        <input 
+            class="form-control" 
+            type="email" 
+            formControlName="email" 
+        >
+        <small 
+            class="text-danger" 
+            *ngIf="userForm.get('email')?.touched && userForm.get('email')?.hasError('required')"
+        >Please enter your email
+        </small>
+    </div>
+    <!-- Food -->
+    <div 
+        class="d-flex flex-column gap-3"
+        formArrayName="foodList"
+    >
+        <label for="food">List Your Healthy Food</label>
+        <div>
+            <button 
+                class="btn btn-outline-warning rounded-pill py-2 px-4" 
+                type="button"
+                (click)="addNewFood()"
+            >Add Food
+            </button>
+        </div>
+        <div
+            class="form-group"
+            *ngFor="let foodControl of foodArray.controls; let i = index"
+            [formGroupName] = "i"
+        >
+            <input 
+                class="form-control"
+                type="text"
+                formControlName="f1"
+            >
+            <small 
+                class="text-danger" 
+                *ngIf="userForm.get('f1')?.hasError('foodIsNotHealthy')"
+            >Food entered not considered healthy
+            </small>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <button
+            class="btn btn-primary rounded-pill py-2 px-4"
+            type="submit" 
+            [disabled]="!userForm.valid"
+        >Add User
+        </button>
+    </div>
+</form>
+

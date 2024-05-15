@@ -5,7 +5,7 @@ import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TaskListComponent } from './task-list/task-list.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     MaterialModule
   ],
