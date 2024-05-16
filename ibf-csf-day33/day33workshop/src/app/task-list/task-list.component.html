@@ -1,25 +1,75 @@
 <h1>Task List</h1>
-<ul class="d-flex flex-column ps-2 gap-3">
+<ul class="d-flex flex-column ps-2 gap-3 mb-5">
     <li 
         class="d-flex align-items-center justify-content-between gap-3" 
         *ngFor="let task of tasks"
     >
-        <mat-checkbox
-            type="checkbox" 
-            [checked]="task.completed" 
-            (change)="toggleCompleted(task)"
-        ></mat-checkbox>
-        <div class="col-8">
-            <span 
-                [class.completed]="task.completed || task.editing"
-                *ngIf="!task.editing"
-                (click)="editTask(task)">{{ task.description }}
-            </span>
-            <input 
-                class="form-control"
-                *ngIf="task.editing"
-                [(ngModel)]="task.description"
-            >
+        <div class="d-flex flex-column align-items-start justify-content-between">
+            <div>
+                <mat-checkbox
+                    type="checkbox" 
+                    [checked]="task.completed" 
+                    *ngIf="!task.editing"
+                    (change)="toggleCompleted(task)"
+                ></mat-checkbox>
+                <!-- Show Description -->
+                <span 
+                    [class.completed]="task.completed || task.editing"
+                    *ngIf="!task.editing"
+                    (click)="editTask(task)">{{ task.description | titlecase }}
+                </span>
+                <!-- Edit Description -->
+                <mat-form-field class="pt-3" appearance="outline" *ngIf="task.editing">
+                    <mat-label>Description</mat-label>
+                    <input 
+                        matInput
+                        class="form-control"
+                        *ngIf="task.editing"
+                        [(ngModel)]="task.description"
+                    >
+                </mat-form-field>
+            </div>
+            <div>
+                <!-- Show priority -->
+                <span
+                    class="custom-padding"
+                    [class.completed]="task.completed || task.editingPriority"
+                    *ngIf="!task.editing"
+                    (click)="editTask(task)">Priority: {{ task.priority }}
+                </span>
+                <!-- Edit priority -->
+                <div *ngIf="task.editing && task.editingPriority">
+                    <div>
+                        <label class="form-label">Priority</label>
+                    </div>
+                    <mat-radio-group [(ngModel)]="task.priority">
+                        <mat-radio-button 
+                            *ngFor="let p of priority" 
+                            [value]="p"
+                        >{{p}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+            <div class="pt-2">
+                <!-- Show due date -->
+                <span 
+                    class="custom-padding"
+                    [class.completed]="task.completed || task.editingDueDate"
+                    *ngIf="!task.editing"
+                    (click)="editTask(task)">Due Date: {{ task.dueDate | date: 'short' }}
+                </span>
+                <!-- Edit due date -->
+                <mat-form-field class="pt-3" appearance="outline" *ngIf="task.editing && task.editingDueDate">
+                    <mat-label>Due Date</mat-label>
+                    <input 
+                        matInput 
+                        [matDatepicker]="taskdatepicker" 
+                        [(ngModel)]="task.dueDate"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="taskdatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #taskdatepicker></mat-datepicker>
+                </mat-form-field>
+            </div>
         </div>
         <div class="d-flex justify-content-end gap-2">
             <button mat-fab extended

@@ -48,14 +48,12 @@
             <small 
                 class="text-danger" 
                 *ngIf="userForm.get('lastName')?.hasError('required')"
-            >
-                Please enter your last name
+            >Please enter your last name
             </small>
             <small 
                 class="text-danger" 
                 *ngIf="userForm.get('lastName')?.hasError('minlength')"
-            >
-                Last name must be minimally 3 characters long
+            >Last name must be minimally 3 characters long
             </small>
         </div>
     </div>

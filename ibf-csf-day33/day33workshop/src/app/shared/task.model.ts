@@ -5,6 +5,8 @@ export class Task {
         public priority: string,
         public dueDate: Date,
         public completed: boolean,
-        public editing?: boolean 
+        public editing?: boolean,
+        public editingPriority?: boolean,
+        public editingDueDate?: boolean
     ) {}
 }

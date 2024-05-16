@@ -9,6 +9,8 @@ import { TaskService } from '../task-list/task.service';
 })
 export class TaskListComponent implements OnInit {
 	tasks: Task[] = [];
+	dueDateInPast: boolean = false;
+	priority: string[] = ['Low', 'Medium', 'High']
 
 	constructor(private taskService: TaskService) { }
 
@@ -32,10 +34,16 @@ export class TaskListComponent implements OnInit {
 
 	editTask(task: Task): void {
 		task.editing = true;
+		task.editingPriority = true;
+    	task.editingDueDate = true;
 	}
 
 	saveTask(task: Task): void {
 		task.editing = false;
+		// Save priority and due date along with description
+		// Assuming you have these properties in your Task model
+		task.editingPriority = false;
+		task.editingDueDate = false;
 		this.taskService.updateTask(task);
 		this.loadTasks();
 	}

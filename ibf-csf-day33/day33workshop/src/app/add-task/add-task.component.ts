@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../task-list/task.service';
 import { v4 as uuidv4 } from 'uuid';
+import { checkDueDate } from '../custom-validator';
 
 @Component({
 	selector: 'app-add-task',
@@ -14,6 +15,7 @@ export class AddTaskComponent implements OnInit {
 	dueDateInPast: boolean = false;
 	priority: string[] = ['Low', 'Medium', 'High']
 	datepicker!: Date;
+	taskdatepicker!: Date;
 
 	constructor(
 		private formBuilder: FormBuilder, 
@@ -23,12 +25,12 @@ export class AddTaskComponent implements OnInit {
 		this.taskForm = this.formBuilder.group({
 			description: ['', [Validators.required, Validators.minLength(5)]],
 			priority: ['Low'],
-			dueDate: ['', Validators.required]
+			dueDate: ['', [Validators.required, checkDueDate]]
 		});
 	}
 
 	addTask(): void {
-		if (this.taskForm.valid && !this.dueDateInPast) {
+		if (this.taskForm.valid) {
 			const { description, priority, dueDate } = this.taskForm.value;
 			const uuid: string = uuidv4().slice(0,8);
 			this.taskService.addTask({ 
@@ -39,11 +41,5 @@ export class AddTaskComponent implements OnInit {
 				completed: false });
 			this.taskForm.reset();
 		}
-	}
-
-	checkDueDate(): void {
-		const dueDate = new Date(this.taskForm.value.dueDate);
-		const currentDate = new Date();
-		this.dueDateInPast = dueDate < currentDate;
 	}
 }

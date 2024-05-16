@@ -18,36 +18,39 @@
                 *ngIf="taskForm.get('description')?.touched && taskForm.get('description')?.hasError('required')"
             >Please enter description
             </small>
+            <small 
+                class="text-danger" 
+                *ngIf="taskForm.get('description')?.touched && taskForm.get('description')?.hasError('minlength')"
+            >Description must be at least 5 characters long
+        </small>
         </div>
     </div>
     <div>
-            <label class="form-label">Priority</label>
-            <div class="d-flex gap-5">
-                <mat-radio-group formControlName="priority">
-                    <mat-radio-button
-                        *ngFor="let p of priority"
-                        class="me-2" 
-                        [value]="p"
-                    >{{p}}
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
+        <label class="form-label">Priority</label>
+        <div class="d-flex gap-5">
+            <mat-radio-group formControlName="priority">
+                <mat-radio-button
+                    *ngFor="let p of priority"
+                    class="me-2" 
+                    [value]="p"
+                >{{p}}</mat-radio-button>
+            </mat-radio-group>
+        </div>
     </div>
-    <div>
+    <div class="pt-3">
         <mat-form-field appearance="outline">
             <mat-label>Due Date</mat-label>
             <input 
                 matInput
-                [matDatepicker] = "datepicker"
+                [matDatepicker]="datepicker"
                 formControlName="dueDate" 
-                (change)="checkDueDate()"
             >
             <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
             <mat-datepicker #datepicker></mat-datepicker>
         </mat-form-field>
         <small 
-            class="text-danger" 
-            *ngIf="dueDateInPast"
+            class="text-danger d-block" 
+            *ngIf="taskForm.get('dueDate')?.hasError('dueDateInThePast')"
         >Error: Due date cannot be in the past
         </small>
     </div>
@@ -55,7 +58,7 @@
         <button 
             mat-raised-button
             type="submit" 
-            [disabled]="!taskForm.valid || dueDateInPast"
+            [disabled]="!taskForm.valid"
         >Add Task
         </button>
     </div>

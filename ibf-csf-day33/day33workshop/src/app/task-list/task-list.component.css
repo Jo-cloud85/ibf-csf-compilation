@@ -5,3 +5,7 @@ ul {
 .completed {
     text-decoration: line-through;
 }
+
+.custom-padding{
+    padding-left: 42px;
+}
