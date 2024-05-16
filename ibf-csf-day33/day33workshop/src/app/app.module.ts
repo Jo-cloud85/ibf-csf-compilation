@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { TaskListComponent } from './task-list/task-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatLuxonDateModule } from '@angular/material-luxon-adapter';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    MatLuxonDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

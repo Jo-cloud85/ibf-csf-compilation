@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { User } from '../model/user.model';
-import { Observable } from 'rxjs';
-import { nonWhiteSpace } from '../custom-validator';
+import { nonWhiteSpace, unhealthyFoodCheck } from '../custom-validator';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +12,7 @@ export class UserComponent implements OnInit {
 
   userForm!: FormGroup;
   foodArray!: FormArray;
-  unhealthyFood = ['fried chicken', 'sweets', 'coke', 'curry', 'chocolate', 'chips']
+
 
   user: User = new User('', '', '', []);
 
@@ -40,7 +39,7 @@ export class UserComponent implements OnInit {
   addNewFood(): void {
     // Method 1
     const foodItemControl = this.formBuilder.group({
-      f1: this.formBuilder.control<string>('', [Validators.required], this.unhealthyFoodCheck.bind(this))
+      f1: this.formBuilder.control<string>('', [Validators.required], unhealthyFoodCheck)
     })
     this.foodArray.push(foodItemControl);
 
@@ -54,18 +53,8 @@ export class UserComponent implements OnInit {
   //   return (<FormArray>this.userForm.get('food')).controls;
   // }
 
-  unhealthyFoodCheck(control: AbstractControl): Promise<ValidationErrors | null > | Observable<ValidationErrors | null> {
-    const promise = new Promise<any>((resolve, reject) => {
-      setTimeout(() => {
-        if (control && control.value && this.unhealthyFood.includes(control.value)) {
-          resolve({foodIsNotHealthy: true});
-        } else {
-          resolve(null);
-        }
-      }, 1500)
-    })
-
-    return promise;
+  removeFood(i: number) {
+    this.foodArray.removeAt(i);
   }
 
   // Just a helper method for printing data

@@ -99,14 +99,26 @@
             *ngFor="let foodControl of foodArray.controls; let i = index"
             [formGroupName] = "i"
         >
-            <input 
-                class="form-control"
-                type="text"
-                formControlName="f1"
-            >
+            <div class="d-flex align-items-center justify-content-between gap-3">
+                <div class="col-6">
+                    <input 
+                        class="form-control"
+                        type="text"
+                        formControlName="f1"
+                    >
+                </div>
+                <div class="col-6">
+                    <button
+                        class="btn btn-outline-danger rounded-pill py-2 px-4"
+                        type="button"
+                        (click)="removeFood(i)"
+                    >Delete
+                    </button>
+                </div>
+            </div>
             <small 
                 class="text-danger" 
-                *ngIf="userForm.get('f1')?.hasError('foodIsNotHealthy')"
+                *ngIf="userForm.get('f1')?.hasError('unhealthyFoodCheck')"
             >Food entered not considered healthy
             </small>
         </div>

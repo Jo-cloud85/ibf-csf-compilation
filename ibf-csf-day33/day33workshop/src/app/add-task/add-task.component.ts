@@ -11,6 +11,7 @@ import { TaskService } from '../task-list/task.service';
 export class AddTaskComponent implements OnInit {
 	taskForm!: FormGroup;
 	dueDateInPast: boolean = false;
+	priority: string[] = ['Low', 'Medium', 'High']
 
 	constructor(
 		private formBuilder: FormBuilder, 

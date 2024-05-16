@@ -4,11 +4,11 @@
         class="d-flex align-items-center justify-content-between gap-3" 
         *ngFor="let task of tasks"
     >
-        <input 
+        <mat-checkbox
             type="checkbox" 
             [checked]="task.completed" 
             (change)="toggleCompleted(task)"
-        > 
+        ></mat-checkbox>
         <div class="col-8">
             <span 
                 [class.completed]="task.completed || task.editing"

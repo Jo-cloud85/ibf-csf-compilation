@@ -1,50 +1,33 @@
 <h1>Todo</h1>
-<form 
+<form
     class="form-group d-flex flex-column gap-4 my-3" 
     [formGroup]="taskForm" 
     (ngSubmit)="addTask()"
 >
     <div>
-        <label class="form-label">Description</label>
-        <input 
-            class="form-control" 
-            type="text" 
-            formControlName="description"
-        >
-        <small 
-            class="text-danger" 
-            *ngIf="taskForm.get('description')?.hasError('required')"
-        >
-            Please enter description
-        </small>
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput type="text" formControlName="description">
+        </mat-form-field>
+        <div>
+            <small 
+                class="text-danger" 
+                *ngIf="taskForm.get('description')?.touched && taskForm.get('description')?.hasError('required')"
+            >Please enter description
+            </small>
+        </div>
     </div>
     <div>
         <label class="form-label">Priority</label>
         <div class="d-flex gap-5">
-            <label>
-                <input 
+            <mat-radio-group formControlName="priority">
+                <mat-radio-button
+                    *ngFor="let p of priority"
                     class="me-2" 
-                    type="radio" 
-                    formControlName="priority" 
-                    value="Low"
-                >Low
-            </label>
-            <label>
-                <input 
-                    class="me-2" 
-                    type="radio" 
-                    formControlName="priority" 
-                    value="Medium"
-                >Medium
-            </label>
-            <label>
-                <input 
-                    class="me-2" 
-                    type="radio" 
-                    formControlName="priority" 
-                    value="High"
-                >High
-            </label>
+                    [value]="p"
+                >{{p}}
+                </mat-radio-button>
+            </mat-radio-group>
         </div>
     </div>
     <div>
