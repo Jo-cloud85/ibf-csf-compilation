@@ -5,9 +5,7 @@ import { Task } from '../shared/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-    private tasks: Task[] = [
-		new Task(1715258810817, "Learn Spring Boot", "Medium", new Date(), false, false)
-	];
+    private tasks: Task[] = [];
 
     constructor() { }
 
@@ -20,12 +18,12 @@ export class TaskService {
         this.saveTasksToLocalStorage();
     }
 
-    deleteTask(id: number): void {
+    deleteTask(id: string): void {
         this.tasks = this.tasks.filter(task => task.id !== id);
         this.saveTasksToLocalStorage();
     }
 
-    markAsCompleted(id: number): void {
+    markAsCompleted(id: string): void {
         const task = this.tasks.find(task => task.id === id);
         if (task) {
             task.completed = true;

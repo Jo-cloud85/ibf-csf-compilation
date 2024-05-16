@@ -7,7 +7,10 @@
     <div>
         <mat-form-field appearance="outline">
             <mat-label>Description</mat-label>
-            <input matInput type="text" formControlName="description">
+            <input 
+                matInput 
+                type="text" 
+                formControlName="description">
         </mat-form-field>
         <div>
             <small 
@@ -18,26 +21,30 @@
         </div>
     </div>
     <div>
-        <label class="form-label">Priority</label>
-        <div class="d-flex gap-5">
-            <mat-radio-group formControlName="priority">
-                <mat-radio-button
-                    *ngFor="let p of priority"
-                    class="me-2" 
-                    [value]="p"
-                >{{p}}
-                </mat-radio-button>
-            </mat-radio-group>
-        </div>
+            <label class="form-label">Priority</label>
+            <div class="d-flex gap-5">
+                <mat-radio-group formControlName="priority">
+                    <mat-radio-button
+                        *ngFor="let p of priority"
+                        class="me-2" 
+                        [value]="p"
+                    >{{p}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
     </div>
     <div>
-        <label class="form-label">Due Date</label>
-        <input 
-            class="form-control" 
-            type="date" 
-            formControlName="dueDate" 
-            (change)="checkDueDate()"
-        >
+        <mat-form-field appearance="outline">
+            <mat-label>Due Date</mat-label>
+            <input 
+                matInput
+                [matDatepicker] = "datepicker"
+                formControlName="dueDate" 
+                (change)="checkDueDate()"
+            >
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker></mat-datepicker>
+        </mat-form-field>
         <small 
             class="text-danger" 
             *ngIf="dueDateInPast"

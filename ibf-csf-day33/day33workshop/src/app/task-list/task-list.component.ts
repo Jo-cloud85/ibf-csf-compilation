@@ -25,7 +25,7 @@ export class TaskListComponent implements OnInit {
 		this.taskService.updateTask(task);
 	}
 
-	deleteTask(id: number): void {
+	deleteTask(id: string): void {
 		this.taskService.deleteTask(id);
 		this.loadTasks();
 	}
