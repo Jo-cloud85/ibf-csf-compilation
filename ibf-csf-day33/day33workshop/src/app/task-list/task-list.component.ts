@@ -40,8 +40,6 @@ export class TaskListComponent implements OnInit {
 
 	saveTask(task: Task): void {
 		task.editing = false;
-		// Save priority and due date along with description
-		// Assuming you have these properties in your Task model
 		task.editingPriority = false;
 		task.editingDueDate = false;
 		this.taskService.updateTask(task);

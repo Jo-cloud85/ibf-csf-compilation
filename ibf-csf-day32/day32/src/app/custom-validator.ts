@@ -24,7 +24,7 @@ export function unhealthyFoodCheck(control: AbstractControl): Promise<Validation
   const promise = new Promise<any>((resolve, reject) => {
     setTimeout(() => {
       if (control && control.value && unhealthyFood.includes(control.value)) {
-        resolve({foodIsNotHealthy: true});
+        resolve({ foodIsNotHealthy: true });
       } else {
         resolve(null);
       }
