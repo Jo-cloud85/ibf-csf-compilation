@@ -116,7 +116,7 @@
             </div>
             <small 
                 class="text-danger" 
-                *ngIf="userForm.get('f1')?.hasError('unhealthyFoodCheck')"
+                *ngIf="userForm.get('f1')?.hasError('foodIsNotHealthy')"
             >Food entered not considered healthy
             </small>
         </div>

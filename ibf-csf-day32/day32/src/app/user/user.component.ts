@@ -9,10 +9,9 @@ import { nonWhiteSpace, unhealthyFoodCheck } from '../custom-validator';
   styleUrl: './user.component.css'
 })
 export class UserComponent implements OnInit {
-
+  
   userForm!: FormGroup;
   foodArray!: FormArray;
-
 
   user: User = new User('', '', '', []);
 
