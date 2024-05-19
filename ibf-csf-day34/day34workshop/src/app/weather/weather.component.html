@@ -1,0 +1,17 @@
+<div class="container pt-5">
+    <h1>Welcome to weather app</h1>
+    <form class="form-group col-6" [formGroup]="citySearchForm" (ngSubmit)="onSearch()">
+        <input class="form-control" type="text" formControlName="city" placeholder="Enter city name" />
+        <button class="btn btn-primary rounded-pill py-2 px-4 mt-3" type="submit">Search</button>
+    </form>
+    <br>
+    <div *ngIf="weather">
+        <h3>Weather in {{ weather.name }}</h3>
+        <img [src]="iconUrl" alt="Weather icon">
+        <p>Temperature: {{ weather.main.temp }}°C</p>
+        <p>Weather: {{ weather.weather[0].description }}</p>
+        <p>Humidity: {{ weather.main.humidity }}%</p>
+        <p>Wind Speed: {{ weather.wind.speed }} m/s</p>
+      </div>
+</div>
+  
