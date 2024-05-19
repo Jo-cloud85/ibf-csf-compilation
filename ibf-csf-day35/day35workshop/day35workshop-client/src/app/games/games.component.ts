@@ -63,10 +63,10 @@ export class GamesComponent implements OnInit {
   }
 
   changePageSize(): void {
-    // setting the currentPage back to 1 is also VERY IMPT else when you click
+    // Setting the currentPage back to 1 is also VERY IMPT else when you click
     // next, you will show the entire rest of the result
     this.currentPage = 1;
-    // converting this to Number is VERY IMPT as .value can return a string
+    // Converting this to Number is VERY IMPT as .value can return a string
     this.gamesPerPage = Number(this.gameSearchForm.get('gamesPerPage')?.value);
     this.updateDisplayedGames();
 }

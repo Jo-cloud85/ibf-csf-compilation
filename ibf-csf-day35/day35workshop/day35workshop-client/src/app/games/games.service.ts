@@ -15,23 +15,7 @@ export class GamesService {
 
     getBoardGamesByName(gameName: string): Observable<any> {
         const url = `${this.endpoint}?name=${gameName}`;
-        return this.http
-            .get<ResponseData>(url)
-            // .pipe(
-            //     map((responseData: ResponseData) => {
-            //         const gamesArray = [];
-            //         let index = 1;
-            //         for (const key in responseData) {
-            //             if (responseData.hasOwnProperty(key)) {
-            //                 gamesArray.push({ index: index++, ...responseData[key] });
-            //             }
-            //         }
-            //         return gamesArray;
-            //     }),
-            //     catchError(errorRes => {
-            //         return throwError(() => new Error(errorRes));
-            //     })
-            // );
+        return this.http.get<ResponseData>(url)
     }
 
 }
