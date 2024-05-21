@@ -16,11 +16,11 @@ export class WeatherComponent implements OnInit {
   weather!: any;
   iconUrl: string = '';
 
-  private sub !: Subscription;
+  //private sub !: Subscription;
 
   constructor(
     private formbuilder: FormBuilder,
-    private weatherService: WeatherService) { }
+    private weatherService: WeatherService) {}
 
   ngOnInit(): void {
     this.citySearchForm = this.formbuilder.group({
@@ -52,11 +52,11 @@ export class WeatherComponent implements OnInit {
   getWeather(city: string): void {
     this.weatherService.getWeatherByCityNameUsingPromise(city)
       .then((data: any) => {
-            this.weather = data;
-            const iconCode = this.weather.weather[0].icon;
-            this.iconUrl = this.weatherService.getIconUrl(iconCode);
-            // console.log(this.weather);
-          }
+          this.weather = data;
+          const iconCode = this.weather.weather[0].icon;
+          this.iconUrl = this.weatherService.getIconUrl(iconCode);
+          // console.log(this.weather);
+        }
       )
       .catch((error: HttpErrorResponse) => {
         console.error('Error fetching weather data', error.message);
