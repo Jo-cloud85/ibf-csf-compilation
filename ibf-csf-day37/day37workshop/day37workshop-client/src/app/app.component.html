@@ -1,0 +1,64 @@
+<div class="container pt-5">
+	<h1>Add your post here </h1>
+	<form 
+		class="form-group col-6 d-flex flex-column gap-3"
+		[formGroup]="postForm" 
+		(ngSubmit)="uploadImage()">
+		<div>
+			<label for="comments" class="form-label">Comments</label>
+			<textarea 
+				class="form-control" 
+				id="comments" 
+				rows="5"
+				placeholder="Share with us what you think"
+				formControlName="comments"></textarea>
+			<div>
+				<small 
+					class="text-danger" 
+					*ngIf="postForm.get('comments')?.touched && postForm.get('comments')?.hasError('required')"
+				>Comments section cannot be empty
+				</small>
+				<small 
+					class="text-danger" 
+					*ngIf="postForm.get('comments')?.touched && postForm.get('comments')?.hasError('minlength')"
+				>Comments must be at least 5 characters long
+				</small>
+			</div>
+		</div>
+		<div>
+			<label for="formFile" class="form-label">Upload image</label>
+			<input 
+				class="form-control" 
+				type="file" 
+				id="formFile"
+				accept="image/*"
+				#imgFile
+				formControlName="picture">
+			<div>
+				<small 
+					class="text-danger" 
+					*ngIf="postForm.get('picture')?.touched && postForm.get('picture')?.hasError('required')"
+				>Please upload an image
+				</small>
+			</div>
+		</div>
+		<div class="mt-3">
+			<button
+				class="btn btn-primary rounded-pill py-1 px-4"
+				type="submit"
+				[disabled]="!postForm.valid">POST
+			</button>
+		</div>
+	</form>
+</div>
+
+<!-- The accept="image/*" attribute in the <input> element restricts the file types that the user can select to 
+only image files. This attribute is used to specify the types of files that the server accepts, ensuring that 
+the file input dialog only allows the user to choose files with image MIME types. The MIME type image/* is a 
+wildcard that covers all image types, such as:
+	- image/jpeg
+	- image/png
+	- image/gif
+	- image/bmp
+	- image/webp 
+etc. -->
