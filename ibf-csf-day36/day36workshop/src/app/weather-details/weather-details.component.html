@@ -1,7 +1,9 @@
 <div *ngIf="weather">
     <div class="d-flex align-items-center justify-content-between gap-3">
         <h4>Weather in {{ weather.name }}</h4>
-        <a class="btn btn-outline-dark rounded-pill py-1 px-4" [routerLink]="['/']">Back</a>
+        <a 
+            class="btn btn-outline-dark rounded-pill py-1 px-4" 
+            routerLink='/'>Back</a>
     </div>
     <img [src]="iconUrl" alt="Weather icon">
     <p>Temperature: {{ weather.main.temp }}°C</p>

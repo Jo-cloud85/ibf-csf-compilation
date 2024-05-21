@@ -20,7 +20,7 @@ export class WeatherDetailsComponent implements OnInit{
     private weatherService: WeatherService) {}
   
   ngOnInit(): void {
-    this.getWeather()
+    this.getWeather();
   }
 
   // Method 1 - Using Promise
@@ -29,7 +29,6 @@ export class WeatherDetailsComponent implements OnInit{
       .subscribe({
           next: (params: any) => {
             this.city = params.get('city')!;
-            console.log("FROM ngONINIT "+this.city)
             this.weatherService.getWeatherByCityNameUsingPromise(this.city)
               .then(data => {
                 this.weather = data;
@@ -40,8 +39,8 @@ export class WeatherDetailsComponent implements OnInit{
                 console.error('Error fetching weather data', error.message);
               })
           },
-          error:(error: string) => {
-            console.error('Error fetching weather data', error);
+          error:(error: HttpErrorResponse) => {
+            console.error('Error fetching weather data', error.message);
           },
           complete: () => {
             this.subscription.unsubscribe();

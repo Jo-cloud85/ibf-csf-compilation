@@ -9,13 +9,44 @@ export class WeatherService {
   private apiKey: string = environment.apiKey;
   private apiUrl: string = 'https://api.openweathermap.org/data/2.5/weather';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
+  /* Any non-null and non-undefined value will become true after applying !! because the first ! converts the value to false, and the second ! converts false back to true. */
+
+  // Method 1 - Observable
+  // isCityValidUsingObservable(city: string): Observable<boolean> {
+  //   const url = `${this.apiUrl}?q=${city}&appid=${this.apiKey}&units=metric`;
+  //   return this.httpClient
+  //     .get<Weather>(url)
+  //     .pipe(
+  //       map(response => !!response),
+  //       catchError(() => of(false))
+  //     );
+  // }
+
+  // Method 2 - Promise
+  isCityValidUsingPromise(city: string): Promise<boolean> {
+    const params = new HttpParams()
+      .set('q', city)
+      .set('appid', this.apiKey)
+      .set('units', 'metric')
+    return firstValueFrom(
+      this.httpClient
+        .get<Weather>(this.apiUrl, {params: params})
+        .pipe(
+          map(response => !!response),
+          catchError(() => of(false))
+        )
+    )
+  }
+
+  // Method 1 - Observable
   // getWeatherByCityNameUsingObservable(city: string): Observable<Weather> {
   //     const url = `${this.apiUrl}?q=${city}&appid=${this.apiKey}&units=metric`;
   //     return this.httpClient.get<Weather>(url);
   // }
 
+  // Method 2 - Promise
   getWeatherByCityNameUsingPromise(city: string): Promise<Weather> {
     const params = new HttpParams()
       .set('q', city)
@@ -28,15 +59,5 @@ export class WeatherService {
 
   getIconUrl(iconCode: string): string {
       return `http://openweathermap.org/img/wn/${iconCode}.png`;
-  }
-
-  isCityValid(city: string): Observable<boolean> {
-    const url = `${this.apiUrl}?q=${city}&appid=${this.apiKey}&units=metric`;
-    return this.httpClient
-      .get<Weather>(url)
-      .pipe(
-        map(response => !!response),
-        catchError(() => of(false))
-      );
   }
 }
