@@ -16,7 +16,7 @@
 </form>
 <div
     class="mt-4"
-    *ngIf="citiesList.length > 0">
+    *ngIf="citiesList.length > 0; else cityListIsEmpty">
     <ul class="list-group">
         <li 
             class="list-group-item list-group-item-action" 
@@ -25,3 +25,7 @@
         </li>
     </ul>
 </div>
+<!-- Must be outside the div where the 'else cityListIsEmpty' is -->
+<ng-template #cityListIsEmpty>
+    <p>No city added yet.</p>
+</ng-template>

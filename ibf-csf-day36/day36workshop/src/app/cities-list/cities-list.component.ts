@@ -23,7 +23,7 @@ export class CitiesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.addCityForm = this.formbuilder.group({
-      city: ['', Validators.required]
+      city: this.formbuilder.control<string>('', [Validators.required])
     })
   }
 

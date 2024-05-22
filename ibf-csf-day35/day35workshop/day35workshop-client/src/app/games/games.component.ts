@@ -24,8 +24,8 @@ export class GamesComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameSearchForm = this.formbuilder.group({
-      gameName: [''],
-      gamesPerPage: [5] // Default value for games per page
+      gameName: this.formbuilder.control<string>(''),
+      gamesPerPage: this.formbuilder.control<number>(5) // Default value for games per page
     })
   }
 

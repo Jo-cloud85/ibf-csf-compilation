@@ -19,8 +19,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.postForm = this.formbuilder.group({
-      comments: ['', [Validators.required, Validators.minLength(5)]],
-      picture: ['', Validators.required]
+      comments: this.formbuilder.control<string>('', [Validators.required, Validators.minLength(5)]),
+      picture: this.formbuilder.control<string>('', Validators.required)
     })
   }  
 
