@@ -1,14 +1,35 @@
-<div class="container pt-5 d-flex gap-3">
+<div class="container pt-5 d-flex justify-content-center gap-3">
+	<!-- Using *ngFor directive -------------------------------------->
+	<!-- <h3 *ngIf="(imgs.length % 2) == 0">You have even number of pictures</h3>
+	<h3 *ngIf="(imgs.length % 2) != 0">You have odd number of pictures</h3> -->
+
+	<!-- Using the new @for ------------------------------------------>
+	@if((imgs.length % 2) == 0) {
+		<h3>You have even number of pictures</h3>
+	} @else {
+		<h3>You have odd number of pictures</h3>
+	}
+</div>
+
+<div class="container pt-5 d-flex justify-content-center flex-lg-wrap gap-3">
+	<!-- This image is from my-image.component.ts - imageUrl and caption. -->
 	<app-my-image></app-my-image>
+
+	<!-- This image is directly from here. We overwrite the values in my-image.component.ts -->
 	<app-my-image 
 		imageUrl="https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?cs=srgb&dl=pexels-kellie-churchman-371878-1001682.jpg&fm=jpg"
 		caption="A wonderful scenery"
 		(onFigureClicked)="handleClicked($event)"
 	>
 	</app-my-image>
+
+	<!-- This image are from app.component.ts - sceneryUrl and title. The property here links to 
+	my-image.component.ts but we overwrite the values in my-image.component.ts -->
 	<app-my-image [imageUrl]="sceneryUrl" [caption]="title"></app-my-image>
 
 	<!-- Using *ngFor directive -------------------------------------->
+	<!-- These images are from app.component.ts - imgs array. The property here links to 
+	my-image.component.ts but we overwrite the values in my-image.component.ts -->
 	<app-my-image 
 		*ngFor="let i of imgs; let idx=index"
 		[imageUrl]="i"
@@ -22,17 +43,4 @@
 			[caption]="'Image number ' + idx"
 		>({{idx}})</app-my-image>
 	} -->
-</div>
-
-<div  class="container pt-5 d-flex gap-3">
-	<!-- Using *ngFor directive -------------------------------------->
-	<!-- <h3 *ngIf="(imgs.length % 2) == 0">You have even number of pictures</h3>
-	<h3 *ngIf="(imgs.length % 2) != 0">You have odd number of pictures</h3> -->
-
-	<!-- Using the new @for ------------------------------------------>
-	@if((imgs.length % 2) == 0) {
-		<h3>You have even number of pictures</h3>
-	} @else {
-		<h3>You have odd number of pictures</h3>
-	}
 </div>
