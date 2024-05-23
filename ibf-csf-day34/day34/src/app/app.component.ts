@@ -30,18 +30,22 @@ export class AppComponent implements OnInit, OnDestroy {
       name: this.formbuilder.control('')
     })
 
-    // this.sub$ = this.form.valueChanges
-    //   .pipe(
-    //     debounceTime(500),
-    //     map(value => {
-    //       return { ...value, timestamp: new Date()}
-    //     })
-    //   )
-    //   .subscribe({
-    //     next: value => console.log('>>> form value ', value),
-    //     error: error => console.log('>>> error', error),
-    //     complete: () => console.log('observable closed') // You can unsubscribe here also
-    //   })
+    this.sub$ = this.form.valueChanges
+      .pipe(
+        debounceTime(500),
+        map(value => {
+          return { ...value, timestamp: new Date()}
+        })
+      )
+      .subscribe({
+        next: value => console.log('>>> form value ', value),
+        error: error => console.log('>>> error', error),
+        complete: () => console.log('observable closed') // You can unsubscribe here also
+      })
+
+    this.status$ = this.form.statusChanges.subscribe(
+      status => this.formStatus = status
+    )
   }
   
   process(){
@@ -50,24 +54,18 @@ export class AppComponent implements OnInit, OnDestroy {
     // Using Observable
     this.sub$ = this.httpSrv.getHttpBin(this.form.value['name'])
       .subscribe({
-        next: result => {
-          console.log('>>>> result ', result)
-        },
-        error: error => {
-          console.log('>>>> observable error: ', error)
-        },
-        complete: () => {
-          this.sub$.unsubscribe()
-        }
+        next: result => console.log('>>>> result ', result),
+        error: error => console.log('>>>> observable error: ', error),
+        complete: () => this.sub$.unsubscribe()
     })
 
     // Using Promise
     // this.httpSrv.getHttpBinAsPromise(this.form.value.name)
     //   .then(result => {
-    //     console.log('>>>> result: ', result)
+    //     console.log('>>>> result from promise: ', result)
     //   })
     //   .catch(error => {
-    //     console.log('>>>> error: ', error)
+    //     console.log('>>>> ERROR: ', error)
     //   })
 
     const cust: Customer = {
@@ -75,9 +73,12 @@ export class AppComponent implements OnInit, OnDestroy {
       email: this.form.value['name'] + '@gmail.com'
     }
 
+    // this.sub$ = this.httpSrv.postHttpBin(cust)
+    //   .subscribe((result: string) => console.info('POST: ', result))
+
     this.httpSrv.postHttpBinAsPromise(cust)
       .then(result => console.log('POST form result: ', result))
-      .catch(error => console.log('ERROR in posting form result: ', error) )
+      .catch(error => console.log('ERROR in posting form result: ', error))
     
     // Converting Promise to Observable
     from(this.httpSrv.postHttpBinAsPromise(cust))

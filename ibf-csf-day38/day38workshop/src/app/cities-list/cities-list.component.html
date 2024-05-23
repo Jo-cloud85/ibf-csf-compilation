@@ -1,1 +1,34 @@
-<p>cities-list works!</p>
+<h4>Add your favourite cities</h4>
+<form 
+    class="form-group col-6 d-flex align-items-center gap-3 pt-2" 
+    [formGroup]="addCityForm" 
+    (ngSubmit)="addCity()">
+    <label class="form-label mb-0">City:</label>
+    <input 
+        class="form-control" 
+        type="text" 
+        formControlName="city" 
+        placeholder="Enter city name">
+    <button 
+        class="btn btn-warning rounded-pill py-1 px-4" 
+        type="submit">Add
+    </button>
+</form>
+<div
+    class="mt-4"
+    *ngIf="citiesList.length > 0; else cityListIsEmpty">
+    <ul class="list-group">
+        <li 
+            class="list-group-item list-group-item-action d-flex justify-content-between" 
+            *ngFor="let city of citiesList" 
+            (click)="viewWeatherDetails(city)">{{ city }}
+        </li>
+        <!-- <button class="btn btn-outline-warning py-1 px-4">Delete</button> -->
+    </ul>
+</div>
+
+<!-- Must be outside the div where the 'else cityListIsEmpty' is -->
+<ng-template #cityListIsEmpty>
+    <br>
+    <p>No city added yet.</p>
+</ng-template>

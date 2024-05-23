@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { WeatherService } from '../weather.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,9 +15,14 @@ export class WeatherDetailsComponent implements OnInit{
   iconUrl !: string;
   private subscription !: Subscription;
 
-  constructor(
-    private route: ActivatedRoute, 
-    private weatherService: WeatherService) {}
+  // Method 1
+  private route = inject(ActivatedRoute);
+  private weatherService = inject(WeatherService)
+
+  // Method 2
+  // constructor(
+  //   private route: ActivatedRoute, 
+  //   private weatherService: WeatherService) {}
   
   ngOnInit(): void {
     this.getWeather();
