@@ -4,9 +4,7 @@ import { Observable, firstValueFrom } from "rxjs";
 import { environment } from "../environments/environment";
 import { Weather } from "./weather.model";
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class WeatherService {
     private apiKey: string = environment.apiKey;
     private apiUrl: string = 'https://api.openweathermap.org/data/2.5/weather';
