@@ -1,0 +1,58 @@
+<h2>You are searching for games with '<code>{{ q }}</code>'</h2>
+
+<!--
+<ul>
+  <li *ngFor="let g of games">
+    <a [routerLink]="['/game/', g.gameId]">
+      {{ g.name | titlecase }}
+    </a>
+  </li>
+</ul>
+
+<h2>By Promise</h2>
+
+@if (gamesP$ | async; as gamesP) {
+  <li *ngFor="let g of gamesP">
+    <a [routerLink]="['/game/', g.gameId]">
+      {{ g.name | titlecase }}
+    </a>
+  </li>
+} @else {
+  <h2>Loading....</h2>
+}
+-->
+
+<h2>By Observable</h2>
+
+<ul>
+  @for (g of games$ | async; track $index) {
+    <li>
+      <a [routerLink]="['/game/', g.gameId]">
+        {{ g.name | titlecase }}
+      </a>
+    </li>
+  } @empty {
+    <h2>No games found</h2>
+  }
+</ul>
+
+<!--
+<ul *ngIf="gamesP$ | async as gamesP">
+  <li *ngFor="let g of gamesP">
+    <a [routerLink]="['/game/', g.gameId]">
+      {{ g.name | titlecase }}
+    </a>
+  </li>
+</ul>
+
+<h2>By Observable</h2>
+
+<ul>
+  <li *ngFor="let g of games$ | async">
+    <a [routerLink]="['/game/', g.gameId]">
+      {{ g.name | titlecase }}
+    </a>
+  </li>
+</ul>
+
+-->

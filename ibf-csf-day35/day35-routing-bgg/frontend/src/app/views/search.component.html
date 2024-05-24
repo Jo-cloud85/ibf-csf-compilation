@@ -1,0 +1,8 @@
+
+<h1>Search your favourite boardgames</h1>
+
+<form [formGroup]="form" (submit)="search()">
+  <label for="q">Text: </label>
+  <input type="text" size="30" formControlName="q">
+  <button type="submit" [disabled]="form.invalid">Search</button>
+</form>

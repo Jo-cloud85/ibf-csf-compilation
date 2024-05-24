@@ -11,7 +11,7 @@ export class GamesService {
     // private apiKey: string = environment.apiKey;
     private endpoint: string = 'http://localhost:8080/games';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     getBoardGamesByName(gameName: string): Observable<any> {
         const url = `${this.endpoint}?name=${gameName}`;
