@@ -6,16 +6,20 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './views/main.component';
 import { CatComponent } from './views/cat.component';
 import { DogComponent } from './views/dog.component';
+import { PolarBearComponent } from './views/polar-bear.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     CatComponent,
-    DogComponent
+    DogComponent,
+    PolarBearComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

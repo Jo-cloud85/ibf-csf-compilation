@@ -1,4 +1,20 @@
+<h2>
+  	<a [routerLink]="['/cat']">Cat</a>
+
+	<button type="button" (click)="bigCat()">Big Cat</button>
+
+	<button type="button" (click)="polarBear()">Polar Bear</button>
+
+	<div>
+		@for(breed of dogBreeds; track $index) {
+			<div>
+				<a [routerLink]="['/dog', breed]">{{breed | titlecase}}</a>
+			</div>
+		}
+	</div>
+</h2>
+
 <div>
-  <h1>Single Page Application</h1>
-  <router-outlet></router-outlet>
+	<h1>Single Page Application</h1>
+	<router-outlet></router-outlet>
 </div>
