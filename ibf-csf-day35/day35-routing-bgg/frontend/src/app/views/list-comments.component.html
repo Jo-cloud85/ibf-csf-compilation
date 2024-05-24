@@ -1,0 +1,40 @@
+<h2>Game {{ gameId }}</h2>
+<div>
+    <button type="button" [routerLink]="['/games']" [queryParams]="{ q: q }">
+        Back
+    </button>
+</div>
+
+@if (game$ | async; as game) {
+
+    <div class="game">
+        <img [src]="game.image">
+        <a [href]="game.url" target="_blank">
+            <h3>{{ game.name }}</h3>
+        </a>
+    </div>
+
+    <table border="1" *ngIf="game.comments.length > 0; else noComments">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Comment</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of game.comments">
+                <td> {{ c.user }} </td>
+                <td> {{ c.text }} </td>
+                <td> {{ c.rating }} </td>
+            </tr>
+        </tbody>
+    </table>
+
+} @else {
+  <h2>Loading...</h2>
+}
+
+<ng-template #noComments>
+  <h3>No comments found</h3>
+</ng-template>

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { GameInfo } from "./models";
+import { GameDetail, GameInfo } from "./models";
 import { Observable, firstValueFrom } from "rxjs";
 
 @Injectable()
@@ -19,4 +19,9 @@ export class GamesService {
     return firstValueFrom(this.searchGamesByName(q))
   }
 
+  getGameByGameId(gameId: number) {
+    return firstValueFrom(
+      this.http.get<GameDetail>(`http://localhost:8080/api/game/${gameId}`)
+    )
+  }
 }

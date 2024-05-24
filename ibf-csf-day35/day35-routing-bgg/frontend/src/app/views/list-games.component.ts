@@ -15,7 +15,7 @@ export class ListGamesComponent implements OnInit {
   private readonly router = inject(Router)
   private readonly gamesSvc = inject(GamesService)
 
-  q = ''
+  searchText = ''
 
   games: GameInfo[] = []
 
@@ -23,19 +23,19 @@ export class ListGamesComponent implements OnInit {
   gamesP$!: Promise<GameInfo[]>
 
   ngOnInit(): void {
-    this.q = this.activatedRoute.snapshot.queryParams['q']
-    if (!this.q) {
+    this.searchText = this.activatedRoute.snapshot.queryParams['q']
+    if (!this.searchText) {
       this.router.navigate(['/'])
       return
     }
 
-    this.gamesSvc.searchGamesByNameAsPromise(this.q)
+    this.gamesSvc.searchGamesByNameAsPromise(this.searchText)
       .then(result => this.games = result)
       .catch(error => alert('ERROR ' + JSON.stringify(error)))
 
-    this.gamesP$ = this.gamesSvc.searchGamesByNameAsPromise(this.q)
+    this.gamesP$ = this.gamesSvc.searchGamesByNameAsPromise(this.searchText)
 
-    this.games$ = this.gamesSvc.searchGamesByName(this.q)
+    this.games$ = this.gamesSvc.searchGamesByName(this.searchText)
   }
 
 }

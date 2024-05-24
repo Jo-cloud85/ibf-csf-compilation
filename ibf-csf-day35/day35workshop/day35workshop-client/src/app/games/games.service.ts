@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, catchError, map, throwError } from "rxjs";
-import { ResponseData } from "./game.model";
+import { CommentsResponseData, ResponseData } from "./game.model";
 // import { environment } from "../environments/environment";
 
 @Injectable({
@@ -18,4 +18,8 @@ export class GamesService {
         return this.http.get<ResponseData>(url)
     }
 
+    getListOfCommentsById(gameId: number): Observable<any> {
+        const url = `${this.endpoint}?id=${gameId}`;
+        return this.http.get<CommentsResponseData>(url);
+    }
 }
