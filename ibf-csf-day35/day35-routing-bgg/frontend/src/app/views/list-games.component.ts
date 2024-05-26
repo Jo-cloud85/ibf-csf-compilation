@@ -19,7 +19,7 @@ export class ListGamesComponent implements OnInit {
 
   games: GameInfo[] = []
 
-  games$!: Observable<GameInfo[]>
+  gamesO$!: Observable<GameInfo[]>
   gamesP$!: Promise<GameInfo[]>
 
   ngOnInit(): void {
@@ -29,13 +29,14 @@ export class ListGamesComponent implements OnInit {
       return
     }
 
+    // You can use this OR
     this.gamesSvc.searchGamesByNameAsPromise(this.searchText)
       .then(result => this.games = result)
       .catch(error => alert('ERROR ' + JSON.stringify(error)))
 
+    // This but then this one you have to use async pipe in html
     this.gamesP$ = this.gamesSvc.searchGamesByNameAsPromise(this.searchText)
 
-    this.games$ = this.gamesSvc.searchGamesByName(this.searchText)
+    this.gamesO$ = this.gamesSvc.searchGamesByName(this.searchText)
   }
-
 }

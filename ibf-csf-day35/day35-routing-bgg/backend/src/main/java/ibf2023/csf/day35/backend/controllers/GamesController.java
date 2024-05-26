@@ -48,8 +48,10 @@ public class GamesController {
 		Optional<GameDetail> opt = gamesRepo.getGameDetailsAndComments(gameId);
 		if (opt.isEmpty())
 			return ResponseEntity.status(404).body(
-				Json.createObjectBuilder().add("message", "Cannot find game %d".formatted(gameId))
-					.build().toString()
+				Json.createObjectBuilder()
+					.add("message", "Cannot find game %d".formatted(gameId))
+					.build()
+					.toString()
 			);
 		JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 		GameDetail game = opt.get();

@@ -25,7 +25,9 @@ const appRoutes: Routes = [
     ListCommentsComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule, HttpClientModule,
+    BrowserModule, 
+    ReactiveFormsModule, 
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [ GamesService ],

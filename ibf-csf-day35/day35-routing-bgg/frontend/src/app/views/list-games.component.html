@@ -1,4 +1,3 @@
-
 <h2>You are searching for games with '<code>{{ searchText }}</code>'</h2>
 
 <div>
@@ -7,17 +6,22 @@
     </button>
 </div>
 
-<!--
+<!-- <h2>By Promise</h2> -->
+
+<!-- Use this when in Typescript, you already 'process' the promise i.e. then/catch -->
+<!-- 
 <ul>
     <li *ngFor="let g of games">
         <a [routerLink]="['/game/', g.gameId]">
             {{ g.name | titlecase }}
         </a>
     </li>
-</ul>
+</ul> 
+-->
 
-<h2>By Promise</h2>
-
+<!-- Use this when in Typescript, you only return the promise and want to process here using | async 
+The @if and @else is based on latest syntax (you can use *ngIf) while *ngFor is the older syntax -->
+<!--
 @if (gamesP$ | async; as gamesP) {
     <li *ngFor="let g of gamesP">
         <a [routerLink]="['/game/', g.gameId]">
@@ -26,13 +30,14 @@
     </li>
 } @else {
     <h2>Loading....</h2>
-}
+} 
 -->
 
 <h2>By Observable</h2>
-
+<!-- Rmb, Observable returns a 'stream of data', not just single value like Promise -->
+<!-- Using new syntax -->
 <ul>
-    @for (g of games$ | async; track $index) {
+    @for (g of gamesO$ | async; track $index) {
         <li>
             <a [routerLink]="['/game/', g.gameId]" [queryParams]="{q: searchText}">
                 {{ g.name | titlecase }}
@@ -43,19 +48,10 @@
     }
 </ul>
 
+<!-- Using old syntax -->
 <!--
-<ul *ngIf="gamesP$ | async as gamesP">
-    <li *ngFor="let g of gamesP">
-        <a [routerLink]="['/game/', g.gameId]">
-            {{ g.name | titlecase }}
-        </a>
-    </li>
-</ul>
-
-<h2>By Observable</h2>
-
 <ul>
-    <li *ngFor="let g of games$ | async">
+    <li *ngFor="let g of gamesO$ | async">
         <a [routerLink]="['/game/', g.gameId]">
             {{ g.name | titlecase }}
         </a>

@@ -36,23 +36,6 @@ public class GamesRepository {
 
 	}
 
-	/*
-		db.comments.find(
-			{ gid: 1381 }
-		)
-		.sort({rating: -1})
-		.limit(5)
-	 */
-	// public List<Document> findCommentsByGameId(Integer number) {
-	// 	Criteria criteria = Criteria.where("gid").is(number);
-	// 	Query query = Query
-	// 		.query(criteria)
-	// 		.with(Sort.by(Sort.Direction.DESC, "rating"))
-	// 		.limit(5);
-	// 	// query.fields().include("user", "rating", "c_text");
-	// 	return template.find(query, Document.class, "comments");
-	// }
-
     /*
 		db.games.aggregate([
 		  { $match: { gid: 233078 } },
@@ -63,7 +46,7 @@ public class GamesRepository {
 				as: 'comments',
 				pipeline: [
 				  { $sort: { rating: -1 } },
-				  { $limit: 3 }
+				  { $limit: 5 }
 				]
 			} }
 		])
@@ -90,8 +73,12 @@ public class GamesRepository {
 		List<Comment> comments = doc.getList("comments", Document.class)
 				.stream()
 				.map(d -> {
-					Comment comment = new Comment(d.getString("user"), d.getInteger("gid")
-							, d.getInteger("rating"), d.getString("c_text"));
+					Comment comment = new Comment(
+						d.getString("user"), 
+						d.getInteger("gid"), 
+						d.getInteger("rating"), 
+						d.getString("c_text")
+					);
 					return comment;
 				}).toList();
 
@@ -100,7 +87,9 @@ public class GamesRepository {
 				doc.getInteger("gid"), 
 				doc.getString("name"),
 				doc.getString("image"), 
-				doc.getString("url"), comments)
+				doc.getString("url"), 
+				comments
+			)
 		);
 	}
 }
