@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { PolarBearService } from './polarbear.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +11,13 @@ import { PolarBearService } from './polarbear.service';
 export class AppComponent {
 
   private readonly router = inject(Router);
-
   private readonly polarBearSvc = inject(PolarBearService);
+  private readonly title = inject(Title);
 
   dogBreeds=['puppy1', 'puppy2'];
 
   ngOnInit(): void {
-    // this.title.setTitle('Main');
+    this.title.setTitle('Main');
   }
 
   bigCat(){
@@ -28,5 +29,4 @@ export class AppComponent {
     this.polarBearSvc.image='/assets/polarbear.jpeg'
     this.router.navigate(['/polarbear'])
   }
-
 }

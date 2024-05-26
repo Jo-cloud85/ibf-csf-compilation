@@ -1,4 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -11,6 +12,7 @@ export class DogComponent implements OnInit, OnDestroy {
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly title = inject(Title);
 
   dogImg=''
   breed=''
@@ -21,10 +23,12 @@ export class DogComponent implements OnInit, OnDestroy {
     const b = this.activatedRoute.snapshot.params['breed'];
     
     // save subscription references
-    this.activatedRoute.params.subscribe(
+    // queryParams is the one with ?, params is just /
+    this.activatedRoute.params.subscribe( 
       params => {
-        console.log(this.breed)
+        // console.log(this.breed)
         this.breed = params['breed']
+        this.title.setTitle(this.breed)
         this.dogImg =`/assets/${this.breed}.jpeg`;
       } 
     )

@@ -10,22 +10,23 @@ import { Subscription } from 'rxjs';
 export class CatComponent implements OnInit, OnDestroy {
 
   private readonly activatedRoute = inject(ActivatedRoute);
-  // private readonly router = inject(Router);
 
   width = 100;
   sub$ !: Subscription;
 
   ngOnInit(): void {
-    this.sub$ = this.activatedRoute.queryParams.subscribe(
+    //queryParams is the one with ?, params is just /
+    this.sub$ = this.activatedRoute.queryParams.subscribe( 
       (queryParams: any) => {
         this.width = 100;
-        if (!!queryParams['size'])
+        // Means if I type http://localhost:4200/cat?size=300. Else if I never add ?size=, just use width = 100
+        if (!!queryParams['size']) 
           this.width = parseInt(queryParams['size'])
       }
     )
   }
 
   ngOnDestroy(): void {
-      
+    this.sub$.unsubscribe();
   }
 }

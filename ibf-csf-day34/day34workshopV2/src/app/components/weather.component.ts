@@ -23,12 +23,13 @@ export class WeatherComponent implements OnInit, OnDestroy {
       }
     )
 
-    firstValueFrom(this.weatherSvc.onWeather.asObservable()
-      .pipe(skip(1)))
-      .then(result => {
-        console.info('>>>> PROMISE ', result)
-      }
-    )
+    // Converting the Subject as observable then convert it to Promise
+    // firstValueFrom(this.weatherSvc.onWeather.asObservable()
+    //   .pipe(skip(1)))
+    //   .then(result => {
+    //     console.info('>>>> PROMISE ', result)
+    //   }
+    // )
   }
 
   ngOnDestroy(): void {

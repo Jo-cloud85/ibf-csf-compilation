@@ -1,14 +1,15 @@
 <h2>
   	<a [routerLink]="['/cat']">Cat</a>
 
-	<button type="button" (click)="bigCat()">Big Cat</button>
+	<div><button type="button" (click)="bigCat()">Big Cat</button></div>
 
-	<button type="button" (click)="polarBear()">Polar Bear</button>
+	<div><button type="button" (click)="polarBear()">Polar Bear</button></div>
 
 	<div>
 		@for(breed of dogBreeds; track $index) {
 			<div>
-				<a [routerLink]="['/dog', breed]">{{breed | titlecase}}</a>
+				<!-- breed is my params -->
+				<a [routerLink]="['/dog', breed]">{{ breed | titlecase }}</a>
 			</div>
 		}
 	</div>

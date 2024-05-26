@@ -8,6 +8,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CommonModule } from '@angular/common';
 
 import { Todo } from '../models/todo';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-task-list',
@@ -24,12 +25,12 @@ import { Todo } from '../models/todo';
 })
 export class TaskListComponent {
   @Input() todos: Todo[] = [];
-  @Output() editTodo = new EventEmitter<Todo>();
+  @Output() editTodo = new Subject<Todo>();
 
   constructor() { }
 
   edit(todo: Todo){
-    this.editTodo.emit(todo);
+    this.editTodo.next(todo);
   }
 
   toggleComplete(todo: Todo){
