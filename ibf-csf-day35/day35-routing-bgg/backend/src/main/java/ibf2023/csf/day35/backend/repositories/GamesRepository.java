@@ -31,7 +31,8 @@ public class GamesRepository {
 		return template.find(query, Document.class, "games")
 			.stream()
 			.map(doc -> new GameSummary(
-							doc.getInteger("gid", 0), doc.getString("name")
+							doc.getInteger("gid", 0),
+							doc.getString("name")
 						)).toList();
 
 	}
