@@ -17,4 +17,8 @@ public class CommentService {
     public List<Comment> getCommentsForChar (Integer characterId) {
         return commentRepo.getCommentsForChar(characterId);
     }
+
+    public void addCommentToChar(Integer characterId, Comment comment) {
+        commentRepo.saveComment(comment);
+    }
 }

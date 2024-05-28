@@ -1,12 +1,17 @@
 package ibf.nus.iss.csf.day39workshopbackend.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +26,7 @@ import jakarta.json.JsonObject;
 
 @RestController
 @RequestMapping(path="/api")
+@CrossOrigin(origins="*")
 public class MarvelController {
 
     @Autowired
@@ -30,7 +36,7 @@ public class MarvelController {
     private CommentService commentSvc;
     
     @GetMapping(path = "/characters")
-    public ResponseEntity<String> getListofChar(
+    public ResponseEntity<String> getListofChar (
             @RequestParam("q") String nameStartsWith,
             @RequestParam(defaultValue = "25") Integer limit,
             @RequestParam(defaultValue = "0") Integer offset) {
@@ -66,9 +72,13 @@ public class MarvelController {
         }
     }
 
-    
-    @GetMapping(path = "/characters/{characterId}")
-    public ResponseEntity<String> getCharById (@PathVariable("characterId") Integer id) {
+
+    @GetMapping(path = "/character/{id}")
+    public ResponseEntity<String> getCharById (
+        @PathVariable("id") String idStr) {
+
+        Integer id = Integer.parseInt(idStr);
+
         try {
             MarvelCharacter result = marvelSvc.getCharById(id);
 
@@ -84,8 +94,8 @@ public class MarvelController {
 
             for ( Comment c : comments) {
                 JsonObject jsonObj = Json.createObjectBuilder()
-                    .add("id", c.getId())
-                    .add("characterId", c.getCharacterId())
+                    .add("commentId", c.getCommentId())
+                    .add("id", c.getCharacterId())
                     .add("text", c.getText())
                     .add("timestamp", c.getTimestamp().toString())
                     .build();
@@ -109,6 +119,30 @@ public class MarvelController {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("An unexpected error occurred. Please try again later.");
+        }
+    }
+
+    @PostMapping(path = "/character/{id}")
+    public ResponseEntity<String> addCommentsForChar (
+        @PathVariable("id") String idStr,
+        @RequestBody Comment comment) {
+
+        Integer id = Integer.parseInt(idStr);
+
+        try {
+            // System.out.println(">>>> FROM CONTROLLER BEF SETTING CommentId & Timestamp: " + comment);
+            comment.setCommentId(UUID.randomUUID().toString().substring(0, 8));
+            comment.setCharacterId(id);
+            comment.setTimestamp(LocalDateTime.now());
+            commentSvc.addCommentToChar(id, comment);
+            return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("Comment added successfully.");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("An unexpected error occurred. Please try again later.");
         }
     }
 }

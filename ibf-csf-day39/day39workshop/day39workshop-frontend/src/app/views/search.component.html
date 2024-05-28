@@ -1,0 +1,7 @@
+<form class="form-group" [formGroup]="form" (submit)="process()">
+    <label class="form-label" for="char" class="form-label">Search character</label>
+    <div class="d-flex gap-3 col-8">
+        <input class="form-control" type="text" formControlName="char">
+        <button class="btn btn-primary py-1 px-4" type="submit" [disabled]="form.invalid">Search</button>
+    </div>
+</form>

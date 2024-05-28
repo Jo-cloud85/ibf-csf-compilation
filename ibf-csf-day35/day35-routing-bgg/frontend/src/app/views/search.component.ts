@@ -12,7 +12,7 @@ export class SearchComponent implements OnInit {
   private readonly fb = inject(FormBuilder)
   private readonly router = inject(Router)
 
-  form!: FormGroup
+  form!: FormGroup;
 
   ngOnInit(): void {
     this.form = this.fb.group({

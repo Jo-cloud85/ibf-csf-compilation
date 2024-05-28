@@ -1,0 +1,56 @@
+<div class="d-flex flex-column gap-1">
+    <h2>Character with id: {{ characterId}}</h2>
+    <div>
+        <button 
+            class="btn btn-primary py-1 px-4" 
+            type="button" 
+            [routerLink]="['/characters']" 
+            [queryParams]="{ q: searchText }">
+            Back
+        </button>
+    </div>
+</div>
+
+<br>
+
+<div *ngIf="character$ | async as character; else loading">
+    <div class="d-flex flex-column gap-3">
+        <img [src]="character.thumbnailURL" width="300">
+        <a [href]="character.resourceURI" target="_blank">
+            <h3>{{ character.name }}</h3>
+        </a>
+        <h4>{{ character.description }}</h4>
+    </div>
+  
+    <button 
+        class="btn btn-dark py-1 px-4" 
+        type="button" 
+        (click)="toComment()">Add Comment
+    </button>
+  
+    <table border="1" *ngIf="character.comments.length > 0; else noComments">
+        <thead>
+            <tr>
+            <th>User</th>
+            <th>Comment</th>
+            <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of character.comments">
+            <td>{{ c.commentId }}</td>
+            <td>{{ c.text }}</td>
+            <td>{{ c.timestamp }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+  
+<ng-template #loading>
+    <h2>Loading...</h2>
+</ng-template>
+  
+<ng-template #noComments>
+    <h2>No comments available.</h2>
+</ng-template>
+  

@@ -1,0 +1,24 @@
+<h2>You are searching for characters with '<code>{{ searchText }}</code>'</h2>
+
+<div class="d-flex flex-column gap-3">
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-action"
+            *ngFor="let ch of charactersO$ | async; let i = index" 
+            #noCharacter
+        >
+            <a [routerLink]="['/character/', ch.id]" [queryParams]="{char: searchText}">
+                {{ ch.name | titlecase }}
+            </a>
+        </li>
+    </ul>
+
+    <ng-container *ngIf="(charactersO$ | async)?.length === 0">
+        <h2>No character found</h2>
+    </ng-container>
+
+    <div>
+        <button class="btn btn-primary py-1 px-4" type="button" [routerLink]="['/']">
+            Back
+        </button>
+    </div>
+</div>

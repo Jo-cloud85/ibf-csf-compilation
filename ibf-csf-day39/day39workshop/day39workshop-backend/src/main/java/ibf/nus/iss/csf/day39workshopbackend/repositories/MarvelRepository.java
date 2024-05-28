@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import ibf.nus.iss.csf.day39workshopbackend.models.MarvelCharacter;
 import ibf.nus.iss.csf.day39workshopbackend.utils.RedisUtil;
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
 
 @Repository
 public class MarvelRepository {
@@ -27,17 +29,18 @@ public class MarvelRepository {
 
     public void saveCharToRedis(MarvelCharacter character, long expirationSeconds) {
         hashOps = redisTemplate.opsForHash();
-        hashOps.putIfAbsent(RedisUtil.KEY_MARVEL_CHARACTERS, character.getId().toString(), character.toString());
+        hashOps.putIfAbsent(RedisUtil.KEY_MARVEL_CHARACTERS, character.getId().toString(), characterToJsonStr(character));
         redisTemplate.expire(RedisUtil.KEY_MARVEL_CHARACTERS, expirationSeconds, TimeUnit.SECONDS);
     }
 
     public MarvelCharacter getCharByIdFrRedis(Integer id) {
         hashOps = redisTemplate.opsForHash();
         String characterStr = hashOps.get(RedisUtil.KEY_MARVEL_CHARACTERS, id.toString());
-        return characterStr != null ? jsonToCharacter(characterStr) : null;
+        return characterStr != null ? jsonStrToCharacter(characterStr) : null;
     }
 
-    private MarvelCharacter jsonToCharacter(String jsonStr) {
+    private MarvelCharacter jsonStrToCharacter(String jsonStr) {
+        // System.out.println(jsonStr);
         JSONObject jsonObj = new JSONObject(jsonStr);
         return new MarvelCharacter(
             jsonObj.getInt("id"),
@@ -46,5 +49,17 @@ public class MarvelRepository {
             jsonObj.getString("thumbnailURL"),
             jsonObj.getString("resourceURI")
         );
+    }
+
+    private String characterToJsonStr(MarvelCharacter character) {
+        JsonObject jsonObj = Json.createObjectBuilder()
+            .add("id", character.getId())
+            .add("name", character.getName())
+            .add("description", character.getDescription())
+            .add("thumbnailURL", character.getThumbnailURL())
+            .add("resourceURI", character.getResourceURI())
+            .build();
+        
+        return jsonObj.toString();
     }
 }

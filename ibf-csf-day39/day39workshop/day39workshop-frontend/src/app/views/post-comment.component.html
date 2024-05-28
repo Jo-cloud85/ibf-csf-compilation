@@ -1,0 +1,13 @@
+<h4>Character: {{ characterId }}</h4>
+<form class="d-flex flex-column gap-3 form-group col-8" [formGroup]="commentForm" (submit)="postComment()">
+    <label class="form-label" for="comment">Add comment here: </label>
+    <textarea class="form-control" rows="5" formControlName="comment"></textarea>
+    <div class="d-flex justify-content-between">
+        <div>
+            <button class="btn btn-primary py-1 px-4" type="button" [routerLink]="['/character', characterId]">Cancel</button>
+        </div>
+        <div>
+            <button class="btn btn-primary py-1 px-4" type="submit">Post</button>
+        </div>
+    </div>
+</form>

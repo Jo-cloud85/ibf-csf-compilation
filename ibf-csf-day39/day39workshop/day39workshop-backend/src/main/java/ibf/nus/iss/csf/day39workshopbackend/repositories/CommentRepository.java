@@ -27,4 +27,9 @@ public class CommentRepository {
 
         return mongoTemplate.find(query, Comment.class);
     }
+
+    public void saveComment(Comment comment) {
+        System.out.println(">>> From Comment Repo" + comment.toString());
+        mongoTemplate.save(comment);
+    }
 }

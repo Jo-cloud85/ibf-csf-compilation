@@ -3,7 +3,7 @@ package ibf.nus.iss.csf.day39workshopbackend.models;
 import java.time.LocalDateTime;
 
 public class Comment {
-    private Integer id;
+    private String commentId;
     private Integer characterId;
     private String text;
     private LocalDateTime timestamp;
@@ -11,19 +11,25 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Integer id, Integer characterId, String text, LocalDateTime timestamp) {
-        this.id = id;
+    public Comment(Integer characterId, String text) {
         this.characterId = characterId;
         this.text = text;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now();
     }
 
-    public Integer getId() {
-        return id;
+    // public Comment(Integer id, Integer characterId, String text, LocalDateTime timestamp) {
+    //     this.id = id;
+    //     this.characterId = characterId;
+    //     this.text = text;
+    //     this.timestamp = timestamp;
+    // }
+
+    public String getCommentId() {
+        return commentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 
     public Integer getCharacterId() {
@@ -52,7 +58,7 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment [id=" + id + ", characterId=" + characterId + ", text=" + text + ", timestamp=" + timestamp
+        return "Comment [commentId=" + commentId + ", characterId=" + characterId + ", text=" + text + ", timestamp=" + timestamp
                 + "]";
     }
 }
