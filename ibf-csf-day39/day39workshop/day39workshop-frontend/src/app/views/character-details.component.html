@@ -1,46 +1,44 @@
-<div class="d-flex flex-column gap-1">
-    <h2>Character with id: {{ characterId}}</h2>
-    <div>
-        <button 
-            class="btn btn-primary py-1 px-4" 
-            type="button" 
-            [routerLink]="['/characters']" 
-            [queryParams]="{ q: searchText }">
-            Back
-        </button>
-    </div>
-</div>
+<button 
+    class="btn btn-primary py-1 px-4 mb-4" 
+    type="button" 
+    [routerLink]="['/characters']" 
+    [queryParams]="{ q: searchText }">
+    Back
+</button>
 
 <br>
 
-<div *ngIf="character$ | async as character; else loading">
+<div class="d-flex flex-column gap-3" *ngIf="character$ | async as character; else loading">
     <div class="d-flex flex-column gap-3">
-        <img [src]="character.thumbnailURL" width="300">
+        <img [src]="character.thumbnailURL" width="400">
         <a [href]="character.resourceURI" target="_blank">
-            <h3>{{ character.name }}</h3>
+            <h4>{{ character.name }} (Id: {{ characterId}})</h4>
         </a>
-        <h4>{{ character.description }}</h4>
+        <p class="mb-0">{{ character.description ? character.description : "(No description available)" }} </p>
     </div>
   
-    <button 
-        class="btn btn-dark py-1 px-4" 
-        type="button" 
-        (click)="toComment()">Add Comment
-    </button>
+    <hr>
+
+    <div>
+        <button 
+            class="btn btn-dark py-1 px-4" 
+            type="button" 
+            (click)="toComment()">Add Comment
+        </button>
+    </div>
   
-    <table border="1" *ngIf="character.comments.length > 0; else noComments">
+    <!-- List of comments from mongo -->
+    <table class="table table-striped" *ngIf="character.comments.length > 0; else noComments">
         <thead>
             <tr>
-            <th>User</th>
-            <th>Comment</th>
-            <th>Time</th>
+                <th scope="col">User</th>
+                <th scope="col">Comment</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let c of character.comments">
-            <td>{{ c.commentId }}</td>
-            <td>{{ c.text }}</td>
-            <td>{{ c.timestamp }}</td>
+                <td>{{ c.commentId }}</td>
+                <td>{{ c.text }}</td>
             </tr>
         </tbody>
     </table>

@@ -6,8 +6,6 @@ import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Comment } from '../model';
 
-import { v4 as uuidv4 } from 'uuid';
-
 @Component({
   selector: 'app-post-comment',
   templateUrl: './post-comment.component.html',
@@ -20,13 +18,12 @@ export class PostCommentComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly marvelSvc = inject(MarvelService);
 
-  commentForm !: FormGroup;
+  commentForm!: FormGroup;
 
   characterId!: number;
+  //characterName = '';
 
-  character = '';
-
-  sub$ = new Subscription;
+  private sub$ = new Subscription;
 
   ngOnInit(): void {
     this.characterId = parseInt(this.route.snapshot.params['characterId']);
@@ -41,6 +38,7 @@ export class PostCommentComponent implements OnInit {
       return;
     }
 
+    // I let the backend generate the commentId and the timestamp
     const commentData: Partial<Comment> = {
       characterId: this.characterId,
       text: this.commentForm.get('comment')?.value,
@@ -55,7 +53,7 @@ export class PostCommentComponent implements OnInit {
           console.error('Error posting comment:', err.message);
         },
         complete: () => {
-          this.sub$.unsubscribe()
+          this.sub$.unsubscribe();
         }
       }
     )
