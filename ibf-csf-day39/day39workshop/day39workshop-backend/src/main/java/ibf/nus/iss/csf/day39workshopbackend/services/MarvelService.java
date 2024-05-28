@@ -23,7 +23,6 @@ import jakarta.json.JsonReader;
 
 @Service
 public class MarvelService {
-    public static final String BASE_URL = "https://gateway.marvel.com/v1/public/characters";
 
     @Value("${marvel.apikey}")
     private String apikey;
@@ -34,8 +33,9 @@ public class MarvelService {
     @Autowired
     private MarvelRepository marvelRepo;
 
-    public List<MarvelCharacter> getListofCharsFrApi(String nameStartsWith, Integer limit, Integer offset) {
+    public static final String BASE_URL = "https://gateway.marvel.com/v1/public/characters";
 
+    public List<MarvelCharacter> getListofCharsFrApi(String nameStartsWith, Integer limit, Integer offset) {
         String ts = String.valueOf(System.currentTimeMillis());
         String hash = MarvelApiUtil.generateMd5Hash(ts, privatekey, apikey);
 
@@ -65,8 +65,9 @@ public class MarvelService {
         }
 
         JsonReader reader = Json.createReader(new StringReader(resp.getBody()));
-        JsonObject data = reader.readObject().getJsonObject("data");
-        JsonArray results = data.getJsonArray("results");
+        JsonArray results = reader.readObject()
+                                .getJsonObject("data")
+                                .getJsonArray("results");
 
         List<MarvelCharacter> characterList = results.stream()
             .map(value -> (JsonObject) value)
@@ -83,5 +84,52 @@ public class MarvelService {
         characterList.forEach(character -> marvelRepo.saveCharToRedis(character, 3600)); // 3600 seconds = 1 hour
 
         return characterList;
+    }
+
+
+    public MarvelCharacter getCharById(Integer id) {
+        String ts = String.valueOf(System.currentTimeMillis());
+        String hash = MarvelApiUtil.generateMd5Hash(ts, privatekey, apikey);
+
+        MarvelCharacter character = marvelRepo.getCharByIdFrRedis(id);
+
+        if (character != null) return character;
+
+        String url =  UriComponentsBuilder
+            .fromUriString(BASE_URL)
+            .pathSegment(id.toString()) // Include the character ID in the path
+            .queryParam("ts", ts)
+            .queryParam("apikey", apikey)
+            .queryParam("hash", hash)
+            .toUriString();
+
+        ResponseEntity<String> resp;
+
+        try {
+            RestTemplate template = new RestTemplate();
+            resp = template.getForEntity(url, String.class);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        JsonReader reader = Json.createReader(new StringReader(resp.getBody()));
+        JsonObject data = reader.readObject()
+                                .getJsonObject("data")
+                                .getJsonArray("results")
+                                .getJsonObject(0);
+        
+        character = new MarvelCharacter(
+            data.getInt("id"),
+            data.getString("name"),
+            data.getString("description"),
+            data.getJsonObject("thumbnail").getString("path") + "." + data.getJsonObject("thumbnail").getString("extension"),
+            data.getString("resourceURI")
+        );
+
+        // Cache the character details in Redis for 1 hour
+        marvelRepo.saveCharToRedis(character, 3600);
+
+        return character;
     }
 }
