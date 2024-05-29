@@ -3,3 +3,7 @@ export interface SearchResult {
     q: string
     urls: string[]
 }
+
+export interface SearchResultSlice {
+    results: SearchResult[]
+}

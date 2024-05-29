@@ -11,31 +11,29 @@ export class GiphyService {
     search(q: string): Promise<SearchResult> {
         const params = new HttpParams()
             .set('q', q)
-        
-        // string[] => SearchResult
-        /*
-        return firstValueFrom(
-            this.http.get<string[]>('/api/search', { params })
-                .pipe(
-                    map(urls => {
-                        return {
-                            q, 
-                            urls, 
-                            date: (new Date()).getTime()
-                        } as SearchResult
-                    })
-                )
-        )
-        */
 
-        return firstValueFrom(
-            this.http.get<string[]>('/api/search', { params })
-        ).then(urls => {
+        // string[] => SearchResult
+        /* return firstValueFrom(
+        // Observable
+        this.http.get<string[]>('/api/search', { params })
+            .pipe( // .stream()
+                map(urls => {
                 return {
-                    q, 
-                    urls, 
+                    q, urls,
                     date: (new Date()).getTime()
                 } as SearchResult
-            })
+                })
+            )
+        ) */
+        return firstValueFrom(
+            this.http.get<string[]>('/api/search', { params })
+        ).then((urls: string[]) => {
+            return {
+                q, 
+                urls,
+                date: (new Date()).getTime()
+            } as SearchResult
+        })
     }
+
 }

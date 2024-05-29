@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { GiphyStore } from '../giphy.store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -11,11 +13,14 @@ export class MainComponent implements OnInit {
 
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
+  private readonly giphyStore = inject(GiphyStore);
 
   protected searchForm !: FormGroup;
+  protected savedSearches$!: Observable<string[]>
 
   ngOnInit(): void {
     this.searchForm = this.createSearchForm();
+    this.savedSearches$ = this.giphyStore.getSavedSearches
   }
 
   search() {
@@ -23,7 +28,6 @@ export class MainComponent implements OnInit {
     const values = this.searchForm.value;
     const queryParams = { q: values['q'] }
     this.router.navigate(['/search'], { queryParams })
-    this.searchForm.reset();
   }
 
   private createSearchForm(): FormGroup {
@@ -31,6 +35,4 @@ export class MainComponent implements OnInit {
       q: this.fb.control<string>('', Validators.required)
     })
   }
-
-  
 }

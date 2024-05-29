@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
   { path: 'search', component: SearchComponent }, 
-  { path: 'cached', component: CachedComponent },
+  { path: 'cached/:q', component: CachedComponent },
   { path: '**', redirectTo: "/", pathMatch: 'full'}
 ]
 

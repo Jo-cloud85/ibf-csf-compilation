@@ -1,0 +1,33 @@
+# Build container
+FROM openjdk:21-jdk-bullseye AS builder
+
+## Build
+# Create a directory for our application
+WORKDIR /app
+
+COPY mvnw .
+COPY pom.xml .
+COPY .mvn .mvn
+COPY src src
+
+RUN chmod a+x /app/mvnw
+RUN /app/mvnw package -Dmaven.test.skip=true
+
+# Run container
+FROM openjdk:21-jdk-bullseye 
+
+WORKDIR /app_run
+
+COPY --from=builder /app/target/day36.giphy-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/src/main/resources/static/* /app_run/src/main/resources/static/
+
+## Run
+ENV GIPHY_KEY=18qRdAyQ8A8GmoZTX4Q872KER4sWMgrh 
+ENV PORT=8080
+
+EXPOSE ${PORT} 
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+      CMD curl http://127.0.0.1:${PORT}/healthz || exit 1
+
+ENTRYPOINT SERVER_PORT=${PORT} java -jar day36.giphy-0.0.1-SNAPSHOT.jar

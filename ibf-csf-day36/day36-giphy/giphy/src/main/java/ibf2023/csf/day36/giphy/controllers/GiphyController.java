@@ -1,5 +1,8 @@
 package ibf2023.csf.day36.giphy.controllers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,22 +16,26 @@ import ibf2023.csf.day36.giphy.services.GiphyService;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 
-@Controller
-@RequestMapping(path="/api", produces=MediaType.APPLICATION_JSON_VALUE)
+@Controller 
+@RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GiphyController {
 
-    @Autowired
-    private GiphyService giphySvc;
+   private Logger logger = Logger.getLogger(GiphyController.class.getName());
 
-    @GetMapping("/search")
-    @ResponseBody
-    public ResponseEntity<String> search(
-        @RequestParam(required=true) String q, 
-        @RequestParam(defaultValue = "10") int limit) {
-        
+   @Autowired
+   private GiphyService giphySvc;
+
+   @GetMapping("/search")
+   @ResponseBody
+   public ResponseEntity<String> Search(
+        @RequestParam(required=true) String q,
+        @RequestParam(defaultValue="10") int limit) {
+
+        logger.log(Level.INFO, "SEARCH: q=%s, limit=%d".formatted(q, limit));
+
         JsonArray result = Json.createArrayBuilder(giphySvc.search(q, limit)).build();
-
-        return ResponseEntity.ok(result.toString());
         
-    }
+        return ResponseEntity.ok(result.toString());
+   }
+   
 }
