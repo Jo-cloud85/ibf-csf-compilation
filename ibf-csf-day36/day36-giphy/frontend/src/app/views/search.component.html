@@ -1,0 +1,13 @@
+<h2>Search term: {{q}}</h2>
+<div>
+    <button type="button" [routerLink]="['/']">Back</button>
+    <button type="button">Save</button>
+</div>
+
+<hr>
+
+<div *ngIf="result$ | async as results">
+    <picture *ngFor="let url of results.urls">
+        <img [src]="url" alt="">
+    </picture>
+</div>
