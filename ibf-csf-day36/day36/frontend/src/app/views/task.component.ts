@@ -4,7 +4,9 @@ import {Router} from '@angular/router';
 
 import { v4 as uuidv4 } from 'uuid'
 
-import {Project} from '../models';
+import { Project } from '../models';
+import { ProjectRepository } from '../project.repository';
+import { ProjectStore } from '../project.store';
 
 @Component({
   selector: 'app-task',
@@ -15,6 +17,8 @@ export class TaskComponent implements OnInit {
 
   private readonly fb = inject(FormBuilder)
   private readonly router = inject(Router)
+  private readonly projectRepo = inject(ProjectRepository)
+  private readonly projectStore = inject(ProjectStore)
 
   protected projectForm!: FormGroup
   protected tasksGroup!: FormArray
@@ -32,11 +36,23 @@ export class TaskComponent implements OnInit {
   }
 
   save() {
-    const value: Project = {
+    const proj: Project = {
       id: uuidv4().substring(0, 8),
       ...this.projectForm.value
     }
-    console.info('>>>> value: ', value)
+    console.info('>>>> value: ', proj)
+
+    // This is saving to Component store
+    this.projectStore.addNewProject(proj)
+
+    // This is saving to Dexie
+    // this.projectRepo.projectTable.add(proj)
+    //   .then(id => {
+    //     console.info('>>> proj id:', proj.id)
+    //     console.info('>>> id:', id)
+    //     this.router.navigate(['/'])
+    //   })
+    
     this.router.navigate(['/'])
   }
 

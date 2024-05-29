@@ -19,6 +19,7 @@ export class ListCommentsComponent {
   gameId = 0
 
   ngOnInit(): void {
+    //queryParams is the one with ?, params is just /
     this.q = this.activatedRoute.snapshot.queryParams['q']
     this.gameId = parseInt(this.activatedRoute.snapshot.params['gameId'])
     this.game$ = this.gameSvc.getGameByGameId(this.gameId)

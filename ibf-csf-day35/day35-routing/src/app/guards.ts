@@ -10,16 +10,17 @@ export const enterPolarBear: CanActivateFn =
     (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
         boolean | Promise<boolean> | Observable<boolean> => {
             // const router = inject(Router);
-            return confirm('Are you sure you wish to see the polar bear?')
+            return confirm('Are you sure you wish to see the polar bear?');
     }
 
 export const leavePolarBear: CanDeactivateFn<PolarBearComponent> =
     (comp: PolarBearComponent, route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-        boolean | UrlTree | Promise<boolean|UrlTree> | Observable<boolean|UrlTree> => {
+        boolean | Promise<boolean> | Observable<boolean> => {
 
             const router = inject(Router);
+
             if (!comp.isFormDirty()) {
                 return confirm('You have not saved your form. Are you sure?')
             }
-            return router.parseUrl('/dog/puppy1'); //this returns a UrlTree
+            return true;
     }

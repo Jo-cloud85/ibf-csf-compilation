@@ -23,6 +23,7 @@ export class ListGamesComponent implements OnInit {
   gamesP$!: Promise<GameInfo[]>
 
   ngOnInit(): void {
+    //queryParams is the one with ?, params is just /
     this.searchText = this.activatedRoute.snapshot.queryParams['q']
     if (!this.searchText) {
       this.router.navigate(['/'])

@@ -1,7 +1,21 @@
 <div class="split">
     <h2>List of Projects</h2>
     <div class="split">
-        <button type="button">Persist</button>
+        <!-- persist() is only if you are using Dexie -->
+        <!-- <button type="button" (click)="persist()">Persist</button> -->
         <button type="button" [routerLink]="['/task']">Add Project</button>
     </div>
 </div>
+  
+<hr>
+
+<!-- Using Dexie -->
+<!-- <h4 *ngFor="let p of projectInfoP$ | async">
+    {{ p.projectName | uppercase }} ({{ p.taskCount }})
+    <button type="button" (click)="deleteProject(p.id)">X</button>
+</h4> -->
+
+<!-- Using Component Store -->
+<h4 *ngFor="let info of projectInfoO$ | async">
+    {{ info.projectName | uppercase }} ({{ info.taskCount }})
+</h4>

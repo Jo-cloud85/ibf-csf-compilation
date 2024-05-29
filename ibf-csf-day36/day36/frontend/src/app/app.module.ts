@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,7 +21,7 @@ const appRoutes: Routes = [
     TaskComponent
   ],
   imports: [
-    BrowserModule, ReactiveFormsModule,
+    BrowserModule, ReactiveFormsModule, HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],
