@@ -21,6 +21,10 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 
+/*
+ * https://www.postman.com/alex-postman-workspace/workspace/marvel-api-workspace/documentation/11320063-5d70d457-7b01-4587-8733-de2b5eef7083
+ */
+
 @Service
 public class MarvelService {
 
