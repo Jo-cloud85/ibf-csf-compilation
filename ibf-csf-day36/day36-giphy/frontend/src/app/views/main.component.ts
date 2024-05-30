@@ -16,15 +16,15 @@ export class MainComponent implements OnInit {
   private readonly giphyStore = inject(GiphyStore);
 
   protected searchForm !: FormGroup;
-  protected savedSearches$!: Observable<string[]>
+  protected savedSearches$!: Observable<string[]>;
 
   ngOnInit(): void {
     this.searchForm = this.createSearchForm();
-    this.savedSearches$ = this.giphyStore.getSavedSearches
+    this.savedSearches$ = this.giphyStore.getSavedSearches;
   }
 
   search() {
-    // console.log(this.searchForm.value);
+    //console.log(this.searchForm.value); //{q: "dog"}
     const values = this.searchForm.value;
     const queryParams = { q: values['q'] }
     this.router.navigate(['/search'], { queryParams })

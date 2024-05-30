@@ -28,9 +28,21 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, { useHash: true })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+/* Using { useHash: true } allows us to do deeplinking and links to stay intact in the backend. What
+happen is when the backend sees '#', it passes the 'routing' job to Angular. But note that this is only valid 
+when you are serving the Angular from the backend i.e. 'same-origin'. If you are doing cross-origin i.e. 
+running Angular and Spring Boot separately, then you don't need to use { useHash: true }.
+
+(This for the backend. '/' means point to something outside of your doc.)
+http://acme.com/search?q=seal
+
+(This for the frontend. '#' means point to something in your current doc.)
+http://acme.com/search#/=seal
+*/

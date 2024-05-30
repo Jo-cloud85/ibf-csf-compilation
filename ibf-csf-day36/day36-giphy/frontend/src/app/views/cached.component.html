@@ -1,1 +1,11 @@
-<p>cached works!</p>
+<h2>Search terms: <code>{{ q }}</code></h2>
+
+<div>
+    <button type="button" [routerLink]="['/']">Back</button>
+</div>
+
+<div *ngIf="result$ | async as results">
+    <picture *ngFor="let url of results.urls" style="margin: 10px;">
+        <img [src]="url" alt="">
+    </picture>
+</div>

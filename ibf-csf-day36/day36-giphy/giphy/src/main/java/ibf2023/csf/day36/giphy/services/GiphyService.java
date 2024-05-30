@@ -17,32 +17,32 @@ import jakarta.json.JsonReader;
 @Service
 public class GiphyService {
 
-   public static final String URL = "https://api.giphy.com/v1/gifs/search";
+  public static final String URL = "https://api.giphy.com/v1/gifs/search";
 
-   @Value("${giphy.key}")
-   private String giphyKey;
+  @Value("${giphy.key}")
+  private String giphyKey;
 
-   public List<String> search(String q, int limit) {
-      String url = UriComponentsBuilder.fromUriString(URL)
-            .queryParam("api_key", giphyKey)
-            .queryParam("q", q.replaceAll(" ", "+")) // replace spaces with +
-            .queryParam("limit", limit)
-            .build()
-            .toUriString();
+  public List<String> search(String q, int limit) {
+    String url = UriComponentsBuilder.fromUriString(URL)
+          .queryParam("api_key", giphyKey)
+          .queryParam("q", q.replaceAll(" ", "+")) // replace spaces with +
+          .queryParam("limit", limit)
+          .build()
+          .toUriString();
 
-      // Make the call
-      RequestEntity<Void> req = RequestEntity.get(url).build();
-      RestTemplate template = new RestTemplate();
-      ResponseEntity<String> resp = template.exchange(req, String.class);
+    // Make the call
+    RequestEntity<Void> req = RequestEntity.get(url).build();
+    RestTemplate template = new RestTemplate();
+    ResponseEntity<String> resp = template.exchange(req, String.class);
 
-      // Extract .data[].images.downsized_medium.url
-      JsonReader reader = Json.createReader(new StringReader(resp.getBody()));
-      JsonObject payload = reader.readObject();
-      return payload.getJsonArray("data").stream()
-            .map(item -> item.asJsonObject())
-            .map(json -> json.getJsonObject("images")
-                .getJsonObject("downsized_medium")
-                .getString("url"))
-            .toList();
-   }
+    // Extract .data[].images.downsized_medium.url
+    JsonReader reader = Json.createReader(new StringReader(resp.getBody()));
+    JsonObject payload = reader.readObject();
+    return payload.getJsonArray("data").stream()
+        .map(item -> item.asJsonObject())
+        .map(json -> json.getJsonObject("images")
+          .getJsonObject("downsized_medium")
+          .getString("url"))
+        .toList();
+    }
 }
