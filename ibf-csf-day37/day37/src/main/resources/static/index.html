@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>Title: </td>
+                <td><input type="text" name="title" size="30"></td>
+            </tr>
+            <tr>
+                <td>Description: </td>
+                <td><textarea name="description" col="50" rows="5"></textarea></td>
+            </tr>
+            <tr>
+                <td>Image: </td>
+                <td><input type="file" name="mypic" accept="image/*"></td>
+            </tr>
+            <!-- Try doing multiple files -->
+            <tr>
+                <td></td>
+                <td><button type="submit">Upload</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

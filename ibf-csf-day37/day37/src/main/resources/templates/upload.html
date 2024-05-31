@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Title</td>
+            <td><span data-th-text="${title}"></span></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><span data-th-text="${description}"></span></td>
+        </tr>
+        <tr>
+            <td>Original filename</td>
+            <td><span data-th-text="${originalFilename}"></span></td>
+        </tr>
+        <tr>
+            <td>Size</td>
+            <td><span data-th-text="${size}"></span></td>
+        </tr>
+        <tr>
+            <td>Content Type</td>
+            <td><span data-th-text="${contentType}"></span></td>
+        </tr>
+        <tr>
+            <td>Uploaded Image: </td>
+            <td><img data-th-src="${url}"></img></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="/">Back</a></td>
+        </tr>
+    </table>
+</body>
+</html>
