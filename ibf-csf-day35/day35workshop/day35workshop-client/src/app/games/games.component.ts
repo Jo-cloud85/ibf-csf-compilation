@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GamesService } from './games.service';
 import { Game } from './game.model';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-games',
@@ -11,6 +12,8 @@ import { Subscription } from 'rxjs';
 })
 export class GamesComponent implements OnInit {
 
+  searchText='';
+
   gameSearchForm!: FormGroup;
   gameList: Game[] = [];
   displayedGames: Game[] = [];
@@ -18,14 +21,18 @@ export class GamesComponent implements OnInit {
   gamesPerPage: number = 5; //setting this to default first
   totalPages: number = 0;
 
+
   sub$ !: Subscription;
 
   constructor(
     private formbuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
     private gameService: GamesService
   ){}
 
   ngOnInit(): void {
+    this.searchText = this.activatedRoute.snapshot.queryParams['gameName']
+    console.log(this.searchText);
     this.gameSearchForm = this.formbuilder.group({
       gameName: this.formbuilder.control<string>('', Validators.required),
       gamesPerPage: this.formbuilder.control<number>(5) // Default value for games per page

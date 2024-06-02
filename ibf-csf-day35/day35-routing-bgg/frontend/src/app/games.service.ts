@@ -19,7 +19,8 @@ export class GamesService {
     return firstValueFrom(this.searchGamesByName(q))
   }
 
-  getGameByGameId(gameId: number) {
+  // Also returns a Promise
+  getGameByGameId(gameId: number): Promise<GameDetail> {
     return firstValueFrom(
       this.http.get<GameDetail>(`http://localhost:8080/api/game/${gameId}`)
     )

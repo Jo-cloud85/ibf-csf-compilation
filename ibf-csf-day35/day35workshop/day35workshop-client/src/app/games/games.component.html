@@ -24,7 +24,7 @@
     
     <div class="list-group mt-3" *ngIf="gameList && gameList.length > 0">
         <div class="list-group-item list-group-item-action" style="cursor: pointer;" *ngFor="let game of displayedGames">
-            <a [routerLink]="['/games', game.game_id]">{{game.index}}. {{ game.name }}</a>
+            <a [routerLink]="['/games/', game.game_id]" [queryParams]="{q: searchText}" >{{game.index}}. {{ game.name }}</a>
         </div>
       </div>
     <button 
