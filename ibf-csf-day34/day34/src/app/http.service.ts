@@ -12,6 +12,7 @@ export class HttpService {
     // Method 2
     private readonly httpClient = inject(HttpClient);
 
+    // Rmb, params here is the one that comes after the question mark: https://httpbin.org/get?
     getHttpBin(name: 'abc'): Observable<any> {
         const queryParams = new HttpParams()
             .set('name', name)
@@ -28,22 +29,6 @@ export class HttpService {
         return this.httpClient.post<any>('https://httpbin.org/post', cust, {headers: headers})
     }
 
-    postHttpBinAsPromise(cust: Customer) {
-        const headers = new HttpHeaders()
-            .set('Content-Type', 'application/x-www-form-urlencoded')
-        // <input type="text" name="name" value="fred">
-        // <input type="text" name="email" value="fred@gmail.com">
-        const fields = new HttpParams()
-            .set('name', cust.name)
-            .set('email', cust.email)
-        return firstValueFrom<string>(
-            this.httpClient.post<any>('https://httpbin.org/post', fields.toString(), {headers: headers})
-                .pipe(
-                    map(result=> result['data'])
-                )
-        )
-    }
-
     getHttpBinAsPromise(name: 'abc'): Promise<any> {
         const queryParams = new HttpParams()
             .set('name', name)
@@ -55,4 +40,23 @@ export class HttpService {
             this.httpClient.get<any>('https://httpbin.org/get', {params: queryParams, headers: httpHeaders})
         )
     }
+
+    postHttpBinAsPromise(cust: Customer) {
+        const headers = new HttpHeaders()
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+        // <input type="text" name="name" value="fred">
+        // <input type="text" name="email" value="fred@gmail.com">
+        const fields = new HttpParams()
+            .set('name', cust.name)
+            .set('email', cust.email)
+        return firstValueFrom<string>(
+            this.httpClient.post<any>('https://httpbin.org/post', fields.toString(), {headers: headers})
+                /* The map operator is used to transform the emitted values from the observable. In this case, it takes
+                the result of the HTTP request and extracts the data property from it. */
+                .pipe(
+                    map(result=> result['data'])
+                )
+        )
+    }
+
 }

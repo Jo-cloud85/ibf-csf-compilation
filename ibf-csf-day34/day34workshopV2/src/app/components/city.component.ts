@@ -8,6 +8,7 @@ import { WeatherService } from '../weather.service';
   styleUrl: './city.component.css'
 })
 export class CityComponent implements OnInit {
+
   private readonly fb = inject(FormBuilder)
   private readonly weatherSvc = inject(WeatherService)
 
@@ -21,7 +22,7 @@ export class CityComponent implements OnInit {
 
   getWeather() {
     const city = this.form.value['city']
-    console.info('>>> city: ', city)
+    //console.info('>>> city: ', city)
     this.weatherSvc.getWeatherAsPromise(city)
       .then(results => {
         console.info('>>>> results: ', results)

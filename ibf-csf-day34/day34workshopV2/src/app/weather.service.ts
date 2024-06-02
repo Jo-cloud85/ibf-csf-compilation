@@ -31,7 +31,7 @@ export class WeatherService {
         subject, WeatherComponent receives this data by subscribing to it and updates its weather property.
     */
 
-    onWeather = new Subject<WeatherData[]>(); 
+    onWeather = new Subject<WeatherData[]>();  
 
     // Using Observable
     getWeather(city: string): Observable<WeatherData[]> {
@@ -44,11 +44,11 @@ export class WeatherService {
           .pipe(
             map((result: any) =>
               (result['weather'] as any[]) // cast to an array
-                .map(value => {
+                .map(val => {
                   return {
-                    icon: value['icon'],
-                    main: value['main'],
-                    description: value['description'],
+                    icon: val['icon'],
+                    main: val['main'],
+                    description: val['description'],
                   } as WeatherData
                 }) // WeatherData[]
             ), // map()
@@ -71,11 +71,11 @@ export class WeatherService {
               tap(result => console.info('BEFORE: ', result)), //which is the entire weather data
               map((result: any) =>
                 (result['weather'] as any[]) //cast to an array
-                  .map(value => {
+                  .map(val => {
                     return {
-                      icon: value['icon'],
-                      main: value['main'],
-                      description: value['description'],
+                      icon: val['icon'],
+                      main: val['main'],
+                      description: val['description'],
                     } as WeatherData
                   }) // WeatherData[]
               ), // map()

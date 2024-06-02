@@ -9,17 +9,19 @@ import { OllamaService } from '../services/ollama.service';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit {
   messages : Message[] = []
   messageSent : boolean = false;
   messageForm !: FormGroup;
 
   constructor(private fb: FormBuilder, 
-              private ollamaService: OllamaService) { 
+              private ollamaService: OllamaService) { }
+
+  ngOnInit(): void {
     this.messageForm = this.fb.group({
-      text: ['', [Validators.required, Validators.minLength(3)]],
-    });    
-  }
+      text: this.fb.control<string>('', [Validators.required, Validators.minLength(3)]),
+    })
+  };
 
   sendMessage() {
     console.log("Sending...");

@@ -1,8 +1,8 @@
 <div class="container pt-5">
-  <h3>Form status {{ formStatus }}</h3>
-  <form class="form-group col-6"type="text" [formGroup]="form" (ngSubmit)="process()">
-    Name: 
-    <input class="form-control" type="text" formControlName="name">
-    <button class="btn btn-primary" type="submit">Process</button>
-  </form>
+    <h3>Form status {{ formStatus }}</h3>
+    <form class="form-group col-6"type="text" [formGroup]="form" (ngSubmit)="process()">
+        <label for="name" class="form-label">Name:</label>
+        <input class="form-control" type="text" formControlName="name">
+        <button class="btn btn-primary mt-3" type="submit">Process</button>
+    </form>
 </div>

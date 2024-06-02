@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subscription, debounceTime, from, map, tap } from 'rxjs';
 import { HttpService } from './http.service';
@@ -27,9 +27,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = this.formbuilder.group({
-      name: this.formbuilder.control('')
+      name: this.formbuilder.control<string>('', Validators.required)
     })
 
+    // this.form.valueChanges is an observable that emits events whenever the form's value changes.
     this.sub$ = this.form.valueChanges
       .pipe(
         debounceTime(500),
