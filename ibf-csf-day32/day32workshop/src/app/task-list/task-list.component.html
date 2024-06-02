@@ -23,13 +23,13 @@
         <div class="d-flex justify-content-end gap-2">
             <button 
                 class="btn btn-outline-secondary rounded-pill py-2 px-4"
-                (click)="editTask(task)"
-                *ngIf="!task.editing">Edit
+                *ngIf="!task.editing"
+                (click)="editTask(task)">Edit
             </button>
             <button 
                 class="btn btn-outline-primary rounded-pill py-2 px-4"
-                (click)="saveTask(task)"
-                *ngIf="task.editing">Save
+                *ngIf="task.editing"
+                (click)="saveTask(task)">Save
             </button>
             <button 
                 class="btn btn-outline-danger rounded-pill py-2 px-4"

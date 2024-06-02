@@ -28,7 +28,7 @@ export class UserComponent implements OnInit {
   }
 
   processUserForm(): void {
-    console.log(this.userForm.value);
+    // console.log(this.userForm.value);
     let formData = this.printFormGroupValue(this.userForm); // See below for printFormGroupValue method
     alert(formData);
     this.foodArray.clear(); // you have to clear the array manually
@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
     // Method 1
     const foodItemControl = this.formBuilder.group({
       f1: this.formBuilder.control<string>('', [Validators.required], unhealthyFoodCheck)
-    })
+    }) 
     this.foodArray.push(foodItemControl);
 
     // Method 2

@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../shared/task.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TaskService {
     // if you use interface instead of class for Task model then you don't need to initialize
     private tasks: Task[] = []; 
@@ -35,8 +33,8 @@ export class TaskService {
     updateTask(updatedTask: Task): void {
         const index = this.tasks.findIndex(task => task.id === updatedTask.id);
         if (index !== -1) {
-          this.tasks[index] = updatedTask;
-          this.saveTasksToLocalStorage();
+            this.tasks[index] = updatedTask;
+            this.saveTasksToLocalStorage();
         }
     }
 

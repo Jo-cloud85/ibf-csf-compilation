@@ -21,52 +21,52 @@ export class UserSkillsComponent implements OnInit, OnChanges {
   /////////////////// On Lifecycle //////////////////////////
   // Get called 1st
   constructor(private formBuilder: FormBuilder) {
-    console.log("1. constructor is called")
+    // console.log("1. constructor is called")
   }
 
   // 2nd
   ngOnChanges(changes: SimpleChanges): void {
-      console.log("2. ngOnChanges is called")
-      console.log(changes);
+      // console.log("2. ngOnChanges is called")
+      // console.log(changes);
   }
 
   // 3rd
   ngOnInit(): void {
-    console.log("3. ngOnInit is called")
+    // console.log("3. ngOnInit is called")
     this.skillForm = this.formBuilder.group({
       // type: '',
       skills: this.formBuilder.array([])
     });
   }
 
-  // 4th
-  ngDoCheck(): void {
-    console.log('4. ngDoCheck is called');
-  }
+  // // 4th
+  // ngDoCheck(): void {
+  //   console.log('4. ngDoCheck is called');
+  // }
 
-  // 5th -  called only once -------------
-  ngAfterContentInit(): void {
-    console.log('5. ngAfterContentInit is called');
-  }
+  // // 5th -  called only once -------------
+  // ngAfterContentInit(): void {
+  //   console.log('5. ngAfterContentInit is called');
+  // }
 
-  // 6th -------------
-  // Also get called everytime after ngDoCheck gets called again
-  ngAfterContentChecked(): void {
-      console.log('6. ngAfterContentChecked is called');
-  }
+  // // 6th -------------
+  // // Also get called everytime after ngDoCheck gets called again
+  // ngAfterContentChecked(): void {
+  //     console.log('6. ngAfterContentChecked is called');
+  // }
 
-  // 7th -------------
-  // Gives you access to the template elements. You can then access them and use their 
-  // values and so on. Before this hook is reached, you cannot do that. Thats why, the 
-  // this.header.nativeElement.textContent under ngOnInit() prints nothing
-  ngAfterViewInit(): void {
-      console.log('7. ngAfterViewInit is called');
-  }
+  // // 7th -------------
+  // // Gives you access to the template elements. You can then access them and use their 
+  // // values and so on. Before this hook is reached, you cannot do that. Thats why, the 
+  // // this.header.nativeElement.textContent under ngOnInit() prints nothing
+  // ngAfterViewInit(): void {
+  //     console.log('7. ngAfterViewInit is called');
+  // }
 
-  // 8th  -------------
-  ngAfterViewChecked(): void {
-      console.log('8. ngAfterViewChecked is called --------- ');
-  }
+  // // 8th  -------------
+  // ngAfterViewChecked(): void {
+  //     console.log('8. ngAfterViewChecked is called --------- ');
+  // }
   //////////////////////////////////////////////////////////////
 
   getSkills(): FormArray {

@@ -7,10 +7,9 @@ import { TaskService } from '../task-list/task.service';
 	templateUrl: './add-task.component.html',
 	styleUrls: ['./add-task.component.css']
 })
-
 export class AddTaskComponent implements OnInit {
-	taskForm: FormGroup = {} as FormGroup;
-	dueDateInPast: boolean = false;
+	taskForm !: FormGroup;
+	dueDateInPast !: boolean;
 
 	constructor(
 		private formBuilder: FormBuilder, 
@@ -18,9 +17,9 @@ export class AddTaskComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.taskForm = this.formBuilder.group({
-			description: ['', [Validators.required, Validators.minLength(5)]],
-			priority: ['Low'],
-			dueDate: ['', Validators.required]
+			description: this.formBuilder.control<string>('', [Validators.required, Validators.minLength(5)]),
+			priority: this.formBuilder.control<string>('Low'),
+			dueDate: this.formBuilder.control<string>('', Validators.required)
 		});
 	}
 

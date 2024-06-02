@@ -7,3 +7,11 @@ export class Item {
         public itemId?: string
     ) {}
 }
+
+// export interface Item {
+//     itemName: string,
+//     itemImgPath: string,
+//     itemQty: number,
+//     itemOrderDate: Date,
+//     itemId: string
+// }
