@@ -53,10 +53,12 @@ public class GameController {
     }
 
     // 3. Get details of game by game_id
-    // Example: http://localhost:8080/game/65b32e132da1824ea35a7b6b
-    @GetMapping("/game/{game_id}")
+    // Example: http://localhost:8080/games/65b32e132da1824ea35a7b6b
+    @GetMapping("/games/{game_id}")
     public ResponseEntity<String> searchBoardgameById(
         @PathVariable("game_id") String idStr) throws NoMatchFoundException {
+
+        // System.out.println(boardgameSvc.findBoardgameByIdInJson(idStr).toString());
 
         return new ResponseEntity<String>(
                 boardgameSvc.findBoardgameByIdInJson(idStr).toString(), 

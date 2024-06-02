@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './polar-bear.component.html',
   styleUrl: './polar-bear.component.css'
 })
-export class PolarBearComponent implements OnInit, OnDestroy {
+export class PolarBearComponent implements OnInit {
   
   private readonly polarbearSvc = inject(PolarBearService);
   private readonly router = inject(Router)
@@ -31,16 +31,12 @@ export class PolarBearComponent implements OnInit, OnDestroy {
   }
 
   subscribe() {
-    this.form.reset()
+    this.form.reset();
     this.router.navigate(['/'])
   }
 
   // If form is dirty, you wont be able to leave
   isFormDirty() {
     return this.form.dirty
-  }
-
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
   }
 }

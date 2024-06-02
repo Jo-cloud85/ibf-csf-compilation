@@ -1,4 +1,5 @@
 export interface Game {
+    game_id: string,
     name: string,
     index: number
 }

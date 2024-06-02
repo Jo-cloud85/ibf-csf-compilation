@@ -19,7 +19,8 @@ export class CatComponent implements OnInit, OnDestroy {
     this.sub$ = this.activatedRoute.queryParams.subscribe( 
       (queryParams: any) => {
         this.width = 100;
-        // Means if I type http://localhost:4200/cat?size=300. Else if I never add ?size=, just use width = 100
+        // Means if I type http://localhost:4200/cat?size=300. 
+        // Else if I never add ?size=, just use width = 100
         if (!!queryParams['size']) 
           this.width = parseInt(queryParams['size'])
       }

@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, map, throwError } from "rxjs";
-import { CommentsResponseData, ResponseData } from "./game.model";
+import { Observable, catchError, map, tap, throwError } from "rxjs";
+import { ResponseData } from "./game.model";
 // import { environment } from "../environments/environment";
 
 @Injectable({
@@ -14,12 +14,18 @@ export class GamesService {
     constructor(private http: HttpClient) {}
 
     getBoardGamesByName(gameName: string): Observable<any> {
-        const url = `${this.endpoint}?name=${gameName}`;
-        return this.http.get<ResponseData>(url)
+        const queryParams = new HttpParams()
+            .set("name", gameName)
+        return this.http.get<ResponseData>(this.endpoint, {params: queryParams})
     }
 
-    getListOfCommentsById(gameId: number): Observable<any> {
-        const url = `${this.endpoint}?id=${gameId}`;
-        return this.http.get<CommentsResponseData>(url);
+    getGameDetailsById(gameId: string): Observable<any> {
+        const url = `${this.endpoint}/${gameId}`;
+        return this.http.get<any>(url).pipe(
+            tap({
+                next: (data) => console.log('Game Details:', data),  
+                error: (error) => console.log('>>> ERROR:', error.message) 
+            })
+        );
     }
 }

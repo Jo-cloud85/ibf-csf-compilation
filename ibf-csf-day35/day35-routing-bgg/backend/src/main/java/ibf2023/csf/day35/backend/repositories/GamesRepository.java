@@ -24,6 +24,12 @@ public class GamesRepository {
 	@Autowired
 	private MongoTemplate template;
 
+	/* 
+		db.games.find(
+			{ name: { $regex: 'chess', $options: 'i' } },
+			{ gid: 1, name: 1, _id: 0 }
+		)
+	*/
 	public List<GameSummary> findGamesByName(String name) {
 		Criteria criteria = Criteria.where("name").regex(name, "i");
 		Query query = Query.query(criteria);

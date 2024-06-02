@@ -8,7 +8,7 @@
 	<div>
 		@for(breed of dogBreeds; track $index) {
 			<div>
-				<!-- breed is my params -->
+				<!-- breed is my params(/), not queryParams (?=)-->
 				<a [routerLink]="['/dog', breed]">{{ breed | titlecase }}</a>
 			</div>
 		}

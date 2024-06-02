@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GamesService } from './games.service';
 import { Game } from './game.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-games',
@@ -17,6 +18,8 @@ export class GamesComponent implements OnInit {
   gamesPerPage: number = 5; //setting this to default first
   totalPages: number = 0;
 
+  sub$ !: Subscription;
+
   constructor(
     private formbuilder: FormBuilder,
     private gameService: GamesService
@@ -24,24 +27,9 @@ export class GamesComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameSearchForm = this.formbuilder.group({
-      gameName: this.formbuilder.control<string>(''),
+      gameName: this.formbuilder.control<string>('', Validators.required),
       gamesPerPage: this.formbuilder.control<number>(5) // Default value for games per page
     })
-  }
-
-  getGameList(gameName: string): void {
-    this.gameService.getBoardGamesByName(gameName).subscribe(
-      (data: any) => {  
-        this.gameList = data.games; //this.gameList is a list of objects w/ index
-        // for (let i = 0; i < data.games.length; i++) {
-        //   console.log(data.games[i].name); // Each game obj returned fr server has a 'name' property
-        // }
-        this.updateDisplayedGames();
-      },
-      (error: string) => {
-        console.error('Error fetching game list data', error);
-      }
-    );
   }
 
   onSearch(): void {
@@ -51,7 +39,22 @@ export class GamesComponent implements OnInit {
     }
   }
 
-  updateDisplayedGames(): void {
+  private getGameList(gameName: string): void {
+    this.sub$ = this.gameService.getBoardGamesByName(gameName)
+      .subscribe({
+        next: (data: any) => {  
+          this.gameList = data.games; //this.gameList is a list of objects w/ index
+          // console.log(this.gameList)
+          this.updateDisplayedGames();
+        },
+        error: (error: string) => {
+          console.error('Error fetching game list data', error);
+        },
+        complete: () => this.sub$.unsubscribe()
+      });
+  }
+
+  private updateDisplayedGames(): void {
     const startIndex = (this.currentPage - 1) * this.gamesPerPage;
     const endIndex = startIndex + this.gamesPerPage;
     this.displayedGames = this.gameList
@@ -60,6 +63,7 @@ export class GamesComponent implements OnInit {
         ...game,
         index: startIndex + idx + 1
     }));
+    // console.log(this.displayedGames);
   }
 
   changePageSize(): void {

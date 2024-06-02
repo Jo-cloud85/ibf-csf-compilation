@@ -20,14 +20,13 @@ public class GameRepository {
     private MongoTemplate template;
 
     /*
-    db.games.find(
-        {
-            name: { $regex: 'button', $options: 'i' }   
-        }
-    ).count();
-    */
+        db.games.find(
+            {
+                name: { $regex: 'button', $options: 'i' }   
+            }
+        ).count();
+     */
     public long getTotalBoardgamesCount(String substrName) {
-        //make sure you import the correct Query
         Query query = new Query(
             Criteria.where("name")
                     .regex(substrName, "i")
@@ -36,14 +35,13 @@ public class GameRepository {
     }
 
     /*
-    db.games.find(
-        {
-            name: { $regex: 'button', $options: 'i' }   
-        }
-    ).skip(0).limit(25)
+        db.games.find(
+            {
+                name: { $regex: 'button', $options: 'i' }   
+            }
+        ).skip(0).limit(25)
      */
     public List<GameSummary> findBoardgamesByNameWithPagination(String substrName, int limit, int offset) {
-        //make sure you import the correct Query
         Query query = new Query(
             Criteria.where("name")
                     .regex(substrName, "i")
@@ -55,13 +53,13 @@ public class GameRepository {
     }
 
     /*
-    db.games.find(
-        {
-            name: { $regex: 'button', $options: 'i' }   
-        }
-    )
-    .skip(0).limit(25)
-    .sort({ rank: 1 })
+        db.games.find(
+            {
+                name: { $regex: 'button', $options: 'i' }   
+            }
+        )
+        .skip(0).limit(25)
+        .sort({ rank: 1 })
      */
     public List<GameSummary> findBoardgamesByNameWithPaginationAndRank(String substrName, int limit, int offset) {
         Query query = new Query(
@@ -76,11 +74,11 @@ public class GameRepository {
     }
 
     /*
-    db.games.find(
-        {
-            _id: ObjectId('65b32e122da1824ea35a3b7b')   
-        }
-    )
+        db.games.find(
+            {
+                _id: ObjectId('65b32e122da1824ea35a3b7b')   
+            }
+        )
      */
     public Game findBoardgameById(ObjectId objId) {
         Query query = new Query(

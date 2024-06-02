@@ -1,38 +1,41 @@
 <div class="container pt-5">
     <h1>Let's search for boardgames</h1>
     <form class="form-group" [formGroup]="gameSearchForm" (ngSubmit)="onSearch()">
-        <div class="d-flex align-items-center gap-3">
+
+        <div class="d-flex flex-column gap-3">
             <div class="col-4">
                 <input class="form-control" type="text" formControlName="gameName" placeholder="Enter game name" />
             </div>
-            <button class="btn btn-primary rounded-pill py-2 px-4" type="submit">Search</button>
-        </div>
-    </form>
-    <hr>
-    <form class="form-group" [formGroup]="gameSearchForm">
-        <label class="form-label">Games per page: </label>
-        <div class="col-4" >
-            <select class="form-select" formControlName="gamesPerPage" (change)="changePageSize()">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-            </select>
-        </div>
-        <div class="list-group mt-3" *ngIf="gameList && gameList.length > 0">
-            <div class="list-group-item list-group-item-action" *ngFor="let game of displayedGames">
-                <p>{{game.index}}. {{ game.name }}</p>
+            <div>
+                <button class="btn btn-primary rounded-pill py-2 px-4" type="submit">Search</button>
+            </div>
+            <div class="col-4">
+                <label class="form-label">Games per page: </label>
+                <select class="form-select" formControlName="gamesPerPage" (change)="changePageSize()">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
             </div>
         </div>
-        <button 
-            class="btn btn-outline-dark rounded-pill py-2 px-4 mt-3 me-3" 
-            type="button" 
-            [disabled]="currentPage === 1"
-            (click)="prevPage()">Previous</button>
-        <button 
-            class="btn btn-outline-dark rounded-pill py-2 px-4 mt-3" 
-            type="button" 
-            [disabled]="currentPage === totalPages"
-            (click)="nextPage()">Next</button>
     </form>
+
+    <hr>
+    
+    <div class="list-group mt-3" *ngIf="gameList && gameList.length > 0">
+        <div class="list-group-item list-group-item-action" style="cursor: pointer;" *ngFor="let game of displayedGames">
+            <a [routerLink]="['/games', game.game_id]">{{game.index}}. {{ game.name }}</a>
+        </div>
+      </div>
+    <button 
+        class="btn btn-outline-dark rounded-pill py-2 px-4 mt-3 me-3" 
+        type="button" 
+        [disabled]="currentPage === 1"
+        (click)="prevPage()">Previous</button>
+    <button 
+        class="btn btn-outline-dark rounded-pill py-2 px-4 mt-3" 
+        type="button" 
+        [disabled]="currentPage === totalPages"
+        (click)="nextPage()">Next</button>
 </div>
   

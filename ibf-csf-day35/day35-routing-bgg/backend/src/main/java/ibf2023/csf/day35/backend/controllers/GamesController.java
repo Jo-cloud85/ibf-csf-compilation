@@ -21,7 +21,7 @@ import jakarta.json.JsonObject;
 
 @Controller
 @RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins="*")
+@CrossOrigin(origins="*") //a better option would be to serve the Angular application from the backend
 public class GamesController {
 
 	@Autowired
@@ -31,7 +31,8 @@ public class GamesController {
 	@ResponseBody
 	public ResponseEntity<String> search(@RequestParam String q) {
 		JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
-		gamesRepo.findGamesByName(q).stream()
+		gamesRepo.findGamesByName(q)
+			.stream()
 			.map(g -> Json.createObjectBuilder()
 					.add("gameId", g.gameId())
 					.add("name", g.name())
@@ -55,7 +56,8 @@ public class GamesController {
 			);
 		JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
 		GameDetail game = opt.get();
-		game.comments().stream()
+		game.comments()
+			.stream()
 			.forEach(c -> {
 				arrBuilder.add(
 					Json.createObjectBuilder()
