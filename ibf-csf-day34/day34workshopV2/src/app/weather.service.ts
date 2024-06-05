@@ -42,8 +42,7 @@ export class WeatherService {
         return this.httpClient.get<WeatherData[]>(
           'https://api.openweathermap.org/data/2.5/weather', { params: queryString })
           .pipe(
-            map((result: any) =>
-              (result['weather'] as any[]) // cast to an array
+            map((result: any) => (result['weather'] as any[]) // cast to an array
                 .map(val => {
                   return {
                     icon: val['icon'],

@@ -4,6 +4,7 @@
     [formGroup]="taskForm" 
     (ngSubmit)="addTask()"
 >
+    <!-- Description -->
     <div>
         <label class="form-label">Description</label>
         <input 
@@ -17,6 +18,7 @@
         >Please enter description
         </small>
     </div>
+    <!-- Priority -->
     <div>
         <label class="form-label">Priority</label>
         <div class="d-flex gap-5">
@@ -46,6 +48,7 @@
             </label>
         </div>
     </div>
+    <!-- Due Date -->
     <div>
         <label class="form-label">Due Date</label>
         <input 

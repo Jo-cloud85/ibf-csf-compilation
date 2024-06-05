@@ -25,7 +25,10 @@
 
 	<!-- This image are from app.component.ts - sceneryUrl and title. The property here links to 
 	my-image.component.ts but we overwrite the values in my-image.component.ts -->
-	<app-my-image [imageUrl]="sceneryUrl" [caption]="title"></app-my-image>
+	<app-my-image 
+		[imageUrl]="sceneryUrl" 
+		[caption]="title"
+	></app-my-image>
 
 	<!-- Using *ngFor directive -------------------------------------->
 	<!-- These images are from app.component.ts - imgs array. The property here links to 

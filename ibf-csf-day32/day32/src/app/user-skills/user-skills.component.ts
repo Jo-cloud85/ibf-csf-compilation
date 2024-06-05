@@ -73,7 +73,7 @@ export class UserSkillsComponent implements OnInit, OnChanges {
     return this.skillForm.get("skills") as FormArray;
   }
 
-  newSkill(): FormGroup {
+  private newSkill(): FormGroup {
     return this.formBuilder.group({
       skillname: '',
       experience: ''
