@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import ibf.nus.iss.day38_backend.models.ImageData;
 import ibf.nus.iss.day38_backend.repositories.ImageRepo;
+import ibf.nus.iss.day38_backend.repositories.S3Repo;
 
 @Service
 public class ImageService {
@@ -24,17 +27,32 @@ public class ImageService {
     @Autowired
     private ImageRepo imageRepo;
 
-    public String saveToDB(InputStream is, String contentType) {
+    @Autowired
+    private S3Repo s3Repo;
 
+    public String saveToS3(MultipartFile file) {
+        return s3Repo.saveToS3(file);
+    }
+
+    public byte[] getFileFromS3(String fileId) {
+        return s3Repo.getFileFromS3(fileId);
+    }
+
+    public String saveToDB(InputStream is, String contentType) {
         String pic_id = UUID.randomUUID().toString().substring(0, 8);
         imageRepo.save(pic_id, is, contentType);
-
         return pic_id;
     }
 
+    public Optional<ImageData> getPicture (String pic_id) {
+        return imageRepo.getPicture(pic_id);
+    }
+
+
+    ////////////////////////////////////// ADDITIONAL ////////////////////////////////////////
+    //////////////// Additional: upload files and save to local directory ////////////////////
     public final Path fileUpload = Paths.get("uploads");
 
-    // Additional: upload files and save to local directory
     public void initDirectory() {
         try {
             Files.createDirectories(fileUpload);
@@ -43,7 +61,7 @@ public class ImageService {
         }
     }
 
-    public void save(MultipartFile file) {
+    public void saveToLocalFileDir(MultipartFile file) {
         try {
             Files.copy(file.getInputStream(), this.fileUpload.resolve(file.getOriginalFilename()));
         } catch (Exception e) {
