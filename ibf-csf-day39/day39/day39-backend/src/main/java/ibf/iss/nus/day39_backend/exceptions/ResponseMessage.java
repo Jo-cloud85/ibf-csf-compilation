@@ -1,4 +1,4 @@
-package ibf.nus.iss.day38_backend.exception;
+package ibf.iss.nus.day39_backend.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

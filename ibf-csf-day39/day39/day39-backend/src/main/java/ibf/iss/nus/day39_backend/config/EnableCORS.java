@@ -1,4 +1,4 @@
-package ibf.nus.iss.day38_backend.config;
+package ibf.iss.nus.day39_backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

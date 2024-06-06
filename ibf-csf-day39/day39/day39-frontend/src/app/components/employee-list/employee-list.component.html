@@ -1,0 +1,30 @@
+<div class="container py-5">
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <th>Email</th>
+                <th>Profile URL</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employees">
+                    <td>{{ employee.firstName }}</td>
+                    <td>{{ employee.lastName}}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.profileURL }}</td>
+                    <td>
+                        <button 
+                            class="btn btn-danger"
+                            (click)="deleteEmployee(employee.id)"
+                        >Delete
+                        </button>
+                        <button
+                            class="btn btn-danger"
+                            (click)="showEmployeeDetails(employee.id)"
+                        >Show Employee Details</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
