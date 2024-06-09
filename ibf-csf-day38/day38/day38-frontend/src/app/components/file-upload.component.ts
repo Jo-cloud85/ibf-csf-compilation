@@ -38,6 +38,10 @@ export class FileUploadComponent implements OnDestroy {
       formData.append('myfile', fileSourceValue); // Use 'myfile' as the key
       formData.append('comments', commentsValue); // Append comments value
 
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+
       this.sub$ = this.fileSvc.uploadFile(formData).subscribe({
         next: (result: any) => {
           console.log("Upload result:", result);

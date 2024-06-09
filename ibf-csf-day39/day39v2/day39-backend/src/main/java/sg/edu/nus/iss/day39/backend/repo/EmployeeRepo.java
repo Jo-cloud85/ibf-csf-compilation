@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.day39.backend.repo;
+package main.java.sg.edu.nus.iss.day39.backend.repo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

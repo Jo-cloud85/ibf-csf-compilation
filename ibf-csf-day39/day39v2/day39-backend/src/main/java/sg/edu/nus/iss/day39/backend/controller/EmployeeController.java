@@ -1,4 +1,4 @@
-package sg.edu.nus.iss.day39.backend.controller;
+package main.java.sg.edu.nus.iss.day39.backend.controller;
 
 import java.io.IOException;
 import java.util.List;
