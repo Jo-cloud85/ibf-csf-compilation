@@ -1,4 +1,4 @@
-package main.java.sg.edu.nus.iss.day39.backend.repo;
+package sg.edu.nus.iss.day39.backend.repo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

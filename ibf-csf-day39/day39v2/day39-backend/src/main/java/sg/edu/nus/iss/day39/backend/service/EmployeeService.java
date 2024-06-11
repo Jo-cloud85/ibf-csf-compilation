@@ -1,4 +1,4 @@
-package main.java.sg.edu.nus.iss.day39.backend.service;
+package sg.edu.nus.iss.day39.backend.service;
 
 import java.util.List;
 

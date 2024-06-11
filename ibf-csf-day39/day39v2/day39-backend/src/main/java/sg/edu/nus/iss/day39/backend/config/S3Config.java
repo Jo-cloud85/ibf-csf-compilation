@@ -1,4 +1,4 @@
-package main.java.sg.edu.nus.iss.day39.backend.config;
+package sg.edu.nus.iss.day39.backend.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
