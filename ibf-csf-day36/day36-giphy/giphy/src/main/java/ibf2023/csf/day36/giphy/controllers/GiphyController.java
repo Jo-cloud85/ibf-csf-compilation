@@ -20,22 +20,21 @@ import jakarta.json.JsonArray;
 @RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GiphyController {
 
-   private Logger logger = Logger.getLogger(GiphyController.class.getName());
+  private Logger logger = Logger.getLogger(GiphyController.class.getName());
 
-   @Autowired
-   private GiphyService giphySvc;
+  @Autowired
+  private GiphyService giphySvc;
 
-   @GetMapping("/search")
-   @ResponseBody
-   public ResponseEntity<String> Search(
+  @GetMapping("/search")
+  @ResponseBody
+  public ResponseEntity<String> Search(
         @RequestParam(required=true) String q,
         @RequestParam(defaultValue="10") int limit) {
 
-        logger.log(Level.INFO, "SEARCH: q=%s, limit=%d".formatted(q, limit));
+    logger.log(Level.INFO, "SEARCH: q=%s, limit=%d".formatted(q, limit));
 
-        JsonArray result = Json.createArrayBuilder(giphySvc.search(q, limit)).build();
-        
-        return ResponseEntity.ok(result.toString());
-   }
-   
+    JsonArray result = Json.createArrayBuilder(giphySvc.search(q, limit)).build();
+    
+    return ResponseEntity.ok(result.toString());
+  }
 }

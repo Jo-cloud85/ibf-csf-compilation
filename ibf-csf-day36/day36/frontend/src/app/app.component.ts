@@ -25,6 +25,5 @@ export class AppComponent implements OnInit {
     // If we using Component
     this.count$ = this.projectStore.getProjectCount
   }
-  
 
 }

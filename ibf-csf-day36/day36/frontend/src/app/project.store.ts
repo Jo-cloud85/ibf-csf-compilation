@@ -1,5 +1,8 @@
 // This file is only if you are using state management i.e. storing data in memory using Component Store,
-// not Dexie, not IndexedDB
+// not Dexie, which is IndexedDB
+
+// AND REMEMBER TO INSTALL THIS:
+// npm install @ngrx/component-store
 
 import { Injectable } from "@angular/core";
 import { Project, ProjectInfo, ProjectSlice } from "./models";

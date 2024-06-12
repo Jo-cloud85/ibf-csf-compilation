@@ -13,18 +13,20 @@ export class GiphyService {
             .set('q', q)
 
         // string[] => SearchResult
-        /* return firstValueFrom(
-        // Observable
-        this.http.get<string[]>('/api/search', { params })
-            .pipe( // .stream()
-                map(urls => {
-                return {
-                    q, urls,
-                    date: (new Date()).getTime()
-                } as SearchResult
-                })
-            )
-        ) */
+        /* 
+        return firstValueFrom(
+            this.http.get<string[]>('/api/search', { params })
+                .pipe( // .stream()
+                    map(urls => {
+                    return {
+                        q, urls,
+                        date: (new Date()).getTime()
+                    } as SearchResult
+                    })
+                )
+        ) 
+        */
+       
         return firstValueFrom(
             this.http.get<string[]>('/api/search', { params })
         ).then((urls: string[]) => {

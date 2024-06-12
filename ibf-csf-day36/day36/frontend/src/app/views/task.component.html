@@ -1,54 +1,54 @@
 <div class="split">
     <h2>Task</h2>
     <div>
-      <button [routerLink]="['/']">Back</button>
+		<button [routerLink]="['/']">Back</button>
     </div>
-  </div>
+</div>
   
-  <form [formGroup]="projectForm" (submit)="save()">
+<form [formGroup]="projectForm" (ngSubmit)="save()">
     <table>
-      <tr>
-        <td> Project name: </td>
-        <td>
-          <input type="text" size="30" formControlName="projectName">
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          <div class="split">
-            <button type="submit">Save</button>
-            <button type="button" (click)="addTask()">Add</button>
-          </div>
-        </td>
-      </tr>
+		<tr>
+			<td> Project name: </td>
+			<td>
+				<input type="text" size="30" formControlName="projectName">
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<div class="split">
+					<button type="submit">Save</button>
+					<button type="button" (click)="addTask()">Add</button>
+				</div>
+			</td>
+		</tr>
     </table>
     <hr>
     @if (tasksGroup.length > 0) {
-      <table>
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>Due</th>
-          </tr>
-        </thead>
-        <tbody formArrayName="tasks">
-          @for (task of tasksGroup.controls; track idx; let idx = $index) {
-            <tr [formGroupName]="idx">
-              <td>
-                <input type="text" size="30" placeholder="Task name" formControlName="taskName">
-              </td>
-              <td>
-                <input type="date" formControlName="dueDate">
-              </td>
-              <td>
-                <button type="button" (click)="removeTask(idx)">X</button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+		<table>
+			<thead>
+				<tr>
+					<th>Task</th>
+					<th>Due</th>
+				</tr>
+			</thead>
+			<tbody formArrayName="tasks">
+				@for (task of tasksGroup.controls; track idx; let idx = $index) {
+					<tr [formGroupName]="idx">
+						<td>
+							<input type="text" size="30" placeholder="Task name" formControlName="taskName">
+						</td>
+						<td>
+							<input type="date" formControlName="dueDate">
+						</td>
+						<td>
+							<button type="button" (click)="removeTask(idx)">X</button>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
     } @else {
-      <h2>No task</h2>
+      	<h2>No task</h2>
     }
-  </form>
+</form>

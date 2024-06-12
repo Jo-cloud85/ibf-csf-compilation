@@ -21,7 +21,7 @@ import jakarta.json.JsonReader;
 @CrossOrigin(origins="*")
 public class ProjectController {
 
-	@PostMapping(path="/project", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path="/projects", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> postProject(@RequestBody String payload) {
 		JsonReader reader = Json.createReader(new StringReader(payload));

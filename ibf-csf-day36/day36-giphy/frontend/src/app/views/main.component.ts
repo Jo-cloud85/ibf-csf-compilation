@@ -24,9 +24,9 @@ export class MainComponent implements OnInit {
   }
 
   search() {
-    //console.log(this.searchForm.value); //{q: "dog"}
+    //console.log(this.searchForm.value); // {q: "dog"}
     const values = this.searchForm.value;
-    const queryParams = { q: values['q'] }
+    const queryParams = { q: values['q'] } // 'q' is the formControlName
     this.router.navigate(['/search'], { queryParams })
   }
 

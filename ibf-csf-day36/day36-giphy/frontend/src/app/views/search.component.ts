@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
     this.result$ = this.giphySvc.search(this.q)
   }
 
-  save(){
+  save(): void {
     this.result$
       .then(result => {
         this.giphyStore.saveResult(result)

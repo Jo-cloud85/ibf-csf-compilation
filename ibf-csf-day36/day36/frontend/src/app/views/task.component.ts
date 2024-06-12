@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 
 import { Project } from '../models';
 import { ProjectRepository } from '../project.repository';
@@ -31,11 +31,12 @@ export class TaskComponent implements OnInit {
     this.tasksGroup = this.fb.array([])
     return this.fb.group({
       projectName: this.fb.control<string>('', [Validators.required]),
-      tasks: this.tasksGroup
+      tasks: this.tasksGroup // task is formArrayName in the HTML
     })
   }
 
   save() {
+    // You can choose to add the uuid in the backend also
     const proj: Project = {
       id: uuidv4().substring(0, 8),
       ...this.projectForm.value
@@ -57,6 +58,7 @@ export class TaskComponent implements OnInit {
   }
 
   addTask() {
+    // Rmb, tasksGroup is already a FormArray
     this.tasksGroup.push(
       this.fb.group({
         taskName: this.fb.control<string>('', [ Validators.required ]),
