@@ -3,6 +3,7 @@ import { GamesService } from './games.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { GameDetails } from './game.model';
 
 @Component({
   selector: 'app-game-detail',
@@ -16,14 +17,19 @@ export class GameDetailComponent {
 
   gameId: string = '';
 
+  gameDetail!: GameDetails;
+
   sub$!: Subscription;
 
   ngOnInit(): void {
     this.gameId = this.activatedRoute.snapshot.params['gameId'];
-    console.log(this.gameId);
+    // console.log(this.gameId);
     this.sub$ = this.gamesSvc.getGameDetailsById(this.gameId)
       .subscribe({
-        next: (value: any) => console.log(value),
+        next: (value: any) => {
+          console.log(value);
+          this.gameDetail = value;
+        },
         error: (err: HttpErrorResponse) => console.log(">>> ERROR: ", err.message),
         complete: () => this.sub$.unsubscribe()
       });

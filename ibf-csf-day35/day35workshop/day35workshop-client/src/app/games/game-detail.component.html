@@ -1,1 +1,13 @@
-<h1>Game id: {{gameId}}</h1>
+<div *ngIf="gameDetail; else noGameFound">
+    <h2>Game id: {{gameDetail.game_id}}</h2>
+    <p>Name: {{gameDetail.name}}</p>
+    <p>Ranking: {{gameDetail.ranking}}</p>
+    Image: <img [src]="gameDetail.thumbnail">
+    <p>Timestamp: {{gameDetail.timestamp}}</p>
+    URL: <a [href]="gameDetail.url">Find out more</a>
+    <p>Number of users rated: {{gameDetail.users_rated}}</p>
+    <p>Year the game was launched: {{gameDetail.year}}</p>
+</div>
+<ng-template #noGameFound>
+    <h4>No Game Found</h4>
+</ng-template>

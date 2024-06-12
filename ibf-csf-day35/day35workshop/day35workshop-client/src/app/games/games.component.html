@@ -1,7 +1,6 @@
-<div class="container pt-5">
+<div>
     <h1>Let's search for boardgames</h1>
     <form class="form-group" [formGroup]="gameSearchForm" (ngSubmit)="onSearch()">
-
         <div class="d-flex flex-column gap-3">
             <div class="col-4">
                 <input class="form-control" type="text" formControlName="gameName" placeholder="Enter game name" />
@@ -23,10 +22,14 @@
     <hr>
     
     <div class="list-group mt-3" *ngIf="gameList && gameList.length > 0">
-        <div class="list-group-item list-group-item-action" style="cursor: pointer;" *ngFor="let game of displayedGames">
-            <a [routerLink]="['/games/', game.game_id]" [queryParams]="{q: searchText}" >{{game.index}}. {{ game.name }}</a>
+        <div 
+            class="list-group-item list-group-item-action" 
+            style="cursor: pointer;" 
+            *ngFor="let game of displayedGames"
+        >
+            <a [routerLink]="['/games/', game.game_id]">{{game.index}}. {{ game.name }}</a>
         </div>
-      </div>
+    </div>
     <button 
         class="btn btn-outline-dark rounded-pill py-2 px-4 mt-3 me-3" 
         type="button" 
