@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +20,7 @@ import jakarta.json.JsonObject;
 
 @Controller
 @RequestMapping(path="/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins="*") //a better option would be to serve the Angular application from the backend
+// @CrossOrigin(origins="*") //a better option would be to serve the Angular application from the backend
 public class GamesController {
 
 	@Autowired
@@ -31,6 +30,7 @@ public class GamesController {
 	@ResponseBody
 	public ResponseEntity<String> search(@RequestParam String q) {
 		JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+		// Converting List<GameSummary> to json array
 		gamesRepo.findGamesByName(q)
 			.stream()
 			.map(g -> Json.createObjectBuilder()
@@ -42,6 +42,7 @@ public class GamesController {
 			});
 		return ResponseEntity.ok(arrBuilder.build().toString());
 	}
+
 
 	@GetMapping(path="/game/{gameId}")
 	@ResponseBody
@@ -55,6 +56,7 @@ public class GamesController {
 					.toString()
 			);
 		JsonArrayBuilder arrBuilder = Json.createArrayBuilder();
+		// Converting List<Comment> to json array first
 		GameDetail game = opt.get();
 		game.comments()
 			.stream()
@@ -68,6 +70,8 @@ public class GamesController {
 						.build()
 				);
 			});
+
+		// Converting GameDetail to json object then to json string
 		JsonObject result = Json.createObjectBuilder()
 			.add("gameId", game.gameId())
 			.add("name", game.name())

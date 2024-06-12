@@ -9,20 +9,20 @@ export class GamesService {
   private readonly http = inject(HttpClient)
 
   searchGamesByName(q: string): Observable<GameInfo[]> {
-    const params = new HttpParams()
+    const myparams = new HttpParams()
         .set('q', q)
 
-    return this.http.get<GameInfo[]>('http://localhost:8080/api/search', { params })
+    return this.http.get<GameInfo[]>('/api/search', { params: myparams })
   }
 
+  // Converting Observable (above) to a Promise
   searchGamesByNameAsPromise(q: string): Promise<GameInfo[]> {
     return firstValueFrom(this.searchGamesByName(q))
   }
 
-  // Also returns a Promise
   getGameByGameId(gameId: number): Promise<GameDetail> {
     return firstValueFrom(
-      this.http.get<GameDetail>(`http://localhost:8080/api/game/${gameId}`)
+      this.http.get<GameDetail>(`/api/game/${gameId}`)
     )
   }
 }

@@ -21,9 +21,9 @@ export class SearchComponent implements OnInit {
   }
 
   search() {
-    //queryParams is the one with ?, params is just /
+    // queryParams is the one with ?, params is just /
     console.info(">>> form: ", this.form.value)
-    this.router.navigate(['/games'], { queryParams: { q: this.form.value['q'] } })
+    this.router.navigate(['/games'], { queryParams: { q: this.form.value['q'] }})
   }
 
 }

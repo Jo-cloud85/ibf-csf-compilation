@@ -26,7 +26,7 @@ public class GamesRepository {
 
 	/* 
 		db.games.find(
-			{ name: { $regex: 'chess', $options: 'i' } },
+			{ name: { $regex: 'chess', $options: 'i' }},
 			{ gid: 1, name: 1, _id: 0 }
 		)
 	*/
@@ -39,30 +39,30 @@ public class GamesRepository {
 			.map(doc -> new GameSummary(
 							doc.getInteger("gid", 0),
 							doc.getString("name")
-						)).toList();
-
+					)).toList();
 	}
 
-    /*
-		db.games.aggregate([
-		  { $match: { gid: 233078 } },
-		  { $lookup: {
-				from: 'comments',
-				foreignField: 'gid',
-				localField: 'gid',
-				as: 'comments',
-				pipeline: [
-				  { $sort: { rating: -1 } },
-				  { $limit: 5 }
-				]
-			} }
-		])
-	 */
+  /*
+    db.games.aggregate([
+      { $match: { gid: 233078 }},
+      { $lookup: {
+        from: 'comments',
+        foreignField: 'gid',
+        localField: 'gid',
+        as: 'comments',
+        pipeline: [
+          { $sort: { rating: -1 }},
+          { $limit: 5 }
+        ]
+      }}
+    ])
+  */
 	public Optional<GameDetail> getGameDetailsAndComments(int gameId) {
 		MatchOperation findGameByGid = Aggregation.match(Criteria.where("gid").is(gameId));
 
 		SortOperation sortByRating = Aggregation.sort(Direction.DESC, "rating");
 		LimitOperation take5 = Aggregation.limit(5);
+
 		LookupOperation getCommentsForGame = LookupOperation.newLookup()
 				.from("comments")
 				.localField("gid")
@@ -77,6 +77,8 @@ public class GamesRepository {
 			return Optional.empty();
 
 		Document doc = results.getFirst();
+
+    // Getting the comments from the results from collection 'games'
 		List<Comment> comments = doc.getList("comments", Document.class)
 				.stream()
 				.map(d -> {
@@ -89,6 +91,7 @@ public class GamesRepository {
 					return comment;
 				}).toList();
 
+    // And then formatting into GameDetail
 		return Optional.of(
 			new GameDetail(
 				doc.getInteger("gid"), 

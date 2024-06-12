@@ -15,15 +15,15 @@ export class ListGamesComponent implements OnInit {
   private readonly router = inject(Router)
   private readonly gamesSvc = inject(GamesService)
 
-  searchText = ''
+  searchText = '';
 
-  games: GameInfo[] = []
+  games: GameInfo[] = [];
 
-  gamesO$!: Observable<GameInfo[]>
-  gamesP$!: Promise<GameInfo[]>
+  gamesO$!: Observable<GameInfo[]>;
+  gamesP$!: Promise<GameInfo[]>;
 
   ngOnInit(): void {
-    //queryParams is the one with ?, params is just /
+    // queryParams is the one with ?, params is just /
     this.searchText = this.activatedRoute.snapshot.queryParams['q']
     if (!this.searchText) {
       this.router.navigate(['/'])

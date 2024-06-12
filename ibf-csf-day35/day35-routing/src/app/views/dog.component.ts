@@ -21,25 +21,23 @@ export class DogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log("OnInit activated... Entering component...")
     /* You realise because this is a snapshot, when you click puppy1, the console prints puppy1, but when u 
-    click puupy2, nothing gets printed. This is because the snapshot only works the first time */
+    click puppy2, nothing gets printed. This is because the snapshot only works the first time */
     // const b = this.activatedRoute.snapshot.params['breed'];
-    //console.log(b);
+    // console.log(b);
     
     // save subscription references
     // queryParams is the one with ?, params is just /
-    this.sub$ = this.activatedRoute.params.subscribe( 
-      params => {
-        this.breed = params['breed']
-        this.title.setTitle(this.breed)
-        this.dogImg =`/assets/${this.breed}.jpeg`;
-        console.log(this.breed)
-      } 
-    )
+    this.sub$ = this.activatedRoute.params.subscribe( params => {
+      this.breed = params['breed']
+      this.title.setTitle(this.breed)
+      this.dogImg =`/assets/${this.breed}.jpeg`;
+      console.log(this.breed)
+    })
   }
 
-  back(){
-    this.router.navigate(['/'])
-  }
+  // back(){
+  //   this.router.navigate(['/'])
+  // }
 
   ngOnDestroy(): void {
     console.log("OnDestroy activated... Leaving component...")
