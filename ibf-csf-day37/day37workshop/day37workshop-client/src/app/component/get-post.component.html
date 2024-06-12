@@ -1,0 +1,9 @@
+<div *ngIf="post">
+    <h2>Post Details</h2>
+	<p><strong>Picture Id:</strong> {{ post.postId }}</p>
+    <p><strong>Comments:</strong> {{ post.comments }}</p>
+    <div *ngIf="post.pictureUrl">
+        <h3>Picture</h3>
+        <img [src]="post.pictureUrl" alt="Post Picture" style="width: 600px;"/>
+    </div>
+</div>

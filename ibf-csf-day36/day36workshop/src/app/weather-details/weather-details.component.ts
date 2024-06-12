@@ -33,7 +33,7 @@ export class WeatherDetailsComponent implements OnInit{
     this.route.paramMap
       .subscribe({
           next: (params: any) => {
-            this.city = params.get('city')!;
+            this.city = params.get('city');
             this.weatherService.getWeatherByCityNameUsingPromise(this.city)
               .then(data => {
                 this.weather = data;

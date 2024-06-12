@@ -5,10 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { UploadPostComponent } from './component/upload-post.component';
+import { GetPostComponent } from './component/get-post.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UploadPostComponent,
+    GetPostComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,7 @@ export class CitiesListComponent implements OnInit {
   addCityForm !: FormGroup;
   city !: string;
   citiesList: string[] = ['Singapore', 'Kuala Lumpur', 'Tokyo', 'Bangkok', 'Hong Kong', 'Beijing'];
+
   private subscription !: Subscription;
   
   constructor(
@@ -59,6 +60,7 @@ export class CitiesListComponent implements OnInit {
   //   this.addCityForm.reset();
   // }
 
+  
   // Method 2 - Promise
   addCity() {
     const city = toTitleCase(this.addCityForm.get('city')?.value.trim());
@@ -86,6 +88,7 @@ export class CitiesListComponent implements OnInit {
     this.router.navigate(['/weather', city]);
   }
 }
+
 
 // Helper method
 function toTitleCase(str: string): string {
