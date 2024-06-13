@@ -14,7 +14,7 @@ public class CommentService {
     @Autowired
     private CommentRepository commentRepo;
 
-    public List<Comment> getCommentsForChar (Integer characterId) {
+    public List<Comment> getCommentsForChar(Integer characterId) {
         return commentRepo.getCommentsForChar(characterId);
     }
 

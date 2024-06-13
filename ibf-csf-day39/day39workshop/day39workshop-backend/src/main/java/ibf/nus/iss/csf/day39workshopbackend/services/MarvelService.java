@@ -70,12 +70,12 @@ public class MarvelService {
 
         JsonReader reader = Json.createReader(new StringReader(resp.getBody()));
         JsonArray results = reader.readObject()
-                                .getJsonObject("data")
-                                .getJsonArray("results");
+                                .getJsonObject("data") // "data comes from the way Marvel write their json"
+                                .getJsonArray("results"); // "results comes from the way Marvel write their json"
 
         List<MarvelCharacter> characterList = results.stream()
-            .map(value -> (JsonObject) value)
-            .map(c -> new MarvelCharacter(
+            .map(value -> (JsonObject) value) //cast each result in the JsonArray into a JsonObject first
+            .map(c -> new MarvelCharacter( //then map it to Marvel Character object
                 c.getInt("id"),
                 c.getString("name"),
                 c.getString("description"),
@@ -99,6 +99,7 @@ public class MarvelService {
 
         if (character != null) return character;
 
+        // This is if character is not in Redis, then you have to get from Marvel API
         String url =  UriComponentsBuilder
             .fromUriString(BASE_URL)
             .pathSegment(id.toString()) // Include the character ID in the path

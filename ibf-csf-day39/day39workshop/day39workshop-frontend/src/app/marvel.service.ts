@@ -15,7 +15,7 @@ export class MarvelService {
     return this.httpClient.get<CharInfo[]>('http://localhost:8080/api/characters', { params })
   }
 
-  getCharByCharacterId(characterId: number) {
+  getCharByCharacterId(characterId: number): Promise<any> {
     //console.log(characterId);
     return firstValueFrom(
       this.httpClient.get<CharDetail>(`http://localhost:8080/api/character/${characterId}`)

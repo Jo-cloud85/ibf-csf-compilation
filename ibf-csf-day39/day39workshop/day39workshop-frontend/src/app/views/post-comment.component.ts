@@ -14,20 +14,18 @@ import { Comment } from '../model';
 export class PostCommentComponent implements OnInit {
 
   private readonly fb = inject(FormBuilder);
-  private readonly route = inject(ActivatedRoute);
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly marvelSvc = inject(MarvelService);
 
   commentForm!: FormGroup;
 
   characterId!: number;
-  //characterName = '';
 
   private sub$ = new Subscription;
 
   ngOnInit(): void {
-    this.characterId = parseInt(this.route.snapshot.params['characterId']);
-
+    this.characterId = +this.activatedRoute.snapshot.params['characterId'];
     this.commentForm = this.fb.group({
       comment: ['', [Validators.required, Validators.minLength(5)]]
     });
@@ -44,9 +42,9 @@ export class PostCommentComponent implements OnInit {
       text: this.commentForm.get('comment')?.value,
     };
 
-    this.marvelSvc.postComment(commentData).subscribe(
-      {
-        next: () => {
+    this.sub$ = this.marvelSvc.postComment(commentData).subscribe({
+        next: (result: any) => {
+          console.log(result);
           this.router.navigate(['/character', this.characterId]);
         },
         error: (err : HttpErrorResponse) => {
@@ -55,9 +53,6 @@ export class PostCommentComponent implements OnInit {
         complete: () => {
           this.sub$.unsubscribe();
         }
-      }
-    )
-
-    this.router.navigate(['/character', this.characterId])
+      })
   }
 }

@@ -92,7 +92,7 @@ public class MarvelController {
 
             JsonArrayBuilder jsonArr = Json.createArrayBuilder();
 
-            for ( Comment c : comments) {
+            for (Comment c : comments) {
                 JsonObject jsonObj = Json.createObjectBuilder()
                     .add("commentId", c.getCommentId())
                     .add("id", c.getCharacterId())

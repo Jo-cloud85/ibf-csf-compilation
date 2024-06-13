@@ -1,4 +1,4 @@
-<form class="form-group" [formGroup]="form" (submit)="process()">
+<form class="form-group" [formGroup]="form" (ngSubmit)="process()">
     <label class="form-label" for="char" class="form-label">Search character</label>
     <div class="d-flex gap-3 col-8">
         <input class="form-control" type="text" formControlName="char">

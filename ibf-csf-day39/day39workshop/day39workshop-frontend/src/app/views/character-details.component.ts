@@ -19,15 +19,16 @@ export class CharacterDetailsComponent {
   characterId !: number;
 
   ngOnInit(): void {
-    this.searchText = this.activatedRoute.snapshot.queryParams['char']
-    //console.log(">>>> Queryparam: " + this.char);
-    //console.log(">>>> Params: " + JSON.stringify(this.activatedRoute.snapshot.params));
-    this.characterId = parseInt(this.activatedRoute.snapshot.params['characterId'])
+    // I attached this 'char' in character-list component. Optional to use in this case
+    // this.searchText = this.activatedRoute.snapshot.queryParams['char'] 
+    // console.log(">>>> Queryparam: " + this.char);
+    // console.log(">>>> Params: " + JSON.stringify(this.activatedRoute.snapshot.params));
+
+    this.characterId = +this.activatedRoute.snapshot.params['characterId']
     this.character$ = this.marvelSvc.getCharByCharacterId(this.characterId)
   }
 
   toComment() {
     this.router.navigate(['/character', this.characterId, 'post-comment']);
   }
-
 }

@@ -43,7 +43,7 @@ public class EmployeeService {
         return empRepo.getEmployeeById(id).get();
     }
     
-    @Transactional(rollbackFor = DeleteFileException.class)
+    // @Transactional(rollbackFor = DeleteFileException.class)
     public boolean updateEmployee(Employee employee, String prevFileUrl, MultipartFile newPicFile) {
 
         s3Repo.deleteFileFrS3(prevFileUrl);

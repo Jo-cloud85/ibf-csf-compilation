@@ -28,6 +28,7 @@ public class S3Repo {
     @Autowired
     private AmazonS3 s3;
 
+    // SAVE
     public String saveToS3(MultipartFile uploadFile, String username) {
 
         String key = UUID.randomUUID().toString().substring(0, 8);
@@ -55,10 +56,10 @@ public class S3Repo {
         return s3.getUrl(Utils.S3_BUCKET_NAME, key).toString();
     }
 
-
+    // GET
     public byte[] getFileFrS3(String fileUrl) {
         String fileId = extractFileIdFromUrl(fileUrl);
-        GetObjectRequest getRequest = new GetObjectRequest(Utils.S3_BUCKET_NAME, fileId);
+        GetObjectRequest getRequest = new GetObjectRequest(Utils.S3_BUCKET_NAME, fileId); //fileId is the key which must match the data type on top
         S3Object result = s3.getObject(getRequest);
         ObjectMetadata metadata = result.getObjectMetadata();
         Map<String, String> userData = metadata.getUserMetadata();
@@ -79,11 +80,11 @@ public class S3Repo {
         return buffer;
     }
 
-
+    // DELETE
     public void deleteFileFrS3(String fileUrl) {
         String fileId = extractFileIdFromUrl(fileUrl);
         try {
-            s3.deleteObject(new DeleteObjectRequest(Utils.S3_BUCKET_NAME, fileId));
+            s3.deleteObject(new DeleteObjectRequest(Utils.S3_BUCKET_NAME, fileId)); //fileId is the key which must match the data type on top
         } catch (AmazonS3Exception ex) {
             System.err.println("Amazon S3 error: " + ex.getMessage());
             throw new RuntimeException("Error deleting file from S3", ex);

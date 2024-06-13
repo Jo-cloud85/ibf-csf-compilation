@@ -22,6 +22,6 @@ export class SearchComponent {
 
   process() {
     console.log(">>>>> Form: " + this.form.value);
-    this.router.navigate(['/characters'], {queryParams: {char: this.form.value['char'] }})
+    this.router.navigate(['/characters'], { queryParams: {char: this.form.value['char'] }})
   }
 }

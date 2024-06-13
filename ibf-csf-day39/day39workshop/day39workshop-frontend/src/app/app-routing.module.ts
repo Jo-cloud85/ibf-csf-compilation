@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'characters', component: CharacterListComponent},
   {path: 'character/:characterId', component: CharacterDetailsComponent},
   // I added characterName because I want to pass the characterName as a parameter from the details component
-  {path: 'character/:characterId/:characterName/post-comment', component: PostCommentComponent},
+  {path: 'character/:characterId/post-comment', component: PostCommentComponent},
   {path: '**', redirectTo: '/', pathMatch: 'full'}
 ];
 

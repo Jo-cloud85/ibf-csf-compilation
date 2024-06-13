@@ -17,11 +17,17 @@ public class CommentRepository {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /*
+        db.comment.find(
+            { "characterId": characterId }
+        )
+        .limit(10)
+        .sort({ "timestamp": -1 })
+     */
     public List<Comment> getCommentsForChar(Integer characterId) {
         Query query = new Query(
             Criteria
-                .where("characterId")
-                .is(characterId))
+                .where("characterId").is(characterId))
                 .limit(10) // Fetch only the 10 most recent comments
                 .with(Sort.by(Sort.Direction.DESC, "timestamp"));
 
