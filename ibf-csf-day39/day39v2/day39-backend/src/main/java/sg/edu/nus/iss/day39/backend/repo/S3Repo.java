@@ -35,8 +35,7 @@ public class S3Repo {
             metadata.setContentLength(uploadFile.getSize());
             metadata.setUserMetadata(userData);
 
-
-            PutObjectRequest putRequest = new PutObjectRequest("day39", "%s".formatted(id), uploadFile.getInputStream(),
+            PutObjectRequest putRequest = new PutObjectRequest("day39s3", "%s".formatted(id), uploadFile.getInputStream(),
                     metadata);
             putRequest.withCannedAcl(CannedAccessControlList.PublicRead);
 

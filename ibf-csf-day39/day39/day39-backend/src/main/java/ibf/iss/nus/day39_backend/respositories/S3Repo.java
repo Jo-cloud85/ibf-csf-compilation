@@ -15,6 +15,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 
+import ibf.iss.nus.day39_backend.utils.Utils;
+
 @Repository
 public class S3Repo {
 
@@ -23,7 +25,7 @@ public class S3Repo {
 
     public String saveToS3(MultipartFile uploadFile, String username) {
 
-        String id = UUID.randomUUID().toString().substring(0, 8);
+        String key = UUID.randomUUID().toString().substring(0, 8);
 
         try {
             Map<String, String> userData = new HashMap<>();
@@ -35,7 +37,7 @@ public class S3Repo {
             metadata.setContentLength(uploadFile.getSize());
             metadata.setUserMetadata(userData);
 
-            PutObjectRequest putRequest = new PutObjectRequest("day39s3", "%s".formatted(id), uploadFile.getInputStream(), metadata);
+            PutObjectRequest putRequest = new PutObjectRequest(Utils.S3_BUCKET_NAME, "%s".formatted(key), uploadFile.getInputStream(), metadata);
             putRequest.withCannedAcl(CannedAccessControlList.PublicRead);
 
             PutObjectResult result = s3.putObject(putRequest);
@@ -45,6 +47,6 @@ public class S3Repo {
             e.printStackTrace();
         }
 
-        return id;
+        return s3.getUrl(Utils.S3_BUCKET_NAME, key).toString();
     }
 }

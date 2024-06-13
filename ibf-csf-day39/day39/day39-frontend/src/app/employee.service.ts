@@ -8,9 +8,9 @@ export class EmployeeService {
 
     private readonly http = inject(HttpClient);
 
-    baseURL = "http://localhost:3000/api"
+    baseURL = "/api"
 
-    getAllEmployee(): Observable<Employee[]> {
+    getAllEmployees(): Observable<Employee[]> {
         return this.http.get<Employee[]>(`${this.baseURL}/employees`)
     }
 
@@ -18,15 +18,11 @@ export class EmployeeService {
         return this.http.get<Employee>(`${this.baseURL}/${emp_id}`)
     }
 
-    addNewEmployee(employee: Employee) : Observable<any> {
-        return this.http.post(`${this.baseURL}/add-employee`, employee);
+    addNewEmployeeToS3(formData: FormData) : Observable<any> {
+        return this.http.post(`${this.baseURL}/add-employeeS3`, formData);
     }
 
-    addNewEmployeeToS3(employee: Employee) : Observable<any> {
-        return this.http.post(`${this.baseURL}/add-employeeS3`, employee);
-    }
-
-    updateEmployeeById(id: String, employee: Employee): Observable<any> {
+    updateEmployee(id: String, employee: Employee): Observable<any> {
         return this.http.put(`${this.baseURL}/update/${id}`, employee);
     }
 

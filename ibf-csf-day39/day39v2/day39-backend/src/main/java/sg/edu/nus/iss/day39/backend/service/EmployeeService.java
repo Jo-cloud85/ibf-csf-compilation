@@ -27,7 +27,7 @@ public class EmployeeService {
         
         String s3FileId = s3Repo.saveToS3(file, employee.getFirstName());
 
-        employee.setProfileURL("https://day39.sgp1.digitaloceanspaces.com/"+ s3FileId );
+        employee.setProfileURL("https://day39s3.sgp1.digitaloceanspaces.com/" + s3FileId);
         Boolean isEmployeeSaved = empRepo.save(employee);
 
         return isEmployeeSaved;

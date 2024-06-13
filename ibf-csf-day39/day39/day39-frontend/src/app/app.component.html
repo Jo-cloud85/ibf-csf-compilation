@@ -1,1 +1,13 @@
-<app-create-employee></app-create-employee>
+<nav class="p-4 navbar navbar-expand-lg navbar-dark bg-dark">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a [routerLink]="['/']" class="nav-link">Employee List</a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['/add-employee']" class="nav-link">Create</a>
+      </li>
+    </ul>
+</nav>
+<div class="container py-5">
+    <router-outlet></router-outlet>
+</div>

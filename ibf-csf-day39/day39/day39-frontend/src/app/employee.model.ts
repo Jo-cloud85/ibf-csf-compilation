@@ -1,7 +1,7 @@
-export class Employee {
-    id!: string;
-    firstName!: string;
-    lastName!: string;
-    email!: string;
-    profileURL!: string;
+export interface Employee {
+    id: number
+    firstName: string
+    lastName: string
+    email: string
+    profileUrl: string
 }

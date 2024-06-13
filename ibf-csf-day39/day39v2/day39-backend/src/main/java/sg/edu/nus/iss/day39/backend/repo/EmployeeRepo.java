@@ -34,11 +34,12 @@ public class EmployeeRepo {
 
     String deleteSQL = "delete from employee where id = ?";
 
+
     public Boolean save(Employee employee) {
         Boolean bSaved = false;
 
         PreparedStatementCallback<Boolean> psc = new PreparedStatementCallback<Boolean>() {
-
+            @SuppressWarnings("null")
             @Override
             @Nullable
             public Boolean doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
@@ -50,19 +51,18 @@ public class EmployeeRepo {
                 Boolean rslt = ps.execute();
                 return rslt;
             }
-
         };
 
         bSaved = jdbcTemplate.execute(insertSQL, psc);
-
         return bSaved;
     }
+
 
     public int update(Employee employee) {
         int iUpdated = 0;
 
         PreparedStatementSetter pss = new PreparedStatementSetter() {
-
+            @SuppressWarnings("null")
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
                 ps.setString(1, employee.getFirstName());
@@ -74,37 +74,38 @@ public class EmployeeRepo {
         };
 
         iUpdated = jdbcTemplate.update(updateSQL, pss);
-
         return iUpdated;
     }
 
+    
     public int delete(Integer id) {
         int bDeleted = 0;
 
         PreparedStatementSetter pss = new PreparedStatementSetter() {
+            @SuppressWarnings("null")
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
-
                 ps.setInt(1, id);
             }
         };
 
         bDeleted = jdbcTemplate.update(deleteSQL, pss);
-
         return bDeleted;
     }
+
 
     public List<Employee> findAll() {
         List<Employee> employees = new ArrayList<Employee>();
 
         employees = jdbcTemplate.query(findAllSQL, new ResultSetExtractor<List<Employee>>() {
 
+            @SuppressWarnings("null")
             @Override
             public List<Employee> extractData(ResultSet rs) throws SQLException, DataAccessException {
                 List<Employee> emps = new ArrayList<Employee>();
 
                 while (rs.next()) {
-                    // e.id as emp_id, e.first_name, e.email, e.profile_url,
+                    // e.id as emp_id, e.first_name, e.last_name, e.email, e.profile_url
                     Employee employee = new Employee();
                     employee.setId(rs.getInt("emp_id"));
                     employee.setFirstName(rs.getString("first_name"));
@@ -124,30 +125,6 @@ public class EmployeeRepo {
 
     public Employee findByEmployeeId(Integer employeeId) {
         System.out.println("EmployeeRepo @findByEmployeeId >>> " + employeeId);
-        // Employee employee = new Employee();
-
-        // employee = jdbcTemplate.query(findByIdSQL, new ResultSetExtractor<Employee>() {
-
-        //     @Override
-        //     public Employee extractData(ResultSet rs) throws SQLException, DataAccessException {
-        //         Employee emp = new Employee();
-
-        //         while (rs.next()) {
-        //             // e.id as emp_id, e.first_name, e.last_name, e.salary,
-        //             Employee employee = new Employee();
-        //             employee.setId(rs.getInt("emp_id"));
-        //             employee.setFirstName(rs.getString("first_name"));
-        //             employee.setLastName(rs.getString("last_name"));
-        //             employee.setEmail(rs.getString("email"));
-        //             employee.setProfileURL(rs.getString("profile_url"));
-        //         }
-
-        //         return emp;
-        //     }
-        // }, employeeId);
-
-        // return employee;
-
         return jdbcTemplate.queryForObject(findByIdSQL, BeanPropertyRowMapper.newInstance(Employee.class), employeeId);
     }
 

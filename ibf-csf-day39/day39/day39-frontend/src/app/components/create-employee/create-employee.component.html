@@ -1,96 +1,96 @@
-<div class="container py-5">
-    <h2>Add Employee</h2>
-    <hr>
-    <form class="form-group d-flex flex-column gap-3 pt-3" [formGroup]="empForm" (ngSubmit)="submit()">
+<h2>Add Employee</h2>
+<hr>
+<form class="form-group d-flex flex-column gap-3 pt-3" [formGroup]="empForm" (ngSubmit)="submit()">
 
-        <!-- firstName-->
-        <div class="form-group">
-            <label for="firstname">First Name</label>
-            <input
-                class="form-control"
-                type="text"
-                id="firstName"
-                formControlName="firstName"
-            >
-            <div *ngIf="empForm.get('firstName')?.touched && empForm.get('firstName')?.invalid">
-                <small 
-                    class="form-text text-danger"
-                    *ngIf="empForm.get('firstName')?.hasError('required')">
-                    This field is required!
-                </small>
-                <small 
-                    class="form-text text-danger"
-                    *ngIf="empForm.get('firstName')?.hasError('minlength')">
-                    First name must be minimally 3 characters long
-                </small>
-            </div>
+    <!-- firstName-->
+    <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input
+            class="form-control"
+            type="text"
+            id="firstName"
+            formControlName="firstName"
+        >
+        <div *ngIf="empForm.get('firstName')?.touched && empForm.get('firstName')?.invalid">
+            <small 
+                class="form-text text-danger"
+                *ngIf="empForm.get('firstName')?.hasError('required')">
+                This field is required!
+            </small>
+            <small 
+                class="form-text text-danger"
+                *ngIf="empForm.get('firstName')?.hasError('minlength')">
+                First name must be minimally 3 characters long
+            </small>
         </div>
+    </div>
 
-        <!-- lastName-->
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input
-                class="form-control"
-                type="text"
-                id="lastName"
-                formControlName="lastName"
-            >
-            <div *ngIf="empForm.get('lastName')?.touched && empForm.get('lastName')?.invalid">
-                <small 
-                    class="form-text text-danger"
-                    *ngIf="empForm.get('lastName')?.hasError('required')">
-                    This field is required!
-                </small>
-                <small 
-                    class="form-text text-danger"
-                    *ngIf="empForm.get('lastName')?.hasError('minlength')">
-                    Last name must be minimally 3 characters long
-                </small>
-            </div>
+    <!-- lastName-->
+    <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+            class="form-control"
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+        >
+        <div *ngIf="empForm.get('lastName')?.touched && empForm.get('lastName')?.invalid">
+            <small 
+                class="form-text text-danger"
+                *ngIf="empForm.get('lastName')?.hasError('required')">
+                This field is required!
+            </small>
+            <small 
+                class="form-text text-danger"
+                *ngIf="empForm.get('lastName')?.hasError('minlength')">
+                Last name must be minimally 3 characters long
+            </small>
         </div>
+    </div>
 
-         <!-- Email -->
-         <div>
-            <label for="email">Email</label>
-            <input 
-                class="form-control" 
-                type="email" 
-                formControlName="email"
-            >
-            <div *ngIf="empForm.get('email')?.touched && empForm.get('email')?.invalid">
-                <small 
-                    class="form-text text-danger"
-                    *ngIf="empForm.get('email')?.hasError('required')">
-                    This field is required!
-                </small>
-                <small 
-                    class="form-text text-danger"
-                    *ngIf="empForm.get('email')?.hasError('email')">
-                    Please enter a valid email
-                </small>
-            </div>
+        <!-- Email -->
+        <div>
+        <label for="email">Email</label>
+        <input 
+            class="form-control" 
+            type="email" 
+            formControlName="email"
+        >
+        <div *ngIf="empForm.get('email')?.touched && empForm.get('email')?.invalid">
+            <small 
+                class="form-text text-danger"
+                *ngIf="empForm.get('email')?.hasError('required')">
+                This field is required!
+            </small>
+            <small 
+                class="form-text text-danger"
+                *ngIf="empForm.get('email')?.hasError('email')">
+                Please enter a valid email
+            </small>
         </div>
+    </div>
 
-        <!-- profile file -->
-        <div class="form-group">
-            <label for="file">Profile</label>
-            <input 
-                class="form-control" 
-                type="file" 
-                formControlName="file"
-            >
-            <div *ngIf="empForm.get('file')?.touched && empForm.get('file')?.invalid">
-                <small 
-                    class="form-text text-danger"
-                    *ngIf="empForm.get('file')?.hasError('required')">
-                    File is required
-                </small>
-            </div>
+    <!-- profile file -->
+    <div class="form-group">
+        <label for="file">Profile</label>
+        <input 
+            class="form-control" 
+            type="file" 
+            accept="image/*"
+            (change)="onFileChange($event)"
+            formControlName="file"
+        >
+        <div *ngIf="empForm.get('file')?.touched && empForm.get('file')?.invalid">
+            <small 
+                class="form-text text-danger"
+                *ngIf="empForm.get('file')?.hasError('required')">
+                Image File is required
+            </small>
         </div>
-       
-        <div class="pt-3">
-            <button type="submit" class="btn btn-primary" [disabled]="empForm.invalid">Submit</button>
-        </div>
-    </form>
-</div>
+    </div>
+    
+    <div class="pt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="empForm.invalid">Submit</button>
+    </div>
+</form>
 

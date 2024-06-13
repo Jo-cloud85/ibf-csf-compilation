@@ -1,7 +1,6 @@
 package ibf.iss.nus.day39_backend.controllers;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import ibf.iss.nus.day39_backend.services.EmployeeService;
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonWriter;
 
 @Controller
 @RequestMapping("/api")
@@ -37,78 +35,72 @@ public class EmployeeController {
     public ResponseEntity<String> getAllEmployee(){
         List<Employee> allEmployees = empSvc.getAllEmployee();
 
-        JsonArrayBuilder jsonArr = Json.createArrayBuilder();
+        JsonArrayBuilder jsonArrBuilder = Json.createArrayBuilder();
 
         for (Employee emp : allEmployees) {
             JsonObject jsonObj = convertJsonToStr(emp);
-            jsonArr.add(jsonObj);
+            jsonArrBuilder.add(jsonObj);
         }
-        
-        StringWriter stringWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stringWriter)) {
-            jsonWriter.writeArray(jsonArr.build());
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(stringWriter.toString());
+        return ResponseEntity.status(HttpStatus.OK).body(jsonArrBuilder.build().toString());
     }
+
 
     @GetMapping(path="/employee/{emp_id}")
     public ResponseEntity<String> getEmployeeById(@PathVariable("emp_id") String id){
-        Employee emp = empSvc.getEmployeeById(id);
-
+        Employee emp = empSvc.getEmployeeById(Integer.parseInt(id));
         JsonObject jsonObj = convertJsonToStr(emp);
-
-        StringWriter stringWriter = new StringWriter();
-        try (JsonWriter jsonWriter = Json.createWriter(stringWriter)) {
-            jsonWriter.writeObject(jsonObj);
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(stringWriter.toString());
+        return ResponseEntity.status(HttpStatus.OK).body(jsonObj.toString());
     }
 
-    @PostMapping(path="/add-employee")
-    public ResponseEntity<String> save(@RequestBody Employee employee) {
-        Boolean bSaved = empSvc.addNewEmployee(employee);
-        return new ResponseEntity<String>(bSaved.toString(), HttpStatus.OK);
+
+    @PostMapping(path="/add-employeeS3", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> addEmployee(
+        @RequestPart("firstName") String firstName, 
+        @RequestPart("lastName") String lastName,
+        @RequestPart("email") String email, 
+        @RequestPart("file") MultipartFile picFile) throws IOException {
+
+        System.out.println("picFile input stream >>> " + picFile.getInputStream().toString());
+        System.out.println("picFile original filename >>> " + picFile.getOriginalFilename().toString());
+        System.out.println("picFile size >>> " + picFile.getSize());
+
+        Employee emp = new Employee();
+        emp.setFirstName(firstName);
+        emp.setLastName(lastName);
+        emp.setEmail(email);
+        
+        Employee addedEmployee = empSvc.addEmployee(emp, picFile);
+
+        // System.out.println(">>> addedEmployee: " + addedEmployee);
+
+        return ResponseEntity.ok(addedEmployee.toJson().toString());
     }
 
-    @PostMapping(path = "/add-employeeS3", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Boolean> postEmployeeWithFileToS3(
-        @RequestPart MultipartFile myfile, 
-        @RequestPart String firstName,
-        @RequestPart String lastName, 
-        @RequestPart String email) throws IOException {
-
-        Employee newEmployee = new Employee();
-        newEmployee.setFirstName(firstName);
-        newEmployee.setLastName(lastName);
-        newEmployee.setEmail(email);
-
-        Boolean result = empSvc.saveWithS3(newEmployee, myfile);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
-    }
-
+    
     @PutMapping(path="/update/{emp_id}")
     public ResponseEntity<String> update(
         @PathVariable("emp_id") String id,
         @RequestBody Employee employee) {
             
-        String empId = employee.getEmp_id();
-        Boolean isUpdated = empSvc.updateEmployeeById(empId);
+        Boolean isUpdated = empSvc.updateEmployee(employee);
         return new ResponseEntity<String>(isUpdated.toString(), HttpStatus.OK);
     }
 
     @DeleteMapping(path="/delete/{emp_id}")
-    public ResponseEntity<String> delete(@PathVariable("emp_id") String id) {
-        Boolean isDeleted = empSvc.deleteEmployeeById(id);
+    public ResponseEntity<String> delete(
+        @PathVariable("emp_id") String id) {
+
+        Boolean isDeleted = empSvc.deleteEmployeeById(Integer.parseInt(id));
         return new ResponseEntity<String>(isDeleted.toString(), HttpStatus.OK);
     }
 
     public JsonObject convertJsonToStr(Employee emp) {
         JsonObject jsonObj = Json.createObjectBuilder()
-            .add("emp_id", emp.getEmp_id())
+            .add("emp_id", emp.getId())
             .add("firstName", emp.getFirstName())
             .add("lastName", emp.getLastName())
             .add("email", emp.getEmail())
-            .add("profileURL", emp.getProfileURL())
+            .add("profileURL", emp.getProfileUrl())
             .build();
         return jsonObj;
     }

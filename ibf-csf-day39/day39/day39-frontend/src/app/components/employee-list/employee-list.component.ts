@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Employee } from '../../employee.model';
 import { EmployeeService } from '../../employee.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
 })
-export class EmployeeListComponent implements OnInit {
+export class EmployeeListComponent implements OnInit, OnDestroy {
 
   private readonly empSvc = inject(EmployeeService);
   private readonly router = inject(Router);
@@ -20,19 +20,34 @@ export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
 
   ngOnInit(): void {
-
+    this.sub$ = this.empSvc.getAllEmployees().subscribe({
+      next: (result: any) => {
+        console.log("Results: " + JSON.stringify(result))
+        this.employees = result;
+      },
+      error: (error: HttpErrorResponse) => console.log("Error: " + error),
+      complete: () => console.log("Existing list of employees")
+    })
   }
 
-  deleteEmployee(id: string) {
+  deleteEmployee(id: number) {
     console.log("ID of deleted employee: " + id);
   }
 
-  showEmployeeDetails(id: string) {
-    this.sub$ = this.empSvc.getEmployeeById(id).subscribe({
+  showEmployeeDetails(id: number) {
+    this.sub$ = this.empSvc.getEmployeeById(id.toString()).subscribe({
       next: (result) => {console.log(result)},
       error: (error: HttpErrorResponse) => console.log("Error: " + error),
       complete: () => console.log("Showed employee details")
     })
     this.router.navigate(['/employee', id])
+  }
+
+  updateEmployee(id: number) {
+    //
+  }
+
+  ngOnDestroy(): void {
+      this.sub$.unsubscribe();
   }
 }

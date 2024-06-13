@@ -1,30 +1,43 @@
-<div class="container py-5">
+<div class="container py-5" *ngIf="employees.length > 0; else noEmployeesFound">
     <div class="row">
         <table class="table table-striped">
             <thead>
+                <th>Name</th>
                 <th>Email</th>
                 <th>Profile URL</th>
                 <th>Actions</th>
             </thead>
             <tbody>
                 <tr *ngFor="let employee of employees">
-                    <td>{{ employee.firstName }}</td>
-                    <td>{{ employee.lastName}}</td>
+                    <td> {{ employee.firstName }} {{ employee.lastName}}</td>
                     <td>{{ employee.email }}</td>
-                    <td>{{ employee.profileURL }}</td>
+                    <td>{{ employee.profileUrl }}</td>
                     <td>
-                        <button 
-                            class="btn btn-danger"
-                            (click)="deleteEmployee(employee.id)"
-                        >Delete
-                        </button>
-                        <button
-                            class="btn btn-danger"
-                            (click)="showEmployeeDetails(employee.id)"
-                        >Show Employee Details</button>
+                        <div class="d-flex gap-3">
+                            <button 
+                                class="btn btn-danger"
+                                (click)="deleteEmployee(employee.id)"
+                            >Delete
+                            </button>
+                            <button 
+                                class="btn btn-warning"
+                                (click)="updateEmployee(employee.id)"
+                            >Update
+                            </button>
+                            <button
+                                class="btn btn-primary"
+                                (click)="showEmployeeDetails(employee.id)"
+                            >Show Details</button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+<div>
+    <a [routerLink]="['/add-employee']" class="btn btn-warning">Add Employee</a>
+</div>
+<ng-template #noEmployeesFound>
+    <h3>Seems like you have not add any employees yet...</h3>
+</ng-template>

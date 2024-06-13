@@ -1,71 +1,78 @@
 package ibf.iss.nus.day39_backend.respositories;
 
-import java.util.LinkedList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import ibf.iss.nus.day39_backend.models.Employee;
-import ibf.iss.nus.day39_backend.utils.EmpQueries;
 
 @Repository
-public class EmployeeRepo implements EmpQueries {
+public class EmployeeRepo implements Queries {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Employee> getAllEmployee(){
-        List<Employee> result =new LinkedList<Employee>();
-        result = jdbcTemplate.query(
-                SQL_GET_ALL_EMPLOYEES, 
-                BeanPropertyRowMapper.newInstance(Employee.class));
-        return result;
-    }
-
-    /* In this case, since you want to return all the fields of Employee*/
-
-    public Employee getEmployeeById(String id) {
-        Employee result = new Employee();
-        result = jdbcTemplate.queryForObject(
-                GET_EMPLOYEE_BY_ID, 
-                BeanPropertyRowMapper.newInstance(Employee.class));
-        return result;
-    }
-
-    public boolean addNewEmployee(Employee empData) {
-        int insertResult = 0;
-        insertResult = jdbcTemplate.update(
-            SQL_INSERT_EMPLOYEE, 
-            empData.getEmp_id(),
+    // Create
+    public Integer addEmployee(Employee empData) {
+        
+        jdbcTemplate.update(
+            SQL_ADD_EMPLOYEE, 
             empData.getFirstName(),
             empData.getLastName(),
             empData.getEmail(),
-            empData.getProfileURL()
+            empData.getProfileUrl()
         );
-        return insertResult > 0 ? true : false;
+        return jdbcTemplate.queryForObject(SQL_GET_ID, Integer.class);
     }
 
-    public boolean updateEmployeeById(String id) {
-        Employee emp = getEmployeeById(id);
-        int insertResult = 0;
-        insertResult = jdbcTemplate.update(
-            SQL_UPDATE_EMPLOYEE_BY_ID, 
-            emp.getEmp_id(),
+    // Read - Read All
+    public List<Employee> getAllEmployees() {
+        return jdbcTemplate.query(SQL_GET_ALL_EMPLOYEES, new EmployeeRowMapper());
+    }
+
+    /* In this case, since you want to return all the fields of Employee*/
+    // Read - Read single
+    public Employee getEmployeeById(Integer id) {
+        return jdbcTemplate.queryForObject(
+                SQL_GET_EMPLOYEE_BY_ID,
+                BeanPropertyRowMapper.newInstance(Employee.class));
+    }
+
+
+    // Update
+    public boolean updateEmployee(Employee emp) {
+        return jdbcTemplate.update(
+            SQL_UPDATE_EMPLOYEE, 
+            emp.getId(),
             emp.getFirstName(),
             emp.getLastName(),
             emp.getEmail(),
-            emp.getProfileURL()
-        );
-        return insertResult > 0 ? true : false;
+            emp.getProfileUrl()
+        ) > 0 ? true : false;
     }
 
-    public boolean deleteEmployeeById(String id) {
-        int result = 0;
-        Employee emp = getEmployeeById(id);
-        result = jdbcTemplate.update(SQL_DELETE_EMPLOYEE_BY_ID, emp);
-        return result > 0 ? true : false;
+    // Delete
+    public boolean deleteEmployeeById(Integer id) {
+        return jdbcTemplate.update(SQL_DELETE_EMPLOYEE, id)> 0 ? true : false;
+    }
+
+    private class EmployeeRowMapper implements RowMapper<Employee> {
+        @SuppressWarnings("null")
+        @Override
+        public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Employee emp = new Employee();
+            emp.setId(rs.getInt("id"));
+            emp.setFirstName(rs.getString("first_name"));
+            emp.setLastName(rs.getString("last_name"));
+            emp.setEmail(rs.getString("email"));
+            emp.setProfileUrl(rs.getString("profile_url"));
+            return emp;
+        }
     }
 }

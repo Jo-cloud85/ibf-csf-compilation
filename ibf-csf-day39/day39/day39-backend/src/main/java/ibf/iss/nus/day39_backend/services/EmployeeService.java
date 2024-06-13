@@ -1,5 +1,6 @@
 package ibf.iss.nus.day39_backend.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,30 +20,29 @@ public class EmployeeService {
     @Autowired
     private S3Repo s3Repo;
 
-    public boolean addNewEmployee(Employee emp) {
-        return empRepo.addNewEmployee(emp);
-    }
+    public Employee addEmployee(Employee employee, MultipartFile picFile) throws IOException {
+        String url = s3Repo.saveToS3(picFile, employee.getEmail());
+        employee.setProfileUrl(url);
 
-    public Boolean saveWithS3(Employee employee, MultipartFile file) {
-        String s3FileId = s3Repo.saveToS3(file, employee.getFirstName());
-        employee.setProfileURL("https://day39s3.sgp1.digitaloceanspaces.com/"+ s3FileId );
-        Boolean isEmployeeSaved = empRepo.addNewEmployee(employee);
-        return isEmployeeSaved;
+        int empId = empRepo.addEmployee(employee);
+        employee.setId(empId);
+
+        return employee;
     }
 
     public List<Employee> getAllEmployee() {
-        return empRepo.getAllEmployee();
+        return empRepo.getAllEmployees();
     }
 
-    public Employee getEmployeeById(String id) {
+    public Employee getEmployeeById(Integer id) {
         return empRepo.getEmployeeById(id);
     }
     
-    public boolean updateEmployeeById(String id) {
-        return empRepo.updateEmployeeById(id);
+    public boolean updateEmployee(Employee employee) {
+        return empRepo.updateEmployee(employee);
     }
 
-    public boolean deleteEmployeeById(String id) {
+    public boolean deleteEmployeeById(Integer id) {
         return empRepo.deleteEmployeeById(id);
     }
 }
