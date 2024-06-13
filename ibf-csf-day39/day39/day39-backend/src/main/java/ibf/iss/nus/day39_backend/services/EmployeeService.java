@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.Response;
-
 import ibf.iss.nus.day39_backend.exceptions.DeleteFileException;
-import ibf.iss.nus.day39_backend.exceptions.ResponseMessage;
 import ibf.iss.nus.day39_backend.models.Employee;
 import ibf.iss.nus.day39_backend.respositories.EmployeeRepo;
 import ibf.iss.nus.day39_backend.respositories.S3Repo;
