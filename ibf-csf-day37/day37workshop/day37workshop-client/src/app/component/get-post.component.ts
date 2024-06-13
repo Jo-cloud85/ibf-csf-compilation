@@ -20,7 +20,7 @@ export class GetPostComponent implements OnInit, OnDestroy {
   sub$ !: Subscription;
 
   ngOnInit(): void {
-    const postId = this.activatedRoute.snapshot.params['postId'];
+    const postId = this.activatedRoute.snapshot.params['postId']; // must match your path routes naming
     this.postSvc.getPostById(postId).subscribe({
       next: (result: any) => {
         console.log(result);
@@ -37,8 +37,8 @@ export class GetPostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      if (this.sub$) {
-        this.sub$.unsubscribe();
-      }
+    if (this.sub$) {
+      this.sub$.unsubscribe();
+    }
   }
 }

@@ -15,7 +15,6 @@ export class UploadPostComponent {
 
   private readonly formbuilder = inject(FormBuilder);
   private readonly postSvc = inject(PostService);
-  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
   ngOnInit(): void {
@@ -31,18 +30,18 @@ export class UploadPostComponent {
       return;
     }
 
-    const postId = this.activatedRoute.snapshot.params['postId']
-
     const formData = new FormData();
     formData.set('comments', this.postForm.get('comments')?.value);
     const fileInput = this.imageFile.nativeElement;
+
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
       formData.set('picture', file);
+
       this.postSvc.uploadPost(formData)
         .then (response => {
-            console.info(JSON.stringify(response));
-            const postId = response['postId']; //coming from http
+            // console.info(JSON.stringify(response));
+            const postId = response['postId']; // coming from http
             this.router.navigate(['/post', postId])
         })
         .catch (error => {        

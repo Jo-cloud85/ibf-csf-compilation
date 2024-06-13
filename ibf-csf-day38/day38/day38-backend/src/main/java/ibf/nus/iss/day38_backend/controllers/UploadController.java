@@ -29,6 +29,7 @@ public class UploadController {
     private ImageService imageSvc;
 
 
+    @SuppressWarnings("null")
     @PostMapping(path="/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ModelAndView postFileUpload(
         @RequestPart MultipartFile myfile,
@@ -48,6 +49,7 @@ public class UploadController {
     }
 
     // This is for Angular because Angular only expects JSON
+    @SuppressWarnings("null")
     @PostMapping(path="/uploads3", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> postFileUploadToS3(
         @RequestPart MultipartFile myfile,
