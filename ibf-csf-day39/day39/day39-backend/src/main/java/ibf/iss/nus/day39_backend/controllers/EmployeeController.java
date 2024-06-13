@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,7 +37,7 @@ public class EmployeeController {
         JsonArrayBuilder jsonArrBuilder = Json.createArrayBuilder();
 
         for (Employee emp : allEmployees) {
-            JsonObject jsonObj = convertJsonToStr(emp);
+            JsonObject jsonObj = convertEmployeeObjToStr(emp);
             jsonArrBuilder.add(jsonObj);
         }
         return ResponseEntity.status(HttpStatus.OK).body(jsonArrBuilder.build().toString());
@@ -48,7 +47,8 @@ public class EmployeeController {
     @GetMapping(path="/employee/{emp_id}")
     public ResponseEntity<String> getEmployeeById(@PathVariable("emp_id") String id){
         Employee emp = empSvc.getEmployeeById(Integer.parseInt(id));
-        JsonObject jsonObj = convertJsonToStr(emp);
+        JsonObject jsonObj = convertEmployeeObjToStr(emp);
+        // System.out.println("FROM BACKEND CONTROLLER: " + jsonObj.toString());
         return ResponseEntity.status(HttpStatus.OK).body(jsonObj.toString());
     }
 
@@ -70,22 +70,34 @@ public class EmployeeController {
         emp.setEmail(email);
         
         Employee addedEmployee = empSvc.addEmployee(emp, picFile);
-
         // System.out.println(">>> addedEmployee: " + addedEmployee);
-
         return ResponseEntity.ok(addedEmployee.toJson().toString());
     }
 
-    
+
     @PutMapping(path="/update/{emp_id}")
     public ResponseEntity<String> update(
         @PathVariable("emp_id") String id,
-        @RequestBody Employee employee) {
-            
-        Boolean isUpdated = empSvc.updateEmployee(employee);
+        @RequestPart("prevFileUrl") String prevFileUrl, 
+        @RequestPart("firstName") String firstName, 
+        @RequestPart("lastName") String lastName,
+        @RequestPart("email") String email, 
+        @RequestPart("file") MultipartFile picFile
+    ) {
+        
+        Employee updatedEmployee = new Employee();
+        updatedEmployee.setId(Integer.parseInt(id));
+        updatedEmployee.setFirstName(firstName);
+        updatedEmployee.setLastName(lastName);
+        updatedEmployee.setEmail(email);
+
+        System.out.println("FROM PUTMAPPING: " + updatedEmployee.toString());
+
+        Boolean isUpdated = empSvc.updateEmployee(updatedEmployee, prevFileUrl, picFile);
         return new ResponseEntity<String>(isUpdated.toString(), HttpStatus.OK);
     }
 
+    
     @DeleteMapping(path="/delete/{emp_id}")
     public ResponseEntity<String> delete(
         @PathVariable("emp_id") String id) {
@@ -94,13 +106,13 @@ public class EmployeeController {
         return new ResponseEntity<String>(isDeleted.toString(), HttpStatus.OK);
     }
 
-    public JsonObject convertJsonToStr(Employee emp) {
+    public JsonObject convertEmployeeObjToStr(Employee emp) {
         JsonObject jsonObj = Json.createObjectBuilder()
             .add("emp_id", emp.getId())
             .add("firstName", emp.getFirstName())
             .add("lastName", emp.getLastName())
             .add("email", emp.getEmail())
-            .add("profileURL", emp.getProfileUrl())
+            .add("profileUrl", emp.getProfileUrl())
             .build();
         return jsonObj;
     }

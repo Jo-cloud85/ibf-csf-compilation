@@ -22,6 +22,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sub$ = this.empSvc.getAllEmployees().subscribe({
       next: (result: any) => {
+        // the id is coming in as emp_id so your Angular model must match or you can manually map
         console.log("Results: " + JSON.stringify(result))
         this.employees = result;
       },
@@ -30,13 +31,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     })
   }
 
-  deleteEmployee(id: number) {
-    console.log("ID of deleted employee: " + id);
-  }
-
   showEmployeeDetails(id: number) {
-    this.sub$ = this.empSvc.getEmployeeById(id.toString()).subscribe({
-      next: (result) => {console.log(result)},
+    this.sub$ = this.empSvc.getEmployeeById(id).subscribe({
+      next: (result) => {console.log("Showing employee details: " + result)},
       error: (error: HttpErrorResponse) => console.log("Error: " + error),
       complete: () => console.log("Showed employee details")
     })
@@ -44,8 +41,21 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   updateEmployee(id: number) {
-    //
+    this.router.navigate(['/employee', id, 'update']);
   }
+
+  deleteEmployee(id: number): void {
+    this.sub$ = this.empSvc.deleteEmployeeById(id).subscribe({
+      next: () => {
+        // Update the local state to reflect the deletion
+        this.employees = this.employees.filter(employee => employee.emp_id !== id);
+        console.log(`Employee: ${id} deleted successfully`);
+      },
+      error: (error) => console.log("Error: " + error),
+      complete: () => console.log("Deletion completed")
+    });
+  }
+
 
   ngOnDestroy(): void {
       this.sub$.unsubscribe();

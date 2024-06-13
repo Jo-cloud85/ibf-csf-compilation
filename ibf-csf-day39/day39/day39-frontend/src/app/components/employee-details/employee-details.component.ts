@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EmployeeService } from '../../employee.service';
@@ -11,14 +12,16 @@ import { Employee } from '../../employee.model';
 export class EmployeeDetailsComponent {
   
   private readonly svc = inject(EmployeeService);
+  private readonly activatedRoute = inject(ActivatedRoute);
   empList$!: Subscription;
-  empList!: Employee[];
+  employee!: Employee;
 
   ngOnInit(): void {
-    this.empList$ = this.svc.getAllEmployees()
+    const empId = +this.activatedRoute.snapshot.params['emp_id'];
+    this.empList$ = this.svc.getEmployeeById(empId)
       .subscribe(response => {
-        this.empList = response;
-        console.log('>>> employees list:', this.empList);
+        this.employee = response;
+        console.log('>>> employee detail:', this.employee);
       });
   }
 

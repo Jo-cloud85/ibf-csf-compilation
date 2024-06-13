@@ -14,19 +14,19 @@ export class EmployeeService {
         return this.http.get<Employee[]>(`${this.baseURL}/employees`)
     }
 
-    getEmployeeById(emp_id: String): Observable<Employee> {
-        return this.http.get<Employee>(`${this.baseURL}/${emp_id}`)
+    getEmployeeById(emp_id: number): Observable<Employee> {
+        return this.http.get<Employee>(`${this.baseURL}/employee/${emp_id}`)
     }
 
     addNewEmployeeToS3(formData: FormData) : Observable<any> {
         return this.http.post(`${this.baseURL}/add-employeeS3`, formData);
     }
 
-    updateEmployee(id: String, employee: Employee): Observable<any> {
-        return this.http.put(`${this.baseURL}/update/${id}`, employee);
+    updateEmployee(id: number, formData: FormData): Observable<any> {
+        return this.http.put(`${this.baseURL}/update/${id}`, formData);
     }
 
-    deleteEmployeeById(id: String): Observable<any> {
+    deleteEmployeeById(id: number): Observable<any> {
         return this.http.delete(`${this.baseURL}/delete/${id}`);
     }
 }

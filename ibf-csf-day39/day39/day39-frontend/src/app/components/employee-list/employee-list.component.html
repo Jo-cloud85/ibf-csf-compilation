@@ -9,25 +9,25 @@
             </thead>
             <tbody>
                 <tr *ngFor="let employee of employees">
-                    <td> {{ employee.firstName }} {{ employee.lastName}}</td>
+                    <td>{{ employee.firstName }} {{ employee.lastName }}</td>
                     <td>{{ employee.email }}</td>
-                    <td>{{ employee.profileUrl }}</td>
+                    <td><a [href]="employee.profileUrl">{{employee.profileUrl}}</a></td>
                     <td>
-                        <div class="d-flex gap-3">
-                            <button 
-                                class="btn btn-danger"
-                                (click)="deleteEmployee(employee.id)"
-                            >Delete
-                            </button>
-                            <button 
-                                class="btn btn-warning"
-                                (click)="updateEmployee(employee.id)"
-                            >Update
-                            </button>
+                        <div class="d-flex gap-1 justify-content-between">
                             <button
                                 class="btn btn-primary"
-                                (click)="showEmployeeDetails(employee.id)"
+                                (click)="showEmployeeDetails(employee.emp_id)"
                             >Show Details</button>
+                            <button 
+                                class="btn btn-warning"
+                                (click)="updateEmployee(employee.emp_id)"
+                            >Update
+                            </button>
+                            <button 
+                                class="btn btn-danger"
+                                (click)="deleteEmployee(employee.emp_id)"
+                            >Delete
+                            </button>
                         </div>
                     </td>
                 </tr>

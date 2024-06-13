@@ -3,9 +3,9 @@ package ibf.iss.nus.day39_backend.respositories;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -38,22 +38,33 @@ public class EmployeeRepo implements Queries {
 
     /* In this case, since you want to return all the fields of Employee*/
     // Read - Read single
-    public Employee getEmployeeById(Integer id) {
-        return jdbcTemplate.queryForObject(
-                SQL_GET_EMPLOYEE_BY_ID,
-                BeanPropertyRowMapper.newInstance(Employee.class));
+    public Optional<Employee> getEmployeeById(Integer id) {
+        return jdbcTemplate.query(SQL_GET_EMPLOYEE_BY_ID, (ResultSet rs) -> {
+
+            if(!rs.next()) return Optional.empty();
+
+            // getInt, getString - the names must match MySQL table
+            // Actually this is the same as the EmployeeRowMapper() that I created below
+            Employee emp = new Employee(
+                rs.getInt("id"),
+                rs.getString("first_name"), 
+                rs.getString("last_name"),
+                rs.getString("email"),
+                rs.getString("profile_url")
+            );
+            return Optional.of(emp);
+        }, id);
     }
 
-
-    // Update
+    // Update - getId() MUST BE THE LAST ONE BECAUSE OF THE SEQUENCE OF YOUR QUERY!!!
     public boolean updateEmployee(Employee emp) {
         return jdbcTemplate.update(
             SQL_UPDATE_EMPLOYEE, 
-            emp.getId(),
             emp.getFirstName(),
             emp.getLastName(),
             emp.getEmail(),
-            emp.getProfileUrl()
+            emp.getProfileUrl(),
+            emp.getId()
         ) > 0 ? true : false;
     }
 
@@ -61,6 +72,7 @@ public class EmployeeRepo implements Queries {
     public boolean deleteEmployeeById(Integer id) {
         return jdbcTemplate.update(SQL_DELETE_EMPLOYEE, id)> 0 ? true : false;
     }
+
 
     private class EmployeeRowMapper implements RowMapper<Employee> {
         @SuppressWarnings("null")

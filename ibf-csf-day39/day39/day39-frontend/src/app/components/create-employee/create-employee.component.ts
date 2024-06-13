@@ -26,7 +26,7 @@ export class CreateEmployeeComponent implements OnInit, OnDestroy {
       lastName: this.fb.control<string>('', [Validators.required, Validators.minLength(2)]),
       email: this.fb.control<string>('', [Validators.required, Validators.email]),
       file: this.fb.control<string>('', Validators.required),
-      fileSource: this.fb.control<string>('', [Validators.required]),
+      fileSource: this.fb.control<string>('', [Validators.required])
     })
   }
 
