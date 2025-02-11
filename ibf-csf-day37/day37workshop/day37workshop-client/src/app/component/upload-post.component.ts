@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PostService } from '../post.service';
 
 @Component({
@@ -17,12 +17,14 @@ export class UploadPostComponent {
   private readonly postSvc = inject(PostService);
   private readonly router = inject(Router);
 
+  
   ngOnInit(): void {
     this.postForm = this.formbuilder.group({
       comments: this.formbuilder.control<string>('', [Validators.required, Validators.minLength(5)]),
       picture: this.formbuilder.control<string>('', Validators.required)
     })
   }  
+
 
   uploadPost() {
     if (this.postForm.invalid) {

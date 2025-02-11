@@ -39,6 +39,7 @@ public class PostController {
             System.out.println("Received comments: " + comments);
             System.out.println("Received file name: " + pictureFile.getOriginalFilename());
             System.out.println("Received file mediatype: " + pictureFile.getContentType());
+            
             InputStream pictureStream = pictureFile.getInputStream();
             String postId = UUID.randomUUID().toString().substring(0, 8);
             postSrv.savePost(postId, comments, pictureStream);
